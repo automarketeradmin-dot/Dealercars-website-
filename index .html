@@ -104,7 +104,7 @@ select.ctrl{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns
 .hero p.lead{margin-top:16px;font-size:clamp(16px,2.2vw,19px);color:rgba(255,255,255,.82);max-width:600px}
 .search{margin-top:30px;background:#fff;color:var(--ink);border-radius:18px;padding:14px;box-shadow:0 24px 60px rgba(0,0,0,.35);display:grid;gap:10px;grid-template-columns:1fr}
 .search .ctrl{min-height:50px}
-@media(min-width:820px){.search{grid-template-columns:1.2fr 1fr 1fr auto;align-items:center;padding:12px}.search .btn{height:50px}}
+@media(min-width:820px){.search{grid-template-columns:1fr 1fr 1fr 1fr auto;align-items:center;padding:12px}.search .btn{height:50px}}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .chip{border:1.5px solid rgba(255,255,255,.28);color:#fff;background:transparent;border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none}
 .chip:hover{background:rgba(255,255,255,.12)}
@@ -357,6 +357,26 @@ select.ctrl{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns
 .result .rows span{color:var(--muted)}
 .sellform .pt .rm{position:absolute;top:6px;right:6px}
 
+.card .loc{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:13px;color:var(--ink2)}
+.card .loc svg{width:14px;height:14px;flex:none;color:var(--accent-d)}
+
+/* ---- photo standard and cleaner (dealer form) ---- */
+.pstd{background:var(--navy-t);border-radius:12px;padding:14px 16px;margin-bottom:14px;font-size:14.5px;color:var(--ink2)}
+.pstd ul{margin:8px 0 10px 18px;display:grid;gap:4px}
+.pcheck{display:flex;flex-wrap:wrap;gap:6px}
+.pcheck span{border-radius:99px;padding:4px 11px;font-size:13px;font-weight:700;background:#fff;border:1.5px solid var(--line);color:var(--muted)}
+.pcheck span.yes{background:var(--ok-t);border-color:transparent;color:var(--ok)}
+#ph_rejects .err{margin-top:12px}#ph_rejects ul{margin:6px 0 0 18px}
+.bgbar{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin-top:12px}
+.bgbar .hint{flex:1;min-width:220px;font-size:13px;color:var(--muted)}
+.pcell{display:flex;flex-direction:column;gap:6px}
+.pcell .plbl{min-height:40px;padding:6px 10px;font-size:14px}
+.pcell .plbl.need{border-color:var(--warn);background:var(--warn-t)}
+.pcell .btn-sm{width:100%}
+.pt .lbl2{position:absolute;right:6px;top:6px;background:#fff;color:var(--ink);font-size:11px;font-weight:800;border-radius:99px;padding:2px 8px;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.bgbar .btn{white-space:normal;text-align:center;height:auto;min-height:42px;max-width:100%;line-height:1.3}
+.pcell .btn-sm{white-space:normal;height:auto;min-height:36px;line-height:1.25}
+
 </style>
 </head>
 <body>
@@ -385,7 +405,13 @@ const FUELS = ["Petrol","Diesel","Hybrid","Electric","Other"];
 const TRANS = ["Automatic","Manual"];
 const MAKES = ["Audi","BMW","Chevrolet","Citroen","Ford","Honda","Hyundai","Isuzu","Jaguar","Jeep","Kia","Land Rover","Mahindra","Mazda","Mercedes-Benz","Mini","Mitsubishi","Nissan","Opel","Peugeot","Renault","Subaru","Suzuki","Toyota","Volkswagen","Volvo"];
 const BUCKET = "vehicle-photos";
-const MAX_PHOTOS = 20, MIN_PHOTOS = 3;
+const MAX_PHOTOS = 20, MIN_PHOTOS = 6;
+/* The Dealer Cars photo standard: what every photo shows, which shots are required, and the size rules */
+const PHOTO_LABELS = [["front", "Front"], ["rear", "Rear"], ["left", "Left side"], ["right", "Right side"], ["dash", "Dashboard"], ["odo", "Odometer (mileage)"], ["seats", "Seats"], ["boot", "Boot"], ["engine", "Engine"], ["wheels", "Wheels / tyres"], ["other", "Other"]];
+const PHOTO_REQ = ["front", "rear", "left", "right", "dash", "odo"];
+const PHOTO_EXTERIOR = ["front", "rear", "left", "right"];
+const PHOTO_RULES = { minW: 1200, minH: 800, maxMB: 15 };
+const labelName = (k) => { const x = PHOTO_LABELS.find(l => l[0] === k); return x ? x[1] : ""; };
 
 const $ = (s, r) => (r || document).querySelector(s);
 const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
@@ -512,6 +538,63 @@ const SELL_BUCKET = "sell-photos";
 const stars = (n) => { n = Number(n) || 0; return n ? `<span class="stars" role="img" aria-label="Dealer Cars rating: ${n} out of 5">${"★".repeat(n)}<i>${"★".repeat(5 - n)}</i></span>` : ""; };
 function listedAgo(d) { if (!d) return ""; const days = Math.floor((Date.now() - new Date(d).getTime()) / 864e5); return days <= 0 ? "Listed today" : days === 1 ? "Listed yesterday" : days < 30 ? `Listed ${days} days ago` : days < 60 ? "Listed 1 month ago" : `Listed ${Math.floor(days / 30)} months ago`; }
 
+/* ---------- the Dealer Cars photo standard: check a file before it is accepted ---------- */
+async function imgSize(file) {
+  try { const b = await createImageBitmap(file); const r = { w: b.width, h: b.height }; if (b.close) b.close(); return r; }
+  catch (_) { return await new Promise((res, rej) => { const u = URL.createObjectURL(file), im = new Image(); im.onload = () => { URL.revokeObjectURL(u); res({ w: im.naturalWidth, h: im.naturalHeight }); }; im.onerror = () => rej(new Error("unreadable")); im.src = u; }); }
+}
+// returns "" when the photo follows the standard, otherwise one plain sentence saying what is wrong
+async function checkPhotoStandard(file) {
+  const nm = file.name || "A photo";
+  if (file.size > PHOTO_RULES.maxMB * 1048576) return `${nm} is bigger than ${PHOTO_RULES.maxMB} MB.`;
+  let s; try { s = await imgSize(file); } catch (_) { return `${nm} could not be read. Please use a JPG, PNG or WebP photo.`; }
+  if (s.w < PHOTO_RULES.minW || s.h < PHOTO_RULES.minH) return `${nm} is too small (${s.w} × ${s.h}). The minimum is ${PHOTO_RULES.minW} × ${PHOTO_RULES.minH} pixels.`;
+  if (s.h > s.w) return `${nm} is upright. Please turn your phone sideways and take it in landscape.`;
+  return "";
+}
+async function uploadBlob(blob, folder) {
+  const path = `${S.session.user.id}/${folder}/${rand()}${rand()}.jpg`;
+  const { error } = await client().storage.from(BUCKET).upload(path, blob, { contentType: "image/jpeg", upsert: false });
+  if (error) throw error;
+  return path;
+}
+
+/* ---------- background remover (runs in the dealer's own browser) ---------- */
+// The cut-out is made by the free IMG.LY "background-removal" library, loaded the first time it is used.
+// It is tried from two public CDNs. window.__DC_BG_ENGINE lets the automated tests plug in a stand-in.
+const BG_LIBS = ["https://esm.sh/@imgly/background-removal@1.5.8", "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.8/+esm"];
+let _bgFn = null;
+async function loadBgEngine() {
+  if (window.__DC_BG_ENGINE) return window.__DC_BG_ENGINE;
+  if (_bgFn) return _bgFn;
+  let last;
+  for (const u of BG_LIBS) { try { const m = await import(u); const fn = m.removeBackground || m.default; if (typeof fn === "function") { _bgFn = fn; return fn; } } catch (e) { last = e; console.warn("background remover from " + u + " failed", e); } }
+  throw last || new Error("The photo cleaner could not be loaded.");
+}
+async function cutOut(blob, onProgress) {
+  const fn = await loadBgEngine();
+  const cfg = { model: "isnet_fp16", output: { format: "image/png" }, progress: (key, cur, tot) => { if (onProgress && tot) onProgress(Math.min(100, Math.round(cur / tot * 100)), String(key || "")); } };
+  try { if (navigator.gpu) cfg.device = "gpu"; } catch (_) {}
+  const out = await fn(blob, cfg);
+  if (!out || !out.size) throw new Error("empty result");
+  return out;
+}
+// puts the cut-out car on one clean grey studio backdrop with a soft shadow, and returns a JPEG
+async function studioPhoto(cutBlob) {
+  const bmp = await createImageBitmap(cutBlob), w = bmp.width, h = bmp.height, k = Math.min(1, 1600 / Math.max(w, h));
+  const W = Math.max(1, Math.round(w * k)), H = Math.max(1, Math.round(h * k));
+  const c = document.createElement("canvas"); c.width = W; c.height = H; const x = c.getContext("2d");
+  const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#F6F7F9"); g.addColorStop(0.7, "#E9ECEF"); g.addColorStop(1, "#DADFE4"); x.fillStyle = g; x.fillRect(0, 0, W, H);
+  // where is the car? look at the transparent pixels on a small copy
+  const sw = Math.min(240, W), sh = Math.max(1, Math.round(H * sw / W)), s = document.createElement("canvas"); s.width = sw; s.height = sh; const sx = s.getContext("2d"); sx.drawImage(bmp, 0, 0, sw, sh);
+  const px = sx.getImageData(0, 0, sw, sh).data; let minX = sw, maxX = -1, maxY = -1;
+  for (let yy = 0; yy < sh; yy++) for (let xx = 0; xx < sw; xx++) if (px[(yy * sw + xx) * 4 + 3] > 40) { if (xx < minX) minX = xx; if (xx > maxX) maxX = xx; if (yy > maxY) maxY = yy; }
+  if (maxX > minX) { const cx = (minX + maxX) / 2 * W / sw, rx = (maxX - minX) / 2 * W / sw * 0.96, by = (maxY + 0.5) * H / sh;
+    x.save(); x.translate(cx, by - rx * 0.015); x.scale(1, 0.1); const rg = x.createRadialGradient(0, 0, 0, 0, 0, rx); rg.addColorStop(0, "rgba(0,0,0,.5)"); rg.addColorStop(1, "rgba(0,0,0,0)"); x.fillStyle = rg; x.beginPath(); x.arc(0, 0, rx, 0, Math.PI * 2); x.fill(); x.restore(); }
+  x.drawImage(bmp, 0, 0, W, H); if (bmp.close) bmp.close();
+  return await new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error("Could not prepare that photo.")), "image/jpeg", 0.88));
+}
+
 /* ====================== layout: nav + footer ====================== */
 const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
 function navHtml(cur) {
@@ -584,6 +667,7 @@ function carCard(v) {
   return `<a class="card" href="#/car/${esc(v.ref)}" data-car="${esc(v.ref)}"><div class="ph">${img}${cnt}</div><div class="bd">
     <div class="price">${money(v.price)}</div><div class="ttl">${esc(carTitle(v))}</div>
     <div class="meta">${esc(meta) || "&nbsp;"}</div>
+    <div class="loc">${ICON.pin}<span>${esc([v.city, v.province].filter(Boolean).join(", "))}</span></div>
     <div class="cfoot">${v.rating ? stars(v.rating) : "<span></span>"}<span class="ago">${esc(listedAgo(v.approved_at))}</span></div></div></a>`;
 }
 function noCarsBlock() {
@@ -608,6 +692,7 @@ async function viewHome() {
       <p class="lead">Browse used cars across South Africa. Every vehicle is checked and approved by our team before it goes live.</p>
       <form class="search" id="home_search" role="search">
         <label class="sr" for="hs_make">Make</label><select class="ctrl" id="hs_make"><option value="">Any make</option>${opt(makes)}</select>
+        <label class="sr" for="hs_prov">Province</label><select class="ctrl" id="hs_prov"><option value="">Any province</option>${opt(PROVINCES)}</select>
         <label class="sr" for="hs_body">Body type</label><select class="ctrl" id="hs_body"><option value="">Any body type</option>${opt(BODIES)}</select>
         <label class="sr" for="hs_max">Maximum price</label><select class="ctrl" id="hs_max"><option value="">Any price</option>${prices.map(p => `<option value="${p}">Up to ${money(p)}</option>`).join("")}</select>
         <button class="btn btn-primary" type="submit" id="hs_go">Search cars</button>
@@ -639,7 +724,7 @@ async function viewHome() {
   </div></div></section>`);
   return { html, bind() {
     bindNav();
-    $("#home_search").addEventListener("submit", (e) => { e.preventDefault(); const q = new URLSearchParams(); const m = $("#hs_make").value, b = $("#hs_body").value, x = $("#hs_max").value; if (m) q.set("make", m); if (b) q.set("body", b); if (x) q.set("max", x); location.hash = "#/cars" + (q.toString() ? "?" + q : ""); });
+    $("#home_search").addEventListener("submit", (e) => { e.preventDefault(); const q = new URLSearchParams(); const m = $("#hs_make").value, b = $("#hs_body").value, x = $("#hs_max").value, pr = $("#hs_prov").value; if (m) q.set("make", m); if (pr) q.set("province", pr); if (b) q.set("body", b); if (x) q.set("max", x); location.hash = "#/cars" + (q.toString() ? "?" + q : ""); });
   } };
 }
 
@@ -649,6 +734,7 @@ function filterCars(cars, f) {
   const q = (f.q || "").toLowerCase().trim().split(/\s+/).filter(Boolean);
   const r = cars.filter(v => {
     if (f.make && v.make !== f.make) return false;
+    if (f.province && v.province !== f.province) return false;
     if (f.body && v.body_type !== f.body) return false;
     if (f.fuel && v.fuel_type !== f.fuel) return false;
     if (f.trans && v.transmission !== f.trans) return false;
@@ -656,7 +742,7 @@ function filterCars(cars, f) {
     if (f.year && Number(v.year) < Number(f.year)) return false;
     if (f.km && (v.mileage == null || Number(v.mileage) > Number(f.km))) return false;
     if (f.rating && Number(v.rating || 0) < Number(f.rating)) return false;
-    if (q.length) { const hay = [v.make, v.model, v.variant, v.colour, v.year, v.body_type].join(" ").toLowerCase(); if (!q.every(t => hay.includes(t))) return false; }
+    if (q.length) { const hay = [v.make, v.model, v.variant, v.colour, v.year, v.body_type, v.city, v.province].join(" ").toLowerCase(); if (!q.every(t => hay.includes(t))) return false; }
     return true;
   });
   const t = (d) => new Date(d).getTime(), big = 1e12;
@@ -669,7 +755,7 @@ async function viewCars(query) {
   seo({ title: "Used cars for sale | Dealer Cars", desc: "Browse approved used cars for sale across South Africa. Filter by make, price, mileage, body type and rating, and sort by price, mileage or how long a car has been listed.", path: "cars" });
   let cars = [], err = false;
   try { cars = await loadCars(); } catch (e) { console.warn(e); err = true; }
-  const f = Object.assign({ q: "", make: "", body: "", fuel: "", trans: "", max: "", year: "", km: "", rating: "", sort: "newest" }, Object.fromEntries(new URLSearchParams(query || "")));
+  const f = Object.assign({ q: "", make: "", province: "", body: "", fuel: "", trans: "", max: "", year: "", km: "", rating: "", sort: "newest" }, Object.fromEntries(new URLSearchParams(query || "")));
   const makes = [...new Set(cars.map(c => c.make))].sort();
   const sel = (id, label, arr, val, any) => `<div class="field"><label for="${id}">${label}</label><select class="ctrl" id="${id}"><option value="">${any}</option>${arr.map(x => `<option${x === val ? " selected" : ""}>${esc(x)}</option>`).join("")}</select></div>`;
   const selv = (id, label, pairs, val, any) => `<div class="field"><label for="${id}">${label}</label><select class="ctrl" id="${id}"><option value="">${any}</option>${pairs.map(([v, t]) => `<option value="${v}"${String(v) === String(val) ? " selected" : ""}>${t}</option>`).join("")}</select></div>`;
@@ -681,7 +767,7 @@ async function viewCars(query) {
     <aside><button class="ftoggle" id="ftoggle" aria-expanded="false" type="button"><span>Filters</span><span id="fcount"></span></button>
     <form class="filters fbody" id="fbody" onsubmit="return false"><h3>Filter cars</h3>
       <div class="field"><label for="f_q">Search</label><input class="ctrl" id="f_q" type="search" placeholder="e.g. Polo, Toyota, white" value="${esc(f.q)}"></div>
-      ${sel("f_make", "Make", makes, f.make, "Any make")}${sel("f_body", "Body type", BODIES, f.body, "Any body type")}
+      ${sel("f_make", "Make", makes, f.make, "Any make")}${sel("f_province", "Province", PROVINCES, f.province, "Any province")}${sel("f_body", "Body type", BODIES, f.body, "Any body type")}
       ${selv("f_max", "Maximum price", prices.map(p => [p, "Up to " + money(p)]), f.max, "Any price")}
       ${selv("f_km", "Maximum mileage", [20000, 50000, 100000, 150000, 200000].map(k => [k, "Up to " + km(k)]), f.km, "Any mileage")}
       ${selv("f_year", "Year from", years.map(y => [y, y]), f.year, "Any year")}
@@ -695,7 +781,7 @@ async function viewCars(query) {
   return { html, bind() {
     bindNav(); if (err) return;
     let shown = 24;
-    const ids = ["f_q", "f_make", "f_body", "f_fuel", "f_trans", "f_max", "f_year", "f_km", "f_rating", "f_sort"], keys = ["q", "make", "body", "fuel", "trans", "max", "year", "km", "rating", "sort"];
+    const ids = ["f_q", "f_make", "f_province", "f_body", "f_fuel", "f_trans", "f_max", "f_year", "f_km", "f_rating", "f_sort"], keys = ["q", "make", "province", "body", "fuel", "trans", "max", "year", "km", "rating", "sort"];
     const read = () => Object.fromEntries(keys.map((k, i) => [k, $("#" + ids[i]).value]));
     const paint = () => {
       const cur = read(), list = filterCars(cars, cur), active = Object.entries(cur).filter(([k, v]) => v && k !== "sort").length;
@@ -729,20 +815,20 @@ async function viewCar(ref) {
     seo({ title: "Car no longer available | Dealer Cars", noindex: true });
     return { html: page("cars", `<div class="wrap" style="padding:50px 20px"><div class="empty"><h3>This car is no longer available</h3><p>It may have been sold or taken down.</p><a class="btn btn-primary" href="#/cars">See other cars</a></div></div>`), bind: bindNav };
   }
-  const title = carTitle(v), imgs = v.photos || [];
+  const title = carTitle(v), imgs = v.photos || [], lbls = v.photo_labels || [], cap = (i) => labelName(lbls[i]);
   const url = baseUrl() + "/#/car/" + v.ref;
-  seo({ title: `${title} for sale | Dealer Cars`, desc: `${title}, ${km(v.mileage) ? km(v.mileage) + ", " : ""}${money(v.price)}. Approved by Dealer Cars. Send an enquiry.`, path: "car/" + v.ref, image: imgs[0] ? photoUrl(imgs[0]) : "",
+  seo({ title: `${title} for sale in ${v.city} | Dealer Cars`, desc: `${title}, ${km(v.mileage) ? km(v.mileage) + ", " : ""}${money(v.price)} in ${v.city}, ${v.province}. Approved by Dealer Cars. Send an enquiry.`, path: "car/" + v.ref, image: imgs[0] ? photoUrl(imgs[0]) : "",
     jsonld: { "@context": "https://schema.org", "@type": "Car", name: title, brand: { "@type": "Brand", name: v.make }, model: v.model, vehicleModelDate: String(v.year), mileageFromOdometer: v.mileage == null ? undefined : { "@type": "QuantitativeValue", value: v.mileage, unitCode: "KMT" }, vehicleTransmission: v.transmission, fuelType: v.fuel_type, bodyType: v.body_type, color: v.colour, image: imgs.slice(0, 5).map(photoUrl), url, offers: { "@type": "Offer", price: String(v.price), priceCurrency: "ZAR", availability: "https://schema.org/InStock", seller: { "@type": "Organization", name: "Dealer Cars" } } } });
-  const specs = [["Year", v.year], ["Mileage", km(v.mileage)], ["Gearbox", v.transmission], ["Fuel", v.fuel_type], ["Body", v.body_type], ["Colour", v.colour], ["Reference", v.ref]].filter(s => s[1]);
+  const specs = [["Year", v.year], ["Mileage", km(v.mileage)], ["Gearbox", v.transmission], ["Fuel", v.fuel_type], ["Body", v.body_type], ["Colour", v.colour], ["Location", [v.city, v.province].filter(Boolean).join(", ")], ["Reference", v.ref]].filter(s => s[1]);
   const feats = (v.features || "").split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
   const html = page("cars", `<div class="wrap"><div class="crumbs"><a href="#/cars">← All cars</a></div>
   <div class="cdetail"><div class="stack">
-    <div class="gallery"><div class="main" id="g_main">${imgs.length ? `<img id="g_img" src="${esc(photoUrl(imgs[0]))}" alt="${esc(title)}">${imgs.length > 1 ? `<button class="arrow l" id="g_prev" aria-label="Previous photo">${ICON.left}</button><button class="arrow r" id="g_next" aria-label="Next photo">${ICON.right}</button><span class="pos" id="g_pos">1 / ${imgs.length}</span>` : ""}` : `<div class="noimg" style="color:#52607a">${ICON.car}</div>`}</div>
-      ${imgs.length > 1 ? `<div class="thumbs" id="g_thumbs">${imgs.map((p, i) => `<button type="button" data-i="${i}" class="${i ? "" : "on"}" aria-label="Photo ${i + 1}"><img src="${esc(photoUrl(p))}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}</div>
+    <div class="gallery"><div class="main" id="g_main">${imgs.length ? `<img id="g_img" src="${esc(photoUrl(imgs[0]))}" alt="${esc(title)}">${imgs.length > 1 ? `<button class="arrow l" id="g_prev" aria-label="Previous photo">${ICON.left}</button><button class="arrow r" id="g_next" aria-label="Next photo">${ICON.right}</button><span class="pos" id="g_pos">1 / ${imgs.length}${cap(0) ? " · " + esc(cap(0)) : ""}</span>` : ""}` : `<div class="noimg" style="color:#52607a">${ICON.car}</div>`}</div>
+      ${imgs.length > 1 ? `<div class="thumbs" id="g_thumbs">${imgs.map((p, i) => `<button type="button" data-i="${i}" class="${i ? "" : "on"}" aria-label="Photo ${i + 1}${cap(i) ? ": " + esc(cap(i)) : ""}" title="${esc(cap(i))}"><img src="${esc(photoUrl(p))}" alt="${esc(cap(i))}" loading="lazy"></button>`).join("")}</div>` : ""}</div>
     <div class="panel"><h2>About this car</h2><div class="desc">${fmtText(v.description)}</div>${feats.length ? `<h3 style="margin-top:22px;font-size:17px">Features</h3><div class="tags">${feats.map(f => `<span class="tag">${esc(f)}</span>`).join("")}</div>` : ""}</div>
   </div>
   <aside class="stack sticky">
-    <div class="panel"><div class="cprice">${money(v.price)}</div><h1 class="ctitle">${esc(title)}</h1><div class="cmeta">${v.rating ? stars(v.rating) + '<span class="rl">Dealer Cars rating</span>' : ""}<span class="ago">${esc(listedAgo(v.approved_at))}</span></div>
+    <div class="panel"><div class="cprice">${money(v.price)}</div><h1 class="ctitle">${esc(title)}</h1><div class="cloc" id="car_loc">${ICON.pin.replace("<svg", '<svg width="16" height="16"')}<span>${esc([v.city, v.province].filter(Boolean).join(", "))}</span></div><div class="cmeta">${v.rating ? stars(v.rating) + '<span class="rl">Dealer Cars rating</span>' : ""}<span class="ago">${esc(listedAgo(v.approved_at))}</span></div>
       <div class="specs">${specs.map(s => `<div><span>${s[0]}</span><b>${esc(s[1])}</b></div>`).join("")}</div></div>
     <div class="panel fin-cta"><b>Planning to finance?</b><p>Work out what this car could cost you each month.</p><a class="btn btn-ghost btn-block" id="car_fin" href="#/finance?price=${esc(String(Math.round(v.price)))}">Calculate finance</a></div>
     <div class="panel" id="inq_panel"><h2>Ask about this car</h2><p style="color:var(--muted);font-size:14.5px;margin-bottom:14px">Send us your details and the seller will contact you about this car.</p>
@@ -756,7 +842,7 @@ async function viewCar(ref) {
   </aside></div></div>`);
   return { html, bind() {
     bindNav();
-    let i = 0; const show = (n) => { if (!imgs.length) return; i = (n + imgs.length) % imgs.length; const im = $("#g_img"); if (im) im.src = photoUrl(imgs[i]); const p = $("#g_pos"); if (p) p.textContent = (i + 1) + " / " + imgs.length; $$("#g_thumbs button").forEach(b => b.classList.toggle("on", Number(b.dataset.i) === i)); const tb = $("#g_thumbs button.on"); if (tb && tb.scrollIntoView) tb.scrollIntoView({ block: "nearest", inline: "center" }); };
+    let i = 0; const show = (n) => { if (!imgs.length) return; i = (n + imgs.length) % imgs.length; const im = $("#g_img"); if (im) im.src = photoUrl(imgs[i]); const p = $("#g_pos"); if (p) p.textContent = (i + 1) + " / " + imgs.length + (cap(i) ? " · " + cap(i) : ""); $$("#g_thumbs button").forEach(b => b.classList.toggle("on", Number(b.dataset.i) === i)); const tb = $("#g_thumbs button.on"); if (tb && tb.scrollIntoView) tb.scrollIntoView({ block: "nearest", inline: "center" }); };
     const pv = $("#g_prev"), nx = $("#g_next"); if (pv) pv.addEventListener("click", () => show(i - 1)); if (nx) nx.addEventListener("click", () => show(i + 1));
     const th = $("#g_thumbs"); if (th) th.addEventListener("click", (e) => { const b = e.target.closest("button[data-i]"); if (b) show(Number(b.dataset.i)); });
     let x0 = null; const gm = $("#g_main"); if (gm) { gm.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; }, { passive: true }); gm.addEventListener("touchend", (e) => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1)); x0 = null; }); }
@@ -791,7 +877,7 @@ async function viewForDealers() {
       <li><b>Add your vehicles</b>Enter the details and upload photos. Drag and drop works, so a whole batch can go in at once.</li>
       <li><b>We approve each vehicle</b>Our team reviews every vehicle before it goes live. If something needs fixing, we tell you why.</li>
       <li><b>Buyers send enquiries</b>Your cars appear on Dealer Cars. Buyer enquiries reach you, and you follow them up.</li></ol>
-    <div class="note" style="max-width:720px;margin-top:20px"><b>Your details stay private.</b> Buyers never see your dealership name or where the car is. They only see the car, its photos and price, and they contact you through an enquiry on Dealer Cars.</div>
+    <div class="note" style="max-width:720px;margin-top:20px"><b>Your details stay private.</b> Buyers never see your dealership name, phone number or e-mail. They see the car, its photos, price and the town it is in, and they contact you through an enquiry on Dealer Cars.</div>
     <div style="margin-top:28px"><a class="btn btn-primary" href="#/login?tab=register">Get started</a></div></div></section>`);
   return { html, bind: bindNav };
 }
@@ -1182,15 +1268,24 @@ async function viewVehicleForm(id) {
   let v = null;
   if (id) { const r = await client().from("vehicles").select("*").eq("id", id).eq("dealer_id", S.session.user.id).maybeSingle(); v = r.data; if (!v) { setTimeout(() => { location.hash = "#/portal"; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; } }
   const d = S.dealer;
-  VF = { id: v ? v.id : null, key: rand(), photos: (v ? v.photos : []).map(p => ({ path: p, url: photoUrl(p), up: false })) };
+  VF = { id: v ? v.id : null, key: rand(), photos: (v ? v.photos : []).map((p, i) => ({ path: p, url: photoUrl(p), up: false, label: (v.photo_labels && v.photo_labels[i]) || "" })) };
   const val = (k, def) => esc(v && v[k] != null ? v[k] : (def == null ? "" : def));
   const sel = (idn, arr, cur, ph) => `<select class="ctrl" id="${idn}"><option value="">${ph}</option>${arr.map(x => `<option${x === cur ? " selected" : ""}>${esc(x)}</option>`).join("")}</select>`;
   const html = page("", `<div class="wrap"><div class="crumbs"><a href="#/portal">← My vehicles</a></div>
     <h1 style="font-size:clamp(26px,4vw,34px)" id="vf_h">${v ? "Edit vehicle" : "Add a vehicle"}</h1>
     <p style="color:var(--muted);margin:6px 0 18px">${v && v.status === "Approved" ? "This car is live. Saving your changes sends it back to our team for approval, and it is hidden until approved." : "Our team reviews every vehicle before it goes live."}</p>
     <form id="vf" novalidate style="max-width:860px;padding-bottom:60px">
-      <div class="panel" style="margin-bottom:18px"><h2>Photos</h2><p style="color:var(--muted);font-size:14.5px;margin-bottom:12px">Add at least ${MIN_PHOTOS} photos (up to ${MAX_PHOTOS}). The first photo is the cover. Show the front, sides, back, interior, dashboard and engine.</p>
-        <div id="photoarea"><label class="drop" id="dz" for="vf_files">${ICON.upload}<b>Drag and drop your photos here</b><span>or tap to choose several at once</span><input type="file" id="vf_files" accept="image/*" multiple hidden></label>
+      <div class="panel" style="margin-bottom:18px"><h2>Photos</h2>
+        <div class="pstd" id="pstd"><b>The Dealer Cars photo standard</b>
+          <ul><li>Landscape photos only (turn your phone sideways), at least ${PHOTO_RULES.minW} × ${PHOTO_RULES.minH} pixels, JPG, PNG or WebP, up to ${PHOTO_RULES.maxMB} MB each.</li>
+            <li>At least ${MIN_PHOTOS} photos and up to ${MAX_PHOTOS}. These six are required: <b>front, rear, left side, right side, dashboard and odometer</b> (showing the mileage).</li>
+            <li>The first photo is the cover and must be the <b>front</b> of the car. We move it to the top for you.</li>
+            <li>The whole car in the frame, in daylight, no people, no watermarks, and no phone numbers or text added to the photo.</li>
+            <li>Say what each photo shows using the box under it. Our team can decline cars that do not follow this.</li></ul>
+          <div class="pcheck" id="ph_check" aria-live="polite"></div></div>
+        <div id="photoarea"><label class="drop" id="dz" for="vf_files">${ICON.upload}<b>Drag and drop your photos here</b><span>or tap to choose several at once. Name them 1, 2, 3 in the order of the checklist and we label them for you.</span><input type="file" id="vf_files" accept="image/*" multiple hidden></label>
+        <div id="ph_rejects"></div>
+        <div class="bgbar"><button type="button" class="btn btn-ghost btn-sm" id="bg_all">Remove the background from the front, rear and side photos</button><span class="hint">Optional. Gives the car a clean grey studio backdrop. The first time it needs to download the cleaner, which can take a minute. You can undo it on each photo.</span></div>
         <div class="pgrid" id="pgrid"></div></div><div id="ph_hint" class="hint" style="margin-top:10px;font-size:13px;color:var(--muted)"></div></div>
       <div class="panel" style="margin-bottom:18px"><h2>Vehicle details</h2>
         <div class="grid3"><div class="field"><label for="v_make">Make</label><input class="ctrl" id="v_make" list="makes" autocomplete="off" value="${val("make")}"><datalist id="makes">${MAKES.map(m => `<option value="${m}">`).join("")}</datalist></div>
@@ -1217,29 +1312,58 @@ async function viewVehicleForm(id) {
     window.addEventListener("dragover", guard); window.addEventListener("drop", guard);
     $("#vf_files").addEventListener("change", (e) => { addFiles(Array.from(e.target.files)); e.target.value = ""; });
     $("#pgrid").addEventListener("click", (e) => { const b = e.target.closest("button[data-pa]"); if (!b) return; const i = Number(b.dataset.i), a = b.dataset.pa, P = VF.photos;
-      if (a === "cover" && i > 0) P.unshift(P.splice(i, 1)[0]); else if (a === "left" && i > 0) [P[i - 1], P[i]] = [P[i], P[i - 1]]; else if (a === "right" && i < P.length - 1) [P[i + 1], P[i]] = [P[i], P[i + 1]]; else if (a === "del") P.splice(i, 1);
+      if (a === "left" && i > 0) [P[i - 1], P[i]] = [P[i], P[i - 1]]; else if (a === "right" && i < P.length - 1) [P[i + 1], P[i]] = [P[i], P[i + 1]]; else if (a === "del") P.splice(i, 1);
+      else if (a === "bg") { cleanPhoto(P[i], VF); return; } else if (a === "undo") { const t = P[i]; if (t.prev) { Object.assign(t, { path: t.prev.path, url: t.prev.url, file: t.prev.file, clean: false, prev: null }); } }
       paintPhotos(); });
+    $("#pgrid").addEventListener("change", (e) => { const sel = e.target.closest("select[data-lbl]"); if (!sel) return; VF.photos[Number(sel.dataset.i)].label = sel.value; paintPhotos(); });
+    $("#bg_all").addEventListener("click", async () => { const mine = VF, todo = mine.photos.filter(t => !t.clean && !t.up && !t.busy && PHOTO_EXTERIOR.includes(t.label)); if (!todo.length) { toast("Label your front, rear and side photos first, then try again."); return; } for (const t of todo) { if (VF !== mine) return; await cleanPhoto(t, mine, true); } });
     $("#vf").addEventListener("submit", save);
   } };
 }
+function normalizeOrder() { const P = VF.photos, i = P.findIndex(t => t.label === "front"); if (i > 0) P.unshift(P.splice(i, 1)[0]); }
+function missingShots() { const have = new Set(VF.photos.map(t => t.label)); return PHOTO_REQ.filter(k => !have.has(k)); }
 function paintPhotos() {
   const g = $("#pgrid"); if (!g) return; const P = VF.photos;
-  g.innerHTML = P.map((p, i) => `<div class="pt ${i === 0 ? "cover" : ""}" data-i="${i}"><img src="${esc(p.url)}" alt="Photo ${i + 1}">${i === 0 ? `<span class="lbl">Cover</span>` : ""}${p.up ? `<div class="up">Uploading…</div>` : `<div class="bar">${i > 0 ? `<button type="button" data-pa="cover" data-i="${i}" title="Make this the cover photo">Cover</button><button type="button" data-pa="left" data-i="${i}" aria-label="Move earlier">←</button>` : ""}${i < P.length - 1 ? `<button type="button" data-pa="right" data-i="${i}" aria-label="Move later">→</button>` : ""}<button type="button" class="x" data-pa="del" data-i="${i}" aria-label="Remove photo">✕</button></div>`}</div>`).join("");
-  const h = $("#ph_hint"); if (h) h.textContent = P.length + " of " + MAX_PHOTOS + " photos" + (P.length < MIN_PHOTOS ? " · add at least " + (MIN_PHOTOS - P.length) + " more" : "");
+  g.innerHTML = P.map((p, i) => `<div class="pcell"><div class="pt ${i === 0 ? "cover" : ""}" data-i="${i}"><img src="${esc(p.url)}" alt="Photo ${i + 1}">${i === 0 ? `<span class="lbl">Cover</span>` : ""}${p.clean ? `<span class="lbl2">Clean background</span>` : ""}${p.up ? `<div class="up">Uploading…</div>` : p.busy ? `<div class="up">${esc(p.busy)}</div>` : `<div class="bar">${i > 0 ? `<button type="button" data-pa="left" data-i="${i}" aria-label="Move earlier">←</button>` : ""}${i < P.length - 1 ? `<button type="button" data-pa="right" data-i="${i}" aria-label="Move later">→</button>` : ""}<button type="button" class="x" data-pa="del" data-i="${i}" aria-label="Remove photo">✕</button></div>`}</div>
+    <select class="ctrl plbl${p.label ? "" : " need"}" data-lbl data-i="${i}" aria-label="What photo ${i + 1} shows"><option value="">What does this show?</option>${PHOTO_LABELS.map(([k, n]) => `<option value="${k}"${p.label === k ? " selected" : ""}>${n}</option>`).join("")}</select>
+    ${p.up || p.busy ? "" : p.clean ? `<button type="button" class="btn btn-ghost btn-sm" data-pa="undo" data-i="${i}">Undo background removal</button>` : `<button type="button" class="btn btn-ghost btn-sm" data-pa="bg" data-i="${i}">Remove background</button>`}</div>`).join("");
+  const miss = missingShots(), pc = $("#ph_check");
+  if (pc) pc.innerHTML = PHOTO_REQ.map(k => `<span class="${miss.includes(k) ? "no" : "yes"}">${miss.includes(k) ? "○" : "✓"} ${esc(labelName(k))}</span>`).join("");
+  const h = $("#ph_hint"); if (h) h.textContent = P.length + " of " + MAX_PHOTOS + " photos" + (P.length < MIN_PHOTOS ? " · add at least " + (MIN_PHOTOS - P.length) + " more" : "") + (miss.length ? " · still needed: " + miss.map(labelName).join(", ") : "");
+  const ba = $("#bg_all"); if (ba) ba.disabled = P.some(t => t.busy);
 }
 async function addFiles(files) {
-  const imgs = files.filter(isImg), skipped = files.length - imgs.length;
-  if (skipped) toast(skipped === 1 ? "One file wasn't a photo and was skipped." : skipped + " files weren't photos and were skipped.");
+  const imgs = files.filter(isImg), skipped = files.length - imgs.length, rejects = [];
+  if (skipped) rejects.push(skipped === 1 ? "One file wasn't a photo and was skipped." : skipped + " files weren't photos and were skipped.");
   imgs.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
-  const room = MAX_PHOTOS - VF.photos.length; if (imgs.length > room) toast(`You can add up to ${MAX_PHOTOS} photos. ${imgs.length - room} didn't fit.`);
-  const take = imgs.slice(0, Math.max(0, room)), mine = VF;
-  const tiles = take.map(f => { const t = { path: null, url: URL.createObjectURL(f), up: true }; mine.photos.push(t); return [t, f]; });
+  const ok = [];
+  for (const f of imgs) { const why = await checkPhotoStandard(f); if (why) rejects.push(why); else ok.push(f); }
+  const room = MAX_PHOTOS - VF.photos.length; if (ok.length > room) rejects.push(`You can add up to ${MAX_PHOTOS} photos. ${ok.length - room} didn't fit.`);
+  const box = $("#ph_rejects"); if (box) box.innerHTML = rejects.length ? `<div class="err" role="alert"><b>These photos were not added:</b><ul>${rejects.map(r => `<li>${esc(r)}</li>`).join("")}</ul></div>` : "";
+  const take = ok.slice(0, Math.max(0, room)), mine = VF;
+  // label in order: the next required shot that is still missing, then "other"
+  const have = new Set(mine.photos.map(t => t.label));
+  const nextLabel = () => { const k = PHOTO_REQ.find(x => !have.has(x)) || "other"; have.add(k); return k; };
+  const tiles = take.map(f => { const t = { path: null, url: URL.createObjectURL(f), up: true, file: f, label: nextLabel() }; mine.photos.push(t); return [t, f]; });
   paintPhotos();
   for (const [t, f] of tiles) {
     try { t.path = await uploadPhoto(f, mine.key); t.up = false; }
     catch (e) { console.warn(e); toast(niceErr(e)); const i = mine.photos.indexOf(t); if (i >= 0) mine.photos.splice(i, 1); }
     if (VF === mine) paintPhotos();
   }
+}
+// remove the background of one photo: cut the car out, put it on a clean studio backdrop, upload the new picture
+async function cleanPhoto(t, mine, quiet) {
+  if (!t || t.up || t.busy || t.clean) return;
+  const say = (m) => { t.busy = m; if (VF === mine) paintPhotos(); };
+  say("Preparing…");
+  try {
+    const src = t.file || await (await fetch(t.url)).blob();
+    let last = -1; const cut = await cutOut(src, (pct) => { if (pct !== last) { last = pct; say("Cleaning… " + pct + "%"); } });
+    say("Finishing…"); const out = await studioPhoto(cut), path = await uploadBlob(out, mine.key);
+    t.prev = { path: t.path, url: t.url, file: t.file }; t.path = path; t.url = URL.createObjectURL(out); t.file = out; t.clean = true;
+  } catch (e) { console.warn(e); toast(quiet ? "One photo could not be cleaned. You can still use it as it is." : "Sorry, the background could not be removed from that photo. Check your internet connection and try again, or use the photo as it is."); }
+  t.busy = null; if (VF === mine) paintPhotos();
 }
 async function save(e) {
   e.preventDefault(); const box = $("#vf_msg"), btn = $("#vf_save"); box.innerHTML = "";
@@ -1255,8 +1379,12 @@ async function save(e) {
   if (g("v_city").length < 2) return bad("Please enter the town or city.");
   if (g("v_desc").length < 10) return bad("Please write a short description (at least a sentence).");
   if (VF.photos.some(p => p.up)) return bad("Please wait, your photos are still uploading.");
-  if (VF.photos.length < MIN_PHOTOS) return bad(`Please add at least ${MIN_PHOTOS} photos.`);
-  const p = { id: VF.id || undefined, make: g("v_make"), model: g("v_model"), variant: g("v_variant"), year, price, mileage, transmission: $("#v_trans").value, fuel_type: $("#v_fuel").value, body_type: $("#v_body").value, colour: g("v_colour"), province: $("#v_prov").value, city: g("v_city"), description: $("#v_desc").value, features: $("#v_feat").value, photos: VF.photos.map(x => x.path) };
+  if (VF.photos.some(p => p.busy)) return bad("Please wait, a photo is still being cleaned.");
+  if (VF.photos.length < MIN_PHOTOS) return bad(`Please add at least ${MIN_PHOTOS} photos. The standard needs the front, rear, left side, right side, dashboard and odometer.`);
+  if (VF.photos.some(t => !t.label)) return bad("Please say what each photo shows. Use the box under each photo.");
+  { const miss = missingShots(); if (miss.length) return bad("Our photo standard also needs: " + miss.map(labelName).join(", ") + ". Please add or relabel your photos."); }
+  normalizeOrder();
+  const p = { id: VF.id || undefined, make: g("v_make"), model: g("v_model"), variant: g("v_variant"), year, price, mileage, transmission: $("#v_trans").value, fuel_type: $("#v_fuel").value, body_type: $("#v_body").value, colour: g("v_colour"), province: $("#v_prov").value, city: g("v_city"), description: $("#v_desc").value, features: $("#v_feat").value, photos: VF.photos.map(x => x.path), photo_labels: VF.photos.map(x => x.label) };
   setBusy(btn, true, "Saving…"); const { data, error } = await client().rpc("dealer_save_vehicle", { p }); setBusy(btn, false);
   if (error) return bad(niceErr(error));
   S.cars = null; S.ptab = "vehicles"; toast("Saved. Our team will review it shortly."); VF = null; location.hash = "#/portal";
@@ -1295,8 +1423,8 @@ async function viewAdmin() {
   const pending = vehicles.filter(v => v.status === "Pending"), tab = S.atab || "pending";
   const vcard = (v, full) => { const d = dmap[v.dealer_id] || {};
     return `<div class="arow" data-vid="${esc(v.id)}"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h3 style="font-size:19px">${esc(carTitle(v))}</h3><div style="color:var(--muted);font-size:14px">${money(v.price)} · ${esc(v.city)}, ${esc(v.province)} · ${esc(v.ref)} · added ${dateStr(v.created_at)}${v.rating ? " · " + v.rating + " star" + (v.rating === 1 ? "" : "s") : ""}</div></div><div>${statusBadge(v.status)}</div></div>
-      <div class="ph">${(v.photos || []).map(p => `<img src="${esc(photoUrl(p))}" alt="" data-zoom="${esc(photoUrl(p))}" loading="lazy">`).join("") || `<span style="color:var(--muted)">No photos</span>`}</div>
-      ${full ? `<div class="kv"><div><span>Mileage:</span> ${esc(km(v.mileage) || "-")}</div><div><span>Gearbox / fuel:</span> ${esc([v.transmission, v.fuel_type].filter(Boolean).join(" / ") || "-")}</div><div><span>Body / colour:</span> ${esc([v.body_type, v.colour].filter(Boolean).join(" / ") || "-")}</div><div><span>Dealership:</span> <b>${esc(d.business_name || "?")}</b></div><div><span>Contact:</span> ${esc(d.contact_person || "")} ${esc(d.phone || "")}</div><div><span>E-mail:</span> ${esc(d.email || "")}</div></div><div class="desc" style="margin:12px 0;font-size:15px">${fmtText(v.description)}</div>${v.features ? `<p style="font-size:14px;color:var(--ink2)"><b>Features:</b> ${esc(v.features)}</p>` : ""}` : `<div style="font-size:14px;color:var(--muted)">${esc(d.business_name || "?")}</div>`}
+      <div class="ph">${(v.photos || []).map((p, i) => `<img src="${esc(photoUrl(p))}" alt="${esc(labelName((v.photo_labels || [])[i]))}" title="${esc(labelName((v.photo_labels || [])[i]))}" data-zoom="${esc(photoUrl(p))}" loading="lazy">`).join("") || `<span style="color:var(--muted)">No photos</span>`}</div>
+      ${full ? `<div class="kv"><div><span>Mileage:</span> ${esc(km(v.mileage) || "-")}</div><div><span>Gearbox / fuel:</span> ${esc([v.transmission, v.fuel_type].filter(Boolean).join(" / ") || "-")}</div><div><span>Body / colour:</span> ${esc([v.body_type, v.colour].filter(Boolean).join(" / ") || "-")}</div><div><span>Dealership:</span> <b>${esc(d.business_name || "?")}</b></div><div><span>Contact:</span> ${esc(d.contact_person || "")} ${esc(d.phone || "")}</div><div><span>E-mail:</span> ${esc(d.email || "")}</div><div><span>Photos shown:</span> ${esc((v.photo_labels || []).map(labelName).filter(Boolean).join(", ") || "not labelled")}</div></div><div class="desc" style="margin:12px 0;font-size:15px">${fmtText(v.description)}</div>${v.features ? `<p style="font-size:14px;color:var(--ink2)"><b>Features:</b> ${esc(v.features)}</p>` : ""}` : `<div style="font-size:14px;color:var(--muted)">${esc(d.business_name || "?")}</div>`}
       ${v.status === "Declined" && v.decline_reason ? `<div class="reason">Reason sent: ${esc(v.decline_reason)}</div>` : ""}
       ${v.status !== "Sold" ? `<div class="raterow"><label for="rt_${esc(v.id)}"><b>Dealer Cars rating</b> <span class="hint">(buyers see this and can sort by it)</span></label><select class="ctrl" id="rt_${esc(v.id)}" data-rate>${[["", "Not rated"], [5, "5 stars"], [4, "4 stars"], [3, "3 stars"], [2, "2 stars"], [1, "1 star"]].map(([n, t]) => `<option value="${n}"${String(v.rating || "") === String(n) ? " selected" : ""}>${t}</option>`).join("")}</select>${v.status === "Approved" ? `<button class="btn btn-ghost btn-sm" data-a="rate">Save rating</button>` : ""}</div>` : ""}
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${v.status === "Pending" || v.status === "Declined" ? `<button class="btn btn-primary btn-sm" data-a="approve">Approve</button>` : ""}${v.status === "Pending" ? `<button class="btn btn-danger btn-sm" data-a="decline">Decline…</button>` : ""}${v.status === "Approved" ? `<a class="btn btn-ghost btn-sm" href="#/car/${esc(v.ref)}">View live</a><button class="btn btn-danger btn-sm" data-a="decline">Take down…</button>` : ""}</div></div>`; };
