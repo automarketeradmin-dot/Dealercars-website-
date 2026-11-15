@@ -377,6 +377,34 @@ select.ctrl{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns
 .bgbar .btn{white-space:normal;text-align:center;height:auto;min-height:42px;max-width:100%;line-height:1.3}
 .pcell .btn-sm{white-space:normal;height:auto;min-height:36px;line-height:1.25}
 
+/* ---- share, map, how we work, about ---- */
+.share b{display:block;margin-bottom:10px}
+.sharebtns{display:flex;flex-wrap:wrap;gap:8px}
+.sbtn{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:99px;border:1.5px solid var(--line);background:#fff;color:var(--ink);font:inherit;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none}
+.sbtn:hover{border-color:var(--accent);color:var(--accent-d)}
+.sbtn.main{background:var(--accent);border-color:var(--accent);color:#fff}
+.sbtn svg{width:16px;height:16px}
+#sh_wa{background:#E8F8EE;border-color:#BDE8CC;color:#0E7A3A}
+.mapbox{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--soft);aspect-ratio:16/10}
+.mapbox iframe{width:100%;height:100%;border:0;display:block}
+.how{list-style:none;padding:0;margin:0;display:grid;gap:16px;grid-template-columns:1fr;counter-reset:none}
+@media(min-width:700px){.how{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.how:not(.big){grid-template-columns:repeat(5,1fr)}}
+.how li{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--sh)}
+.how .n{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;margin-bottom:10px}
+.how b{display:block;font-size:17px;margin-bottom:6px}.how p{color:var(--muted);font-size:14.5px}
+.how.big p{color:var(--ink2);font-size:15.5px}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:10px}
+.faq summary{font-weight:700;cursor:pointer}.faq details p{margin-top:8px;color:var(--ink2)}
+/* ---- number plate editor ---- */
+.modal.plm{max-width:760px;width:calc(100% - 24px)}
+.plstage{background:#111;border-radius:12px;overflow:hidden;margin:10px 0}
+.plstage canvas{display:block;width:100%;height:auto;touch-action:none;cursor:grab}
+.plctl{display:flex;flex-wrap:wrap;gap:10px 22px;margin:8px 0 12px}.plctl label{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}.plctl input{width:150px}
+.plm .row{flex-wrap:wrap;gap:8px}
+.pt .lbl3{position:absolute;right:6px;top:30px;background:#16202E;color:#fff;font-size:11px;font-weight:800;border-radius:99px;padding:2px 8px}
+.pcell .tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.pcell .tools .btn-sm{flex:1 1 auto}
+
 </style>
 </head>
 <body>
@@ -395,8 +423,9 @@ const CONFIG = {
   SUPABASE_URL: "https://pgbmfqozaueuervqhddn.supabase.co",
   SUPABASE_ANON_KEY: "sb_publishable_0jPoJqzSxFhILyATV1QljQ_X4zQ9bLa",
   SITE_URL: "",           // optional: your web address, e.g. "https://dealercars.co.za" (leave empty and it is worked out automatically)
-  CONTACT_EMAIL: "",       // shown in the footer when filled in, e.g. "hello@dealercars.co.za"
-  CONTACT_WHATSAPP: ""     // e.g. "27821234567" (country code, no + or spaces)
+  CONTACT_EMAIL: "",       // shown on the site when filled in, e.g. "hello@dealercars.co.za"
+  CONTACT_PHONE: "",       // shown on the site when filled in, e.g. "012 345 6789"
+  CONTACT_WHATSAPP: ""     // e.g. "27821234567" (country code, no + or spaces). Turns on the "WhatsApp us" buttons
 };
 
 const PROVINCES = ["Eastern Cape","Free State","Gauteng","KwaZulu-Natal","Limpopo","Mpumalanga","North West","Northern Cape","Western Cape"];
@@ -445,6 +474,7 @@ const ICON = {
   left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
   right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>',
   menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+  share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>',
   close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'
 };
 const LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#F26A1B"/><path d="M7 20h18M9 20l1.6-5.2a2 2 0 0 1 1.9-1.4h7a2 2 0 0 1 1.9 1.4L23 20" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11.5" cy="21.5" r="2" fill="#fff"/><circle cx="20.5" cy="21.5" r="2" fill="#fff"/></svg>';
@@ -595,8 +625,39 @@ async function studioPhoto(cutBlob) {
   return await new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error("Could not prepare that photo.")), "image/jpeg", 0.88));
 }
 
+/* ---------- contact details (filled in once, in CONFIG at the top) ---------- */
+const hasContact = () => !!(CONFIG.CONTACT_WHATSAPP || CONFIG.CONTACT_EMAIL || CONFIG.CONTACT_PHONE);
+const waLink = (msg) => CONFIG.CONTACT_WHATSAPP ? "https://wa.me/" + CONFIG.CONTACT_WHATSAPP.replace(/\D/g, "") + (msg ? "?text=" + encodeURIComponent(msg) : "") : "";
+
+/* ---------- the Dealer Cars number plate cover (drawn on a photo) ---------- */
+const PLATE_RATIO = 110 / 520;
+function drawPlate(x, cx, cy, w, rotDeg, selected) {
+  const h = w * PLATE_RATIO, r = h * 0.14, pad = h * 0.13;
+  x.save(); x.translate(cx, cy); x.rotate((rotDeg || 0) * Math.PI / 180);
+  x.shadowColor = "rgba(0,0,0,.35)"; x.shadowBlur = h * 0.12; x.shadowOffsetY = h * 0.04;
+  x.beginPath(); x.roundRect(-w / 2, -h / 2, w, h, r); x.fillStyle = "#FFFFFF"; x.fill(); x.shadowColor = "transparent";
+  x.lineWidth = Math.max(1, h * 0.05); x.strokeStyle = "#16202E"; x.stroke();
+  const m = h - pad * 2, mx = -w / 2 + pad, my = -m / 2, s = m / 32;
+  x.save(); x.translate(mx, my); x.scale(s, s);
+  x.beginPath(); x.roundRect(0, 0, 32, 32, 8); x.fillStyle = "#F26A1B"; x.fill();
+  x.strokeStyle = "#fff"; x.lineWidth = 2; x.lineCap = "round"; x.lineJoin = "round"; x.stroke(new Path2D("M7 20h18M9 20l1.6-5.2a2 2 0 0 1 1.9-1.4h7a2 2 0 0 1 1.9 1.4L23 20"));
+  x.fillStyle = "#fff"; x.beginPath(); x.arc(11.5, 21.5, 2, 0, 7); x.fill(); x.beginPath(); x.arc(20.5, 21.5, 2, 0, 7); x.fill(); x.restore();
+  const tx = mx + m + pad * 1.2, avail = w / 2 - pad - tx; let fs = h * 0.5; x.textBaseline = "middle"; x.textAlign = "left";
+  x.font = `800 ${fs}px Inter, Arial, sans-serif`; const tw = x.measureText("DEALER CARS").width; if (tw > avail) { fs *= avail / tw; x.font = `800 ${fs}px Inter, Arial, sans-serif`; }
+  const w1 = x.measureText("DEALER ").width; x.fillStyle = "#16202E"; x.fillText("DEALER", tx, h * 0.02); x.fillStyle = "#F26A1B"; x.fillText("CARS", tx + w1, h * 0.02);
+  if (selected) { x.setLineDash([h * 0.1, h * 0.08]); x.lineWidth = Math.max(2, h * 0.04); x.strokeStyle = "#0B6BFF"; x.beginPath(); x.roundRect(-w / 2 - h * 0.08, -h / 2 - h * 0.08, w + h * 0.16, h + h * 0.16, r); x.stroke(); }
+  x.restore();
+}
+
 /* ====================== layout: nav + footer ====================== */
 const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+const HOW_STEPS = [
+  ["Find your car", "Browse approved cars, filter by what matters to you and sort by price, mileage or rating. Use the finance calculator to plan your budget."],
+  ["Tell us what you like", "Send an enquiry on any car. We talk to the seller for you and answer your questions."],
+  ["We go with you to view it", "You do not have to go alone. We come with you to view the car."],
+  ["We help with the documentation", "We explain what paperwork is needed, help you with it and make sure nothing is missed."],
+  ["Delivery and support", "We are there when the car is delivered, and we help afterwards if you need anything."]
+];
 function navHtml(cur) {
   const on = (k) => cur === k ? ' class="on"' : "";
   const acct = S.session ? `<a href="#/portal" class="btn btn-dark btn-sm" id="nav_acct">My dealership</a>` : `<a href="#/login" class="btn btn-dark btn-sm" id="nav_acct">Dealer login</a>`;
@@ -605,6 +666,7 @@ function navHtml(cur) {
     <a class="logo" href="#/" aria-label="Dealer Cars home">${LOGO}<span>Dealer<b>Cars</b></span></a>
     <nav class="nav-links" aria-label="Main">
       <a href="#/cars"${on("cars")}>Cars for sale</a>
+      <a href="#/about"${on("about")} id="nav_about">How we work</a>
       <div class="dd${svcOn ? " on" : ""}" id="dd_services"><button type="button" id="dd_btn" aria-expanded="false" aria-haspopup="true">Services ${CHEV}</button>
         <div class="menu" id="dd_menu" role="menu">
           <a href="#/sell" role="menuitem" id="nav_sell">Sell your car<small>Get your car approved and sold</small></a>
@@ -618,6 +680,7 @@ function navHtml(cur) {
   </div>
   <div class="mnav" id="mnav">
     <a href="#/cars">Cars for sale<small>Browse approved vehicles</small></a>
+    <a href="#/about">How we work<small>We go with you, start to finish</small></a>
     <div class="grp">Services</div>
     <a href="#/sell">Sell your car<small>Get your car approved and sold</small></a>
     <a href="#/finance">Finance calculator<small>Work out your monthly instalment</small></a>
@@ -630,7 +693,8 @@ function navHtml(cur) {
 }
 function footerHtml() {
   const c = [];
-  if (CONFIG.CONTACT_WHATSAPP) c.push(`<a href="https://wa.me/${esc(CONFIG.CONTACT_WHATSAPP)}" target="_blank" rel="noopener">WhatsApp us</a>`);
+  if (CONFIG.CONTACT_WHATSAPP) c.push(`<a href="${esc(waLink())}" target="_blank" rel="noopener" id="ft_wa">WhatsApp us</a>`);
+  if (CONFIG.CONTACT_PHONE) c.push(`<a href="tel:${esc(CONFIG.CONTACT_PHONE.replace(/[^\d+]/g, ""))}" id="ft_tel">${esc(CONFIG.CONTACT_PHONE)}</a>`);
   if (CONFIG.CONTACT_EMAIL) c.push(`<a href="mailto:${esc(CONFIG.CONTACT_EMAIL)}">${esc(CONFIG.CONTACT_EMAIL)}</a>`);
   return `<footer class="footer"><div class="wrap">
     <div class="fgrid">
@@ -638,9 +702,9 @@ function footerHtml() {
       <div><h4>Buyers &amp; sellers</h4><a href="#/cars">Cars for sale</a><a href="#/sell">Sell your car</a><a href="#/finance">Finance calculator</a></div>
       <div><h4>Coming soon</h4><a href="#/insurance">Insurance</a><a href="#/spotters">Spotters</a></div>
       <div><h4>Dealers</h4><a href="#/for-dealers">List your vehicles</a><a href="#/login">Dealer login</a></div>
-      <div><h4>Company</h4><a href="#/terms">Terms of use</a><a href="#/privacy">Privacy policy</a>${c.join("")}</div>
+      <div><h4>Company</h4><a href="#/about">About us</a><a href="#/terms">Terms of use</a><a href="#/privacy">Privacy policy</a>${c.join("")}</div>
     </div>
-    <div class="copy">© ${new Date().getFullYear()} Dealer Cars. Dealer Cars is a listing platform and is not the seller of any vehicle.</div>
+    <div class="copy">© ${new Date().getFullYear()} Dealer Cars. Vehicles are sold by the dealerships that list them.</div>
   </div></footer>`;
 }
 function page(cur, inner) { return navHtml(cur) + `<main id="main">${inner}</main>` + footerHtml(); }
@@ -718,6 +782,9 @@ async function viewHome() {
       <div class="prop"><div class="ic">${ICON.calc}</div><h3>Plan your finance</h3><p>Use our finance calculator to see what a car could cost you each month.</p></div>
       <div class="prop"><div class="ic">${ICON.chat}</div><h3>Enquire in seconds</h3><p>Send a message about any car. No account needed.</p></div>
     </div></div></section>
+  <section class="section soft" id="home_how"><div class="wrap">
+    <div class="sec-head"><div><h2>We go with you, start to finish</h2><p>Dealer Cars is more than a listing site.</p></div><a class="btn btn-ghost" href="#/about" id="home_about">See how we work</a></div>
+    <ol class="how">${HOW_STEPS.map((x, i) => `<li><span class="n">${i + 1}</span><b>${esc(x[0])}</b><p>${esc(x[1])}</p></li>`).join("")}</ol></div></section>
   <section class="section"><div class="wrap"><div class="band">
     <div><h2>Are you a dealership?</h2><p>Register your dealership, add your stock with photos, and we review each vehicle before it goes live. Buyers then send their enquiries to you.</p></div>
     <div><a class="btn btn-primary" href="#/for-dealers" id="home_dealer_cta">List your vehicles</a></div>
@@ -816,7 +883,7 @@ async function viewCar(ref) {
     return { html: page("cars", `<div class="wrap" style="padding:50px 20px"><div class="empty"><h3>This car is no longer available</h3><p>It may have been sold or taken down.</p><a class="btn btn-primary" href="#/cars">See other cars</a></div></div>`), bind: bindNav };
   }
   const title = carTitle(v), imgs = v.photos || [], lbls = v.photo_labels || [], cap = (i) => labelName(lbls[i]);
-  const url = baseUrl() + "/#/car/" + v.ref;
+  const url = baseUrl() + "/#/car/" + v.ref, place = [v.city, v.province].filter(Boolean).join(", "), shareText = `${title} - ${money(v.price)} - ${place}\n${url}`, mapQ = encodeURIComponent(place + ", South Africa");
   seo({ title: `${title} for sale in ${v.city} | Dealer Cars`, desc: `${title}, ${km(v.mileage) ? km(v.mileage) + ", " : ""}${money(v.price)} in ${v.city}, ${v.province}. Approved by Dealer Cars. Send an enquiry.`, path: "car/" + v.ref, image: imgs[0] ? photoUrl(imgs[0]) : "",
     jsonld: { "@context": "https://schema.org", "@type": "Car", name: title, brand: { "@type": "Brand", name: v.make }, model: v.model, vehicleModelDate: String(v.year), mileageFromOdometer: v.mileage == null ? undefined : { "@type": "QuantitativeValue", value: v.mileage, unitCode: "KMT" }, vehicleTransmission: v.transmission, fuelType: v.fuel_type, bodyType: v.body_type, color: v.colour, image: imgs.slice(0, 5).map(photoUrl), url, offers: { "@type": "Offer", price: String(v.price), priceCurrency: "ZAR", availability: "https://schema.org/InStock", seller: { "@type": "Organization", name: "Dealer Cars" } } } });
   const specs = [["Year", v.year], ["Mileage", km(v.mileage)], ["Gearbox", v.transmission], ["Fuel", v.fuel_type], ["Body", v.body_type], ["Colour", v.colour], ["Location", [v.city, v.province].filter(Boolean).join(", ")], ["Reference", v.ref]].filter(s => s[1]);
@@ -825,13 +892,18 @@ async function viewCar(ref) {
   <div class="cdetail"><div class="stack">
     <div class="gallery"><div class="main" id="g_main">${imgs.length ? `<img id="g_img" src="${esc(photoUrl(imgs[0]))}" alt="${esc(title)}">${imgs.length > 1 ? `<button class="arrow l" id="g_prev" aria-label="Previous photo">${ICON.left}</button><button class="arrow r" id="g_next" aria-label="Next photo">${ICON.right}</button><span class="pos" id="g_pos">1 / ${imgs.length}${cap(0) ? " · " + esc(cap(0)) : ""}</span>` : ""}` : `<div class="noimg" style="color:#52607a">${ICON.car}</div>`}</div>
       ${imgs.length > 1 ? `<div class="thumbs" id="g_thumbs">${imgs.map((p, i) => `<button type="button" data-i="${i}" class="${i ? "" : "on"}" aria-label="Photo ${i + 1}${cap(i) ? ": " + esc(cap(i)) : ""}" title="${esc(cap(i))}"><img src="${esc(photoUrl(p))}" alt="${esc(cap(i))}" loading="lazy"></button>`).join("")}</div>` : ""}</div>
+    <div class="panel" id="car_map"><h2>Where is this car?</h2><p style="color:var(--muted);font-size:14.5px;margin-bottom:12px">${ICON.pin.replace("<svg", '<svg width="15" height="15" style="vertical-align:-2px;margin-right:4px"')}<b style="color:var(--ink)">${esc(place)}</b>. The seller gives you the exact address when they reply to your enquiry.</p>
+      <div class="mapbox"><iframe title="Map of ${esc(place)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=${mapQ}&output=embed"></iframe></div>
+      <a class="btn btn-ghost btn-sm" id="map_open" style="margin-top:12px" href="https://www.google.com/maps/search/?api=1&query=${mapQ}" target="_blank" rel="noopener">Open in Google Maps</a></div>
     <div class="panel"><h2>About this car</h2><div class="desc">${fmtText(v.description)}</div>${feats.length ? `<h3 style="margin-top:22px;font-size:17px">Features</h3><div class="tags">${feats.map(f => `<span class="tag">${esc(f)}</span>`).join("")}</div>` : ""}</div>
   </div>
   <aside class="stack sticky">
     <div class="panel"><div class="cprice">${money(v.price)}</div><h1 class="ctitle">${esc(title)}</h1><div class="cloc" id="car_loc">${ICON.pin.replace("<svg", '<svg width="16" height="16"')}<span>${esc([v.city, v.province].filter(Boolean).join(", "))}</span></div><div class="cmeta">${v.rating ? stars(v.rating) + '<span class="rl">Dealer Cars rating</span>' : ""}<span class="ago">${esc(listedAgo(v.approved_at))}</span></div>
       <div class="specs">${specs.map(s => `<div><span>${s[0]}</span><b>${esc(s[1])}</b></div>`).join("")}</div></div>
+    <div class="panel share" id="share"><b>Share this car</b>
+      <div class="sharebtns"><a class="sbtn" id="sh_wa" href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" rel="noopener">WhatsApp</a><a class="sbtn" id="sh_fb" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank" rel="noopener">Facebook</a><a class="sbtn" id="sh_x" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(title + " - " + money(v.price))}&url=${encodeURIComponent(url)}" target="_blank" rel="noopener">X</a><a class="sbtn" id="sh_tg" href="https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title + " - " + money(v.price))}" target="_blank" rel="noopener">Telegram</a><a class="sbtn" id="sh_mail" href="mailto:?subject=${encodeURIComponent(title + " on Dealer Cars")}&body=${encodeURIComponent(shareText)}">E-mail</a><button class="sbtn" type="button" id="sh_copy">Copy link</button>${navigator.share ? `<button class="sbtn main" type="button" id="sh_native">${ICON.share} Share…</button>` : ""}</div></div>
     <div class="panel fin-cta"><b>Planning to finance?</b><p>Work out what this car could cost you each month.</p><a class="btn btn-ghost btn-block" id="car_fin" href="#/finance?price=${esc(String(Math.round(v.price)))}">Calculate finance</a></div>
-    <div class="panel" id="inq_panel"><h2>Ask about this car</h2><p style="color:var(--muted);font-size:14.5px;margin-bottom:14px">Send us your details and the seller will contact you about this car.</p>
+    <div class="panel" id="inq_panel"><h2>Ask about this car</h2><p style="color:var(--muted);font-size:14.5px;margin-bottom:14px">Send us your details and the seller will contact you about this car.${CONFIG.CONTACT_WHATSAPP ? ` Or <a id="car_wa" href="${esc(waLink("Hi Dealer Cars, I am interested in the " + title + " (" + v.ref + ") " + url))}" target="_blank" rel="noopener">WhatsApp us about this car</a>.` : ""}</p>
       <form id="inq_form" novalidate><div id="inq_msg"></div>
         <div class="field"><label for="i_name">Your name</label><input class="ctrl" id="i_name" autocomplete="name" required></div>
         <div class="grid2"><div class="field"><label for="i_phone">Phone</label><input class="ctrl" id="i_phone" type="tel" autocomplete="tel" inputmode="tel"></div><div class="field"><label for="i_email">E-mail</label><input class="ctrl" id="i_email" type="email" autocomplete="email"></div></div>
@@ -849,6 +921,9 @@ async function viewCar(ref) {
     const onKey = (e) => { if (!document.getElementById("g_main")) { document.removeEventListener("keydown", onKey); return; } if (e.target.closest && e.target.closest("input,textarea,select")) return; if (e.key === "ArrowLeft") show(i - 1); if (e.key === "ArrowRight") show(i + 1); };
     document.addEventListener("keydown", onKey);
     if (gm) gm.addEventListener("click", (e) => { if (e.target.id !== "g_img") return; const lb = document.createElement("div"); lb.className = "lb"; lb.innerHTML = `<img src="${esc(photoUrl(imgs[i]))}" alt="">`; lb.addEventListener("click", () => lb.remove()); document.body.appendChild(lb); });
+    const copy = async () => { try { await navigator.clipboard.writeText(url); } catch (_) { const t = document.createElement("textarea"); t.value = url; t.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); } catch (__) {} t.remove(); } toast("Link copied. Paste it anywhere to share this car."); };
+    $("#sh_copy").addEventListener("click", copy);
+    const nat = $("#sh_native"); if (nat) nat.addEventListener("click", async () => { try { await navigator.share({ title, text: `${title} - ${money(v.price)} - ${place}`, url }); } catch (e) { if (e && e.name !== "AbortError") copy(); } });
     $("#inq_form").addEventListener("submit", async (e) => {
       e.preventDefault(); const btn = $("#inq_send"), box = $("#inq_msg"); box.innerHTML = "";
       const name = $("#i_name").value.trim(), phone = $("#i_phone").value.trim(), email = $("#i_email").value.trim(), msg = $("#i_msg").value.trim();
@@ -1098,6 +1173,37 @@ async function viewSoon(kind) {
   return { html, bind: bindNav };
 }
 
+/* ====================== about us / how we work ====================== */
+function viewAbout() {
+  seo({ title: "About Dealer Cars | How we work", desc: "Dealer Cars is more than a listing site. We go with you to view the car, help with the documentation, and support you at delivery and afterwards.", path: "about" });
+  const ct = [];
+  if (CONFIG.CONTACT_WHATSAPP) ct.push(`<a class="btn btn-primary" id="ab_wa" href="${esc(waLink("Hi Dealer Cars, I would like some help finding a car."))}" target="_blank" rel="noopener">WhatsApp us</a>`);
+  if (CONFIG.CONTACT_PHONE) ct.push(`<a class="btn btn-ghost" id="ab_tel" href="tel:${esc(CONFIG.CONTACT_PHONE.replace(/[^\d+]/g, ""))}">Call ${esc(CONFIG.CONTACT_PHONE)}</a>`);
+  if (CONFIG.CONTACT_EMAIL) ct.push(`<a class="btn btn-ghost" id="ab_mail" href="mailto:${esc(CONFIG.CONTACT_EMAIL)}">${esc(CONFIG.CONTACT_EMAIL)}</a>`);
+  const detail = [
+    ["Find your car", "Browse every approved car on Dealer Cars. Filter by make, price, mileage, province and rating, and sort the list the way you like. Each car shows its photos, its town and a map, and you can use the finance calculator to see what it could cost you each month. Found one you like? Share it with family or friends on WhatsApp in one tap."],
+    ["Tell us what you like", "Send an enquiry on the car, or message us. We speak to the seller on your behalf, check that the car is still available and answer your questions, so you are not chasing around."],
+    ["We go with you to view the car", "Buying a car can be stressful, and it is easy to miss things when you are on your own. We arrange the viewing and come with you, so you have someone on your side when you look at the car."],
+    ["We help with the documentation", "There is a lot of paperwork in buying a car. We explain what is needed, help you with it and make sure nothing is missed, so there are no surprises later."],
+    ["Delivery, and support afterwards", "We are there when the car is delivered to you. If you need any help afterwards, you do not have to work it out alone. You can come back to us."]
+  ];
+  const html = page("about", `<div class="wrap"><div class="page-head"><h1>We do not just list cars. We help you buy one.</h1><p style="max-width:720px">Dealer Cars is a car marketplace with people behind it. Every car on the site is checked and approved by our team. When you find one you like, we stay with you from your first message to the day the car is delivered, and after.</p></div>
+    <section class="section" style="padding-top:8px"><h2 style="margin-bottom:6px">How we work</h2><p style="color:var(--muted);margin-bottom:18px">From finding a car to driving it home, in five steps.</p>
+      <ol class="how big" id="ab_steps">${detail.map((x, i) => `<li><span class="n">${i + 1}</span><b>${esc(x[0])}</b><p>${esc(x[1])}</p></li>`).join("")}</ol></section>
+    <section class="section"><h2 style="margin-bottom:14px">Why buyers choose Dealer Cars</h2>
+      <div class="props"><div class="prop"><div class="ic">${ICON.shield}</div><h3>Approved cars only</h3><p>Nothing goes live until our team has reviewed the car and its photos. Every car also follows our photo standard.</p></div>
+        <div class="prop"><div class="ic">${ICON.pin}</div><h3>You can see where it is</h3><p>Every car shows its town and province, with a map, before you decide to enquire.</p></div>
+        <div class="prop"><div class="ic">${ICON.chat}</div><h3>Someone on your side</h3><p>We go with you to view, help with the documentation and support you at delivery.</p></div></div></section>
+    <section class="section"><h2 style="margin-bottom:14px">Common questions</h2><div class="faq">
+      <details><summary>Who sells the cars?</summary><p>The cars are listed by dealerships that register with Dealer Cars. We approve every car before it goes live, and we help you through the buying process.</p></details>
+      <details><summary>Can I see the car before I buy?</summary><p>Yes. We arrange the viewing and come with you.</p></details>
+      <details><summary>What if I need help after I get the car?</summary><p>We support you at delivery, and you can come back to us if you need help afterwards.</p></details>
+      <details><summary>I want to sell my car. Can you help?</summary><p>Yes. Use the <a href="#/sell">Sell your car</a> page, send us the details and photos, and our team will be in touch.</p></details></div></section>
+    <section class="section" style="padding-bottom:56px"><div class="band"><div><h2>Ready to find your car?</h2><p>Browse approved cars, or get in touch and we will help you.</p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary" href="#/cars" id="ab_cars">See cars for sale</a>${ct.join("")}</div></div></section>
+  </div>`);
+  return { html, bind: bindNav };
+}
+
 /* ====================== login / register ====================== */
 const AGREEMENT = `<p><b>Dealer Agreement</b></p>
 <p>1. I am authorised to represent this dealership and the details I give are correct.</p>
@@ -1281,6 +1387,7 @@ async function viewVehicleForm(id) {
             <li>At least ${MIN_PHOTOS} photos and up to ${MAX_PHOTOS}. These six are required: <b>front, rear, left side, right side, dashboard and odometer</b> (showing the mileage).</li>
             <li>The first photo is the cover and must be the <b>front</b> of the car. We move it to the top for you.</li>
             <li>The whole car in the frame, in daylight, no people, no watermarks, and no phone numbers or text added to the photo.</li>
+            <li>Please cover the number plate with the Dealer Cars plate (button under each photo). It protects your privacy and the privacy of the car\u2019s previous owner.</li>
             <li>Say what each photo shows using the box under it. Our team can decline cars that do not follow this.</li></ul>
           <div class="pcheck" id="ph_check" aria-live="polite"></div></div>
         <div id="photoarea"><label class="drop" id="dz" for="vf_files">${ICON.upload}<b>Drag and drop your photos here</b><span>or tap to choose several at once. Name them 1, 2, 3 in the order of the checklist and we label them for you.</span><input type="file" id="vf_files" accept="image/*" multiple hidden></label>
@@ -1313,7 +1420,7 @@ async function viewVehicleForm(id) {
     $("#vf_files").addEventListener("change", (e) => { addFiles(Array.from(e.target.files)); e.target.value = ""; });
     $("#pgrid").addEventListener("click", (e) => { const b = e.target.closest("button[data-pa]"); if (!b) return; const i = Number(b.dataset.i), a = b.dataset.pa, P = VF.photos;
       if (a === "left" && i > 0) [P[i - 1], P[i]] = [P[i], P[i - 1]]; else if (a === "right" && i < P.length - 1) [P[i + 1], P[i]] = [P[i], P[i + 1]]; else if (a === "del") P.splice(i, 1);
-      else if (a === "bg") { cleanPhoto(P[i], VF); return; } else if (a === "undo") { const t = P[i]; if (t.prev) { Object.assign(t, { path: t.prev.path, url: t.prev.url, file: t.prev.file, clean: false, prev: null }); } }
+      else if (a === "bg") { cleanPhoto(P[i], VF); return; } else if (a === "plate") { plateEditor(P[i], VF); return; } else if (a === "undo") { const t = P[i], h = t.hist && t.hist.pop(); if (h) Object.assign(t, h); }
       paintPhotos(); });
     $("#pgrid").addEventListener("change", (e) => { const sel = e.target.closest("select[data-lbl]"); if (!sel) return; VF.photos[Number(sel.dataset.i)].label = sel.value; paintPhotos(); });
     $("#bg_all").addEventListener("click", async () => { const mine = VF, todo = mine.photos.filter(t => !t.clean && !t.up && !t.busy && PHOTO_EXTERIOR.includes(t.label)); if (!todo.length) { toast("Label your front, rear and side photos first, then try again."); return; } for (const t of todo) { if (VF !== mine) return; await cleanPhoto(t, mine, true); } });
@@ -1324,9 +1431,9 @@ function normalizeOrder() { const P = VF.photos, i = P.findIndex(t => t.label ==
 function missingShots() { const have = new Set(VF.photos.map(t => t.label)); return PHOTO_REQ.filter(k => !have.has(k)); }
 function paintPhotos() {
   const g = $("#pgrid"); if (!g) return; const P = VF.photos;
-  g.innerHTML = P.map((p, i) => `<div class="pcell"><div class="pt ${i === 0 ? "cover" : ""}" data-i="${i}"><img src="${esc(p.url)}" alt="Photo ${i + 1}">${i === 0 ? `<span class="lbl">Cover</span>` : ""}${p.clean ? `<span class="lbl2">Clean background</span>` : ""}${p.up ? `<div class="up">Uploading…</div>` : p.busy ? `<div class="up">${esc(p.busy)}</div>` : `<div class="bar">${i > 0 ? `<button type="button" data-pa="left" data-i="${i}" aria-label="Move earlier">←</button>` : ""}${i < P.length - 1 ? `<button type="button" data-pa="right" data-i="${i}" aria-label="Move later">→</button>` : ""}<button type="button" class="x" data-pa="del" data-i="${i}" aria-label="Remove photo">✕</button></div>`}</div>
+  g.innerHTML = P.map((p, i) => `<div class="pcell"><div class="pt ${i === 0 ? "cover" : ""}" data-i="${i}"><img src="${esc(p.url)}" alt="Photo ${i + 1}">${i === 0 ? `<span class="lbl">Cover</span>` : ""}${p.clean ? `<span class="lbl2">Clean background</span>` : ""}${p.plate ? `<span class="lbl3">Plate covered</span>` : ""}${p.up ? `<div class="up">Uploading…</div>` : p.busy ? `<div class="up">${esc(p.busy)}</div>` : `<div class="bar">${i > 0 ? `<button type="button" data-pa="left" data-i="${i}" aria-label="Move earlier">←</button>` : ""}${i < P.length - 1 ? `<button type="button" data-pa="right" data-i="${i}" aria-label="Move later">→</button>` : ""}<button type="button" class="x" data-pa="del" data-i="${i}" aria-label="Remove photo">✕</button></div>`}</div>
     <select class="ctrl plbl${p.label ? "" : " need"}" data-lbl data-i="${i}" aria-label="What photo ${i + 1} shows"><option value="">What does this show?</option>${PHOTO_LABELS.map(([k, n]) => `<option value="${k}"${p.label === k ? " selected" : ""}>${n}</option>`).join("")}</select>
-    ${p.up || p.busy ? "" : p.clean ? `<button type="button" class="btn btn-ghost btn-sm" data-pa="undo" data-i="${i}">Undo background removal</button>` : `<button type="button" class="btn btn-ghost btn-sm" data-pa="bg" data-i="${i}">Remove background</button>`}</div>`).join("");
+    ${p.up || p.busy ? "" : `<div class="tools">${p.clean ? "" : `<button type="button" class="btn btn-ghost btn-sm" data-pa="bg" data-i="${i}">Remove background</button>`}<button type="button" class="btn btn-ghost btn-sm" data-pa="plate" data-i="${i}">${p.plate ? "Edit plate cover" : "Cover number plate"}</button>${p.hist && p.hist.length ? `<button type="button" class="btn btn-ghost btn-sm" data-pa="undo" data-i="${i}">Undo last change</button>` : ""}</div>`}</div>`).join("");
   const miss = missingShots(), pc = $("#ph_check");
   if (pc) pc.innerHTML = PHOTO_REQ.map(k => `<span class="${miss.includes(k) ? "no" : "yes"}">${miss.includes(k) ? "○" : "✓"} ${esc(labelName(k))}</span>`).join("");
   const h = $("#ph_hint"); if (h) h.textContent = P.length + " of " + MAX_PHOTOS + " photos" + (P.length < MIN_PHOTOS ? " · add at least " + (MIN_PHOTOS - P.length) + " more" : "") + (miss.length ? " · still needed: " + miss.map(labelName).join(", ") : "");
@@ -1361,7 +1468,7 @@ async function cleanPhoto(t, mine, quiet) {
     const src = t.file || await (await fetch(t.url)).blob();
     let last = -1; const cut = await cutOut(src, (pct) => { if (pct !== last) { last = pct; say("Cleaning… " + pct + "%"); } });
     say("Finishing…"); const out = await studioPhoto(cut), path = await uploadBlob(out, mine.key);
-    t.prev = { path: t.path, url: t.url, file: t.file }; t.path = path; t.url = URL.createObjectURL(out); t.file = out; t.clean = true;
+    (t.hist = t.hist || []).push({ path: t.path, url: t.url, file: t.file, clean: !!t.clean, plate: !!t.plate }); t.path = path; t.url = URL.createObjectURL(out); t.file = out; t.clean = true;
   } catch (e) { console.warn(e); toast(quiet ? "One photo could not be cleaned. You can still use it as it is." : "Sorry, the background could not be removed from that photo. Check your internet connection and try again, or use the photo as it is."); }
   t.busy = null; if (VF === mine) paintPhotos();
 }
@@ -1388,6 +1495,48 @@ async function save(e) {
   setBusy(btn, true, "Saving…"); const { data, error } = await client().rpc("dealer_save_vehicle", { p }); setBusy(btn, false);
   if (error) return bad(niceErr(error));
   S.cars = null; S.ptab = "vehicles"; toast("Saved. Our team will review it shortly."); VF = null; location.hash = "#/portal";
+}
+
+// the Dealer Cars number plate cover: the dealer drags a Dealer Cars plate over the real plate, sizes and turns it, and applies it
+async function plateEditor(t, mine) {
+  if (!t || t.up || t.busy) return;
+  let bmp; try { const blob = t.file || await (await fetch(t.url)).blob(); bmp = await createImageBitmap(blob); } catch (e) { console.warn(e); toast("Sorry, that photo could not be opened. Please try again."); return; }
+  const k = Math.min(1, 1600 / bmp.width), W = Math.round(bmp.width * k), H = Math.round(bmp.height * k);
+  const plates = [{ cx: 0.5, cy: 0.7, w: 0.2, rot: 0 }]; let sel = 0;
+  const bg = document.createElement("div"); bg.className = "modal-bg"; bg.id = "pl_modal"; bg.setAttribute("role", "dialog"); bg.setAttribute("aria-modal", "true");
+  bg.innerHTML = `<div class="modal plm"><h3>Cover the number plate</h3><p style="margin-bottom:6px">Drag the Dealer Cars plate over the real number plate. Use the sliders to make it the right size and angle. Tap <b>Add another plate</b> if the car has a plate at the back and the front in the same photo.</p>
+    <div class="plstage"><canvas id="pl_cv" width="${W}" height="${H}" aria-label="Photo with the Dealer Cars plate. Drag the plate to move it."></canvas></div>
+    <div class="plctl"><label>Size <input type="range" id="pl_size" min="6" max="45" step="1" aria-label="Plate size"></label><label>Turn <input type="range" id="pl_rot" min="-35" max="35" step="1" aria-label="Turn the plate"></label></div>
+    <div class="row"><button type="button" class="btn btn-ghost btn-sm" id="pl_add">Add another plate</button><button type="button" class="btn btn-ghost btn-sm" id="pl_del">Remove this plate</button><span style="flex:1"></span><button type="button" class="btn btn-ghost" id="pl_cancel">Cancel</button><button type="button" class="btn btn-primary" id="pl_apply">Apply to photo</button></div></div>`;
+  document.body.appendChild(bg);
+  const cv = bg.querySelector("#pl_cv"), cx = cv.getContext("2d"), size = bg.querySelector("#pl_size"), rot = bg.querySelector("#pl_rot");
+  const paint = (final) => { cx.clearRect(0, 0, W, H); cx.drawImage(bmp, 0, 0, W, H); plates.forEach((p, i) => drawPlate(cx, p.cx * W, p.cy * H, p.w * W, p.rot, !final && i === sel)); };
+  const sync = () => { const p = plates[sel]; size.value = Math.round(p.w * 100); rot.value = p.rot; bg.querySelector("#pl_del").disabled = plates.length < 2; bg.querySelector("#pl_add").disabled = plates.length >= 3; paint(); };
+  const pos = (e) => { const r = cv.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width * W, y: (e.clientY - r.top) / r.height * H }; };
+  const hit = (x, y) => { for (let i = plates.length - 1; i >= 0; i--) { const p = plates[i], w = p.w * W, h = w * PLATE_RATIO, a = -p.rot * Math.PI / 180, dx = x - p.cx * W, dy = y - p.cy * H, lx = dx * Math.cos(a) - dy * Math.sin(a), ly = dx * Math.sin(a) + dy * Math.cos(a); if (Math.abs(lx) <= w / 2 + 12 && Math.abs(ly) <= h / 2 + 12) return i; } return -1; };
+  let drag = null;
+  cv.addEventListener("pointerdown", (e) => { const q = pos(e), i = hit(q.x, q.y); if (i < 0) return; sel = i; drag = { dx: plates[i].cx * W - q.x, dy: plates[i].cy * H - q.y }; try { cv.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); sync(); });
+  cv.addEventListener("pointermove", (e) => { if (!drag) return; const q = pos(e), p = plates[sel]; p.cx = Math.min(1, Math.max(0, (q.x + drag.dx) / W)); p.cy = Math.min(1, Math.max(0, (q.y + drag.dy) / H)); paint(); });
+  const stop = () => { drag = null; }; cv.addEventListener("pointerup", stop); cv.addEventListener("pointercancel", stop);
+  size.addEventListener("input", () => { plates[sel].w = Number(size.value) / 100; paint(); });
+  rot.addEventListener("input", () => { plates[sel].rot = Number(rot.value); paint(); });
+  bg.querySelector("#pl_add").addEventListener("click", () => { if (plates.length >= 3) return; plates.push({ cx: 0.5, cy: 0.5 + plates.length * 0.08, w: 0.2, rot: 0 }); sel = plates.length - 1; sync(); });
+  bg.querySelector("#pl_del").addEventListener("click", () => { if (plates.length < 2) return; plates.splice(sel, 1); sel = Math.max(0, sel - 1); sync(); });
+  const close = () => { if (bmp.close) bmp.close(); bg.remove(); };
+  bg.querySelector("#pl_cancel").addEventListener("click", close);
+  bg.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  bg.querySelector("#pl_apply").addEventListener("click", async (e) => {
+    const btn = e.currentTarget; setBusy(btn, true, "Applying…");
+    try {
+      paint(true);
+      const out = await new Promise((res, rej) => cv.toBlob(b => b ? res(b) : rej(new Error("Could not prepare that photo.")), "image/jpeg", 0.9));
+      const path = await uploadBlob(out, mine.key);
+      (t.hist = t.hist || []).push({ path: t.path, url: t.url, file: t.file, clean: !!t.clean, plate: !!t.plate });
+      t.path = path; t.url = URL.createObjectURL(out); t.file = out; t.plate = true;
+      close(); if (VF === mine) paintPhotos(); toast("Plate covered. You can undo this on the photo.");
+    } catch (err) { console.warn(err); setBusy(btn, false); paint(); toast("Sorry, the plate could not be added. Please try again."); }
+  });
+  sync(); size.focus();
 }
 
 /* ====================== admin ====================== */
@@ -1483,6 +1632,7 @@ async function resolveView() {
     case "insurance": return viewSoon("insurance");
     case "finance": return viewFinance(query);
     case "sell": return viewSell();
+    case "about": return viewAbout();
     case "for-dealers": return viewForDealers();
     case "login": return viewLogin(query);
     case "portal": return p[1] === "add" ? viewVehicleForm(null) : p[1] === "edit" && p[2] ? viewVehicleForm(decodeURIComponent(p[2])) : viewPortal();
