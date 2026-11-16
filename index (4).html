@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dealer Cars | Used cars for sale in South Africa</title>
+<meta name="description" content="Browse used cars for sale across South Africa on Dealer Cars. Cars from hand-picked dealers, with help from viewing to delivery. Sell your car, work out your finance and more.">
+<meta name="theme-color" content="#0F1A2C">
+<link rel="canonical" href="">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dealer Cars">
+<meta property="og:title" content="Dealer Cars | Used cars for sale">
+<meta property="og:description" content="Browse used cars for sale across South Africa. Cars from hand-picked dealers.">
+<meta property="og:locale" content="en_ZA">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F26A1B'/%3E%3Cpath d='M7 20h18M9 20l1.6-5.2a2 2 0 0 1 1.9-1.4h7a2 2 0 0 1 1.9 1.4L23 20' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='11.5' cy='21.5' r='2' fill='white'/%3E%3Ccircle cx='20.5' cy='21.5' r='2' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1A2C;--ink2:#26354D;--muted:#5C6A80;--line:#DCE0E4;--bg:#F3F4F5;--card:#fff;--soft:#ECEFF1;
+  --accent:#F26A1B;--accent-d:#D24F08;--accent-t:#FFF0E5;--accent-l:#FF9B5E;--navy-t:#E8EDF6;
+  --ok:#17784F;--ok-t:#E3F4EC;--warn:#9A6200;--warn-t:#FFF3D6;--bad:#B93222;--bad-t:#FCE9E6;
+  --r:14px;--sh:0 1px 2px rgba(15,26,44,.06),0 8px 24px rgba(15,26,44,.07);
+  --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,h4{line-height:1.12;margin:0;letter-spacing:-.02em;font-weight:800}
+p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+.narrow{max-width:760px;margin:0 auto;padding:0 20px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+:focus-visible{outline:3px solid #2F6BFF;outline-offset:2px;border-radius:6px}
+[hidden]{display:none!important}
+
+/* ---------- buttons & fields ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:13px 20px;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none;transition:background .15s,transform .05s,box-shadow .15s;white-space:nowrap}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-d)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{background:#1c2c47}
+.btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--ink2)}
+.btn-line{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5)}
+.btn-line:hover{background:rgba(255,255,255,.1)}
+.btn-sm{padding:8px 13px;font-size:13.5px;border-radius:10px}
+.btn-danger{background:var(--bad-t);color:var(--bad)}
+.btn-danger:hover{background:#f8d6d1}
+.btn-block{width:100%}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field>label,.lab{font-size:13.5px;font-weight:700;color:var(--ink2)}
+.field .hint{font-size:12.5px;color:var(--muted)}
+.ctrl{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:12px 14px;font-size:16px;min-height:48px}
+.ctrl:focus{outline:none;border-color:var(--ink2);box-shadow:0 0 0 3px rgba(38,53,77,.12)}
+textarea.ctrl{min-height:120px;resize:vertical;line-height:1.5}
+select.ctrl{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235C6A80' stroke-width='1.8' fill='none'/%3E%3C/svg%3E") no-repeat right 14px center;padding-right:38px}
+.grid2{display:grid;grid-template-columns:1fr;gap:0 16px}
+@media(min-width:640px){.grid2{grid-template-columns:1fr 1fr}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 16px}}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.45}
+.check input{width:20px;height:20px;margin-top:1px;accent-color:var(--accent);flex:none}
+.err{background:var(--bad-t);color:var(--bad);border-radius:10px;padding:11px 14px;font-size:14px;font-weight:600;margin:0 0 14px}
+.ok{background:var(--ok-t);color:var(--ok);border-radius:10px;padding:11px 14px;font-size:14px;font-weight:600;margin:0 0 14px}
+.note{background:var(--navy-t);color:var(--ink2);border-radius:10px;padding:11px 14px;font-size:14px;margin:0 0 14px}
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;background:var(--soft);color:var(--ink2)}
+.badge.ok{background:var(--ok-t);color:var(--ok);padding:4px 10px;margin:0}
+.badge.warn{background:var(--warn-t);color:var(--warn);padding:4px 10px;margin:0}
+.badge.bad{background:var(--bad-t);color:var(--bad);padding:4px 10px;margin:0}
+.badge.dark{background:var(--ink);color:#fff}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.5) blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-size:21px;letter-spacing:-.03em}
+.logo svg{width:34px;height:34px;flex:none}
+.logo b{color:var(--accent)}.hero .logo b,.footer .logo b{color:var(--accent-l)}
+.nav-links{display:none;align-items:center;gap:26px}
+.nav-links a{text-decoration:none;font-weight:600;font-size:15px;color:var(--ink2)}
+.nav-links a:hover,.nav-links a.on{color:var(--accent-d)}
+.nav-links a.btn{color:#fff}.nav-links a.btn:hover{color:#fff}
+.burger{border:1.5px solid var(--line);background:#fff;border-radius:10px;width:44px;height:44px;display:grid;place-items:center;cursor:pointer}
+.burger svg{width:22px;height:22px}
+.mnav{display:none;border-top:1px solid var(--line);background:#fff;padding:8px 20px 18px}
+.mnav.open{display:block}
+.mnav a{display:flex;justify-content:space-between;align-items:center;padding:15px 2px;border-bottom:1px solid var(--soft);text-decoration:none;font-weight:700;font-size:16px}
+.mnav a small{display:block;font-weight:500;color:var(--muted);font-size:13px}
+.mnav .btn{margin-top:14px}.mnav a.btn{justify-content:center;border-bottom:0;color:#fff}
+@media(min-width:900px){.nav-links{display:flex}.burger,.mnav{display:none!important}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;background:radial-gradient(1200px 500px at 85% -10%,#1d3a6b 0,transparent 60%),linear-gradient(160deg,#0B1424,#13223d 70%);color:#fff;padding:54px 0 72px}
+.hero svg.road{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.9}
+.hero-in{position:relative}
+.eyebrow{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#FFB27F;margin-bottom:12px}
+.hero h1{font-size:clamp(34px,6vw,58px);max-width:760px}
+.hero h1 em{font-style:normal;color:var(--accent-l)}
+.hero p.lead{margin-top:16px;font-size:clamp(16px,2.2vw,19px);color:rgba(255,255,255,.82);max-width:600px}
+.search{margin-top:30px;background:#fff;color:var(--ink);border-radius:18px;padding:14px;box-shadow:0 24px 60px rgba(0,0,0,.35);display:grid;gap:10px;grid-template-columns:1fr}
+.search .ctrl{min-height:50px}
+@media(min-width:820px){.search{grid-template-columns:1fr 1fr 1fr 1fr auto;align-items:center;padding:12px}.search .btn{height:50px}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{border:1.5px solid rgba(255,255,255,.28);color:#fff;background:transparent;border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none}
+.chip:hover{background:rgba(255,255,255,.12)}
+.section{padding:56px 0}
+.section.soft{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(26px,4vw,36px)}
+.sec-head p{color:var(--muted);margin-top:6px}
+.link{font-weight:700;color:var(--accent-d);text-decoration:none}
+.link:hover{text-decoration:underline}
+
+/* ---------- car cards ---------- */
+.cards{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:560px){.cards{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.cards{grid-template-columns:1fr 1fr 1fr}}
+@media(min-width:1180px){.cards.four{grid-template-columns:repeat(4,1fr)}}
+.card{background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);text-decoration:none;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s;border:1px solid #efece4}
+.card:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(15,26,44,.06),0 16px 36px rgba(15,26,44,.13)}
+.card .ph{aspect-ratio:4/3;background:var(--soft);position:relative;overflow:hidden}
+.card .ph img{width:100%;height:100%;object-fit:cover}
+.card .ph .cnt{position:absolute;right:10px;bottom:10px;background:rgba(15,26,44,.78);color:#fff;font-size:12px;font-weight:700;border-radius:999px;padding:3px 9px}
+.card .bd{padding:14px 16px 16px;display:flex;flex-direction:column;gap:5px;flex:1}
+.card .price{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.card .ttl{font-weight:700;font-size:16px;line-height:1.3}
+.card .meta{font-size:13.5px;color:var(--muted)}
+.card .dl{margin-top:auto;padding-top:10px;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink2);border-top:1px solid var(--soft);margin-top:10px}
+.card .dl svg{width:16px;height:16px;flex:none;color:var(--muted)}
+.noimg{display:grid;place-items:center;height:100%;color:#b5b1a4}
+.noimg svg{width:64px;height:64px}
+.empty{background:#fff;border:1.5px dashed var(--line);border-radius:var(--r);padding:40px 20px;text-align:center;color:var(--ink2)}
+.empty h3{font-size:20px;margin-bottom:8px}
+.empty p{color:var(--muted);max-width:460px;margin:0 auto 18px}
+
+/* ---------- value props & band ---------- */
+.props{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:800px){.props{grid-template-columns:repeat(3,1fr)}}
+.prop{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.prop .ic{width:44px;height:44px;border-radius:12px;background:var(--accent-t);color:var(--accent-d);display:grid;place-items:center;margin-bottom:14px}
+.prop .ic svg{width:24px;height:24px}
+.prop h3{font-size:18px;margin-bottom:6px}
+.prop p{color:var(--muted);font-size:15px}
+.band{background:linear-gradient(120deg,#0F1A2C,#1b3157);color:#fff;border-radius:22px;padding:34px 26px;display:grid;gap:20px;align-items:center}
+@media(min-width:800px){.band{grid-template-columns:1.4fr auto;padding:44px}}
+.band h2{font-size:clamp(24px,3.6vw,34px)}
+.band p{color:rgba(255,255,255,.8);margin-top:8px;max-width:560px}
+.steps{counter-reset:s;display:grid;gap:14px;margin-top:6px}
+.steps li{list-style:none;position:relative;padding-left:46px;font-size:15.5px}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:-2px;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
+.steps b{display:block}
+
+/* ---------- browse ---------- */
+.page-head{padding:34px 0 10px}
+.page-head h1{font-size:clamp(28px,4.5vw,40px)}
+.page-head p{color:var(--muted);margin-top:8px}
+.browse{display:grid;gap:22px;grid-template-columns:1fr;padding-bottom:50px}
+@media(min-width:960px){.browse{grid-template-columns:290px 1fr;align-items:start}}
+.filters{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:18px}
+@media(min-width:960px){.filters{position:sticky;top:84px}}
+.filters h3{font-size:16px;margin-bottom:14px}
+.filters .field{margin-bottom:12px}
+.ftoggle{display:flex;justify-content:space-between;align-items:center;width:100%;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:13px 16px;font-weight:700;cursor:pointer}
+@media(min-width:960px){.ftoggle{display:none}}
+.fbody{display:none}.fbody.open{display:block;margin-top:10px}
+@media(min-width:960px){.fbody{display:block;margin-top:0}}
+.resbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.resbar .count{font-weight:700}
+.resbar select{width:auto;min-height:42px;padding-top:8px;padding-bottom:8px}
+
+/* ---------- car page ---------- */
+.crumbs{padding:20px 0 10px;font-size:14px;color:var(--muted)}
+.crumbs a{color:var(--ink2);font-weight:600;text-decoration:none}
+.crumbs a:hover{text-decoration:underline}
+.cdetail{display:grid;gap:26px;grid-template-columns:minmax(0,1fr);padding-bottom:56px}
+.cdetail>*,.browse>*{min-width:0}
+@media(min-width:980px){.cdetail{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);align-items:start}}
+.gallery .main{position:relative;background:#000;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3}
+.gallery .main img{width:100%;height:100%;object-fit:contain;background:#0d1522}
+.gallery .arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.92);box-shadow:0 2px 10px rgba(0,0,0,.25);cursor:pointer;display:grid;place-items:center}
+.gallery .arrow.l{left:12px}.gallery .arrow.r{right:12px}
+.gallery .arrow svg{width:20px;height:20px}
+.gallery .pos{position:absolute;right:12px;bottom:12px;background:rgba(15,26,44,.8);color:#fff;font-weight:700;font-size:12.5px;border-radius:999px;padding:4px 11px}
+.thumbs{display:flex;gap:8px;overflow-x:auto;padding:10px 2px 4px;scrollbar-width:thin}
+.thumbs button{flex:none;width:84px;height:62px;border:2.5px solid transparent;border-radius:10px;overflow:hidden;padding:0;cursor:pointer;background:var(--soft)}
+.thumbs button.on{border-color:var(--accent)}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--sh)}
+.panel h2,.panel h3{font-size:20px;margin-bottom:12px}
+.cprice{font-size:clamp(30px,4vw,38px);font-weight:800;letter-spacing:-.03em;color:var(--ink)}
+.ctitle{font-size:clamp(22px,3vw,28px);margin:2px 0 4px}
+.cloc{color:var(--muted);font-size:15px;display:flex;gap:6px;align-items:center}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;margin:16px 0 0}
+.specs div{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--soft);font-size:14.5px}
+.specs span{color:var(--muted)}.specs b{text-align:right}
+.rt{margin:0 0 12px}.rt:last-child{margin:0}
+.desc{color:var(--ink2);font-size:16px;line-height:1.7}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{background:var(--navy-t);border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:600;color:var(--ink2)}
+.avatar{width:54px;height:54px;border-radius:14px;background:var(--navy-t);color:var(--ink2);display:grid;place-items:center;font-weight:800;font-size:19px;flex:none;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.stack>*+*{margin-top:18px}
+.sticky{position:static}
+@media(min-width:980px){.sticky{position:sticky;top:84px}}
+.tel{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ---------- dealerships ---------- */
+.linkrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+
+/* ---------- forms/auth ---------- */
+.authwrap{max-width:560px;margin:34px auto 60px}
+.tabs{display:flex;gap:6px;background:var(--soft);border-radius:12px;padding:5px;margin-bottom:20px}
+.tabs button{flex:1;border:0;background:transparent;border-radius:9px;padding:11px;font-weight:700;cursor:pointer;color:var(--ink2)}
+.tabs button.on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.12);color:var(--ink)}
+.agree{max-height:170px;overflow:auto;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13.5px;color:var(--ink2);margin-bottom:12px}
+.agree p{margin-bottom:8px}
+
+/* ---------- portal ---------- */
+.ptop{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:30px 0 8px}
+.ptop h1{font-size:clamp(26px,4vw,34px)}
+.ptabs{display:flex;gap:6px;border-bottom:2px solid var(--line);margin:16px 0 22px;overflow-x:auto}
+.ptabs button{border:0;background:transparent;padding:12px 16px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.ptabs button.on{color:var(--ink);border-bottom-color:var(--accent)}
+.ptabs .n{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:99px;background:var(--accent);color:#fff;font-size:12px;padding:0 6px;margin-left:6px}
+.vrow{display:grid;gap:14px;grid-template-columns:96px 1fr;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:14px}
+.vrow .acts{grid-column:1/-1}
+@media(min-width:720px){.vrow{grid-template-columns:150px 1fr auto;align-items:center}.vrow .acts{grid-column:auto}}
+.vrow .th{aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:var(--soft)}
+.vrow .th img{width:100%;height:100%;object-fit:cover}
+.vrow h3{font-size:17px}
+.vrow .sm{color:var(--muted);font-size:14px;margin-top:2px}
+.vrow .acts{display:flex;gap:8px;flex-wrap:wrap}
+.reason{background:var(--bad-t);color:var(--bad);border-radius:10px;padding:9px 12px;font-size:14px;margin-top:8px}
+.irow{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.irow.new{border-left:5px solid var(--accent)}
+.irow .top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.irow .msg{background:var(--bg);border-radius:10px;padding:10px 12px;margin:8px 0;white-space:pre-wrap;font-size:15px}
+.drop{border:2.5px dashed #B6BEC7;border-radius:var(--r);background:#fff;padding:26px 16px;text-align:center;cursor:pointer;display:block;transition:border-color .15s,background .15s}
+.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-t)}
+.drop svg{width:40px;height:40px;color:var(--accent);margin:0 auto 6px}
+.drop b{display:block;font-size:16px}
+.drop span{font-size:13.5px;color:var(--muted)}
+.pgrid{display:grid;gap:10px;grid-template-columns:repeat(2,1fr);margin-top:14px}
+@media(min-width:640px){.pgrid{grid-template-columns:repeat(4,1fr)}}
+.pt{position:relative;border-radius:12px;overflow:hidden;background:var(--soft);aspect-ratio:4/3;border:2px solid transparent}
+.pt.cover{border-color:var(--accent)}
+.pt img{width:100%;height:100%;object-fit:cover}
+.pt .lbl{position:absolute;left:6px;top:6px;background:var(--accent);color:#fff;font-size:11.5px;font-weight:800;border-radius:99px;padding:2px 9px}
+.pt .bar{position:absolute;left:0;right:0;bottom:0;display:flex;gap:4px;padding:6px;background:linear-gradient(transparent,rgba(0,0,0,.65))}
+.pt .bar button{flex:1;border:0;border-radius:7px;background:rgba(255,255,255,.95);padding:5px 0;font-size:12px;font-weight:700;cursor:pointer;min-height:30px}
+.pt .bar button.x{flex:none;width:34px;background:#fff;color:var(--bad)}
+.pt .up{position:absolute;inset:0;display:grid;place-items:center;background:rgba(255,255,255,.75);font-weight:700;font-size:13px}
+.pt.dragging{opacity:.4}
+.pt.dragover{border-color:#2F6BFF}
+
+/* ---------- admin ---------- */
+.arow{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:16px}
+.arow .ph{display:flex;gap:8px;overflow-x:auto;margin:12px 0}
+.arow .ph img{height:96px;width:auto;border-radius:8px;flex:none;cursor:zoom-in}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;font-size:14px}
+.kv span{color:var(--muted)}
+@media(max-width:560px){.kv{grid-template-columns:1fr}}
+
+/* ---------- footer & misc ---------- */
+.footer{background:#0B1424;color:rgba(255,255,255,.75);padding:46px 0 26px;margin-top:20px}
+.fgrid{display:grid;gap:28px;grid-template-columns:1fr}
+@media(min-width:760px){.fgrid{grid-template-columns:1.6fr 1fr 1fr 1fr}}
+.footer h4{color:#fff;font-size:14px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.footer a{display:block;text-decoration:none;padding:5px 0;color:rgba(255,255,255,.75)}
+.footer a:hover{color:#fff}
+.footer .logo{color:#fff;display:flex;padding:0}.footer a.logo:hover{color:#fff}
+.footer .copy{border-top:1px solid rgba(255,255,255,.12);margin-top:30px;padding-top:18px;font-size:13px;color:rgba(255,255,255,.55)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:13px 20px;border-radius:12px;font-weight:600;font-size:15px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200;max-width:92vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.modal-bg{position:fixed;inset:0;background:rgba(10,18,32,.55);display:grid;place-items:center;z-index:150;padding:20px}
+.modal{background:#fff;border-radius:18px;padding:24px;max-width:440px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.modal h3{font-size:20px;margin-bottom:8px}
+.modal p{color:var(--ink2);margin-bottom:18px}
+.modal .row{display:flex;gap:10px;justify-content:flex-end}
+.lb{position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:160;display:grid;place-items:center;padding:20px}
+.lb img{max-height:92vh;max-width:96vw;border-radius:8px}
+.loading{padding:70px 0;text-align:center;color:var(--muted)}
+.spin{width:30px;height:30px;border:3.5px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 12px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.legal h2{font-size:20px;margin:26px 0 8px}
+.legal p,.legal li{color:var(--ink2);margin-bottom:10px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* coming-soon marker */
+.soon{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--accent-t);color:var(--accent-d);border-radius:99px;padding:2px 8px;margin-left:6px;vertical-align:1px}
+
+/* ---------- services dropdown, source tabs, sell form ---------- */
+.dd{position:relative}
+.dd>button{background:none;border:0;padding:0;font-weight:600;font-size:15px;color:var(--ink2);cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.dd>button:hover,.dd.on>button,.dd.open>button{color:var(--accent-d)}
+.dd>button svg{width:14px;height:14px;transition:transform .15s}.dd.open>button svg{transform:rotate(180deg)}
+.dd .menu{display:none;position:absolute;top:calc(100% + 14px);left:-14px;min-width:290px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 36px rgba(15,26,44,.16);padding:8px;z-index:60}
+.dd.open .menu{display:block}
+.nav-links .dd .menu a{display:block;padding:11px 13px;border-radius:10px;font-weight:700;font-size:15px;color:var(--ink)}
+.nav-links .dd .menu a small{display:block;font-weight:500;color:var(--muted);font-size:13px;margin-top:1px}
+.nav-links .dd .menu a:hover{background:var(--accent-t);color:var(--ink)}
+.mnav .grp{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-d);margin:18px 2px 0;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.mnav .grp+a{border-top:0}
+.sellform fieldset{border:0;margin:0 0 26px;padding:0}
+.sellform legend{font-weight:800;font-size:19px;letter-spacing:-.01em;margin-bottom:4px;padding:0}
+.sellform .sub{color:var(--muted);font-size:14.5px;margin-bottom:14px}
+.agree{max-height:170px;overflow:auto;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px;font-size:13.5px;color:var(--ink2);line-height:1.55}
+.agree p{margin:0 0 9px}.agree p:last-child{margin:0}
+.refbadge{display:inline-block;font-weight:800;font-size:20px;letter-spacing:.5px;background:var(--accent-t);border:1px solid var(--accent-l);color:var(--accent-d);border-radius:99px;padding:9px 20px;margin:8px 0}
+.hpot{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.redir{max-width:560px;margin:14vh auto;padding:0 20px;text-align:center}
+/* choice buttons on the sell form (the default .chip is for the dark hero) */
+.sellform .chips{margin-top:0}
+.sellform .chip{display:inline-flex;align-items:center;color:var(--ink);background:#fff;border:1.5px solid var(--line);padding:10px 16px;font-size:14.5px;min-height:44px}
+.sellform .chip:hover{background:var(--accent-t);border-color:var(--accent-l)}
+.sellform .chip input{accent-color:var(--accent);width:18px;height:18px;margin:0 8px 0 0}
+.sellform .chip:has(input:checked){border-color:var(--accent);background:var(--accent-t);color:var(--accent-d)}
+.sellform .chip:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---- rating, listing age, sort ---- */
+.stars{color:#F5A524;letter-spacing:1px;font-size:15px;white-space:nowrap}
+.stars i{font-style:normal;color:#D3D7DC}
+.cfoot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--soft)}
+.ago{color:var(--muted);font-size:13px}
+.cmeta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:8px 0 4px}
+.cmeta .rl{font-size:13px;color:var(--muted)}
+.sortbox{display:flex;align-items:center;gap:10px}
+.sortbox label{font-weight:700;font-size:14px;white-space:nowrap}
+.sortbox select{min-width:210px}
+.fin-cta{margin-top:16px}.fin-cta p{color:var(--muted);margin:4px 0 12px;font-size:14.5px}
+.raterow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:12px}
+.raterow .ctrl{width:auto;min-width:150px;min-height:40px;padding:6px 12px}
+/* ---- services tiles ---- */
+.svcs{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:640px){.svcs{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.svcs{grid-template-columns:repeat(4,1fr)}}
+.svc{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;text-decoration:none;color:var(--ink);box-shadow:var(--sh);transition:transform .15s,box-shadow .15s}
+.svc:hover{transform:translateY(-3px)}
+.svc .ic{width:46px;height:46px;border-radius:12px;background:var(--accent-t);color:var(--accent-d);display:grid;place-items:center;margin-bottom:6px}
+.svc .ic svg{width:26px;height:26px}
+.svc h3{font-size:18px}.svc p{color:var(--muted);font-size:14.5px;flex:1}
+.svc .go{font-weight:800;color:var(--accent-d);font-size:14.5px;margin-top:6px}
+.svc.off{background:#FAFAFA}.svc.off .ic{background:var(--soft);color:var(--muted)}
+.svc .soon{align-self:flex-start;margin-top:6px}
+/* ---- finance calculator ---- */
+.fcalc{display:grid;gap:22px;grid-template-columns:1fr;align-items:start}
+@media(min-width:860px){.fcalc{grid-template-columns:1.1fr .9fr}}
+.fcalc .stack{display:grid;gap:14px}
+.result .lab{font-size:13.5px;color:var(--muted);font-weight:700}
+.result .big{font-size:clamp(34px,6vw,46px);font-weight:800;letter-spacing:-.03em;color:var(--accent-d);margin:2px 0 14px}
+.result .rows>div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--soft);font-size:15px}
+.result .rows span{color:var(--muted)}
+.sellform .pt .rm{position:absolute;top:6px;right:6px}
+
+.card .loc{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:13px;color:var(--ink2)}
+.card .loc svg{width:14px;height:14px;flex:none;color:var(--accent-d)}
+
+/* ---- photo standard and cleaner (dealer form) ---- */
+.pstd{background:var(--navy-t);border-radius:12px;padding:14px 16px;margin-bottom:14px;font-size:14.5px;color:var(--ink2)}
+.pstd ul{margin:8px 0 10px 18px;display:grid;gap:4px}
+.pcheck{display:flex;flex-wrap:wrap;gap:6px}
+.pcheck span{border-radius:99px;padding:4px 11px;font-size:13px;font-weight:700;background:#fff;border:1.5px solid var(--line);color:var(--muted)}
+.pcheck span.yes{background:var(--ok-t);border-color:transparent;color:var(--ok)}
+#ph_rejects .err{margin-top:12px}#ph_rejects ul{margin:6px 0 0 18px}
+.bgbar{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin-top:12px}
+.bgbar .hint{flex:1;min-width:220px;font-size:13px;color:var(--muted)}
+.pcell{display:flex;flex-direction:column;gap:6px}
+.pcell .plbl{min-height:40px;padding:6px 10px;font-size:14px}
+.pcell .plbl.need{border-color:var(--warn);background:var(--warn-t)}
+.pcell .btn-sm{width:100%}
+.pt .lbl2{position:absolute;right:6px;top:6px;background:#fff;color:var(--ink);font-size:11px;font-weight:800;border-radius:99px;padding:2px 8px;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.bgbar .btn{white-space:normal;text-align:center;height:auto;min-height:42px;max-width:100%;line-height:1.3}
+.pcell .btn-sm{white-space:normal;height:auto;min-height:36px;line-height:1.25}
+
+/* ---- share, map, how we work, about ---- */
+.share b{display:block;margin-bottom:10px}
+.sharebtns{display:flex;flex-wrap:wrap;gap:8px}
+.sbtn{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:99px;border:1.5px solid var(--line);background:#fff;color:var(--ink);font:inherit;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none}
+.sbtn:hover{border-color:var(--accent);color:var(--accent-d)}
+.sbtn.main{background:var(--accent);border-color:var(--accent);color:#fff}
+.sbtn svg{width:16px;height:16px}
+#sh_wa{background:#E8F8EE;border-color:#BDE8CC;color:#0E7A3A}
+.mapbox{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--soft);aspect-ratio:16/10}
+.mapbox iframe{width:100%;height:100%;border:0;display:block}
+.how{list-style:none;padding:0;margin:0;display:grid;gap:16px;grid-template-columns:1fr;counter-reset:none}
+@media(min-width:700px){.how{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.how:not(.big){grid-template-columns:repeat(5,1fr)}}
+.how li{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--sh)}
+.how .n{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;margin-bottom:10px}
+.how b{display:block;font-size:17px;margin-bottom:6px}.how p{color:var(--muted);font-size:14.5px}
+.how.big p{color:var(--ink2);font-size:15.5px}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:10px}
+.faq summary{font-weight:700;cursor:pointer}.faq details p{margin-top:8px;color:var(--ink2)}
+/* ---- number plate editor ---- */
+.modal-bg.plbg{display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:12px}
+.modal.plm{max-width:760px;width:100%;margin:auto;position:relative;padding:18px 18px 0}
+.plm .plx{position:absolute;right:10px;top:10px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:17px;cursor:pointer;display:grid;place-items:center}
+.plm h3{padding-right:44px}
+.plfoot{position:sticky;bottom:0;background:#fff;padding:10px 0 14px;border-top:1px solid var(--line);margin-top:6px}
+.plrow{display:flex;align-items:center;gap:8px;margin-bottom:8px}.plrow span{width:38px;font-weight:700;font-size:14px}.plrow input{flex:1;min-width:60px;width:auto}.plrow .btn{width:auto;flex:none;white-space:nowrap}
+.plm .plctl{display:block;margin:0 0 4px}
+.plstage{background:#111;border-radius:12px;overflow:hidden;margin:10px 0}
+.plstage{display:flex;justify-content:center}.plstage canvas{display:block;width:auto;height:auto;max-width:100%;max-height:min(50vh,520px);touch-action:none;cursor:grab}
+.plctl{display:flex;flex-wrap:wrap;gap:10px 22px;margin:8px 0 12px}.plctl label{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}.plctl input{width:150px}
+.plm .row{flex-wrap:wrap;gap:8px}
+.pt .lbl3{position:absolute;right:6px;top:30px;background:#16202E;color:#fff;font-size:11px;font-weight:800;border-radius:99px;padding:2px 8px}
+.pcell .tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.pcell .tools .btn-sm{flex:1 1 auto}
+
+/* ---- monthly instalment, car-page seo block, simpler share ---- */
+.card .pm{font-size:13.5px;font-weight:700;color:var(--accent-d);margin-top:1px}.card .pm i{font-style:normal;font-weight:600;color:var(--muted);font-size:12px}
+.cpm{margin-top:2px;font-size:16px;color:var(--ink2)}.cpm b{color:var(--accent-d)}.cpm span{display:block;font-size:12.5px;color:var(--muted)}
+#sh_btn svg{width:17px;height:17px;margin-right:6px;vertical-align:-3px}
+.seoblock{margin:34px 0 56px;padding:24px;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+.seoblock h2{font-size:20px;margin-bottom:8px}.seoblock p{color:var(--ink2);margin-bottom:14px;max-width:820px}
+.seolinks{display:flex;flex-wrap:wrap;gap:8px}.seolinks a{padding:8px 14px;border:1px solid var(--line);border-radius:99px;font-weight:600;font-size:14px;color:var(--ink);text-decoration:none;background:var(--soft)}.seolinks a:hover{border-color:var(--accent);color:var(--accent-d)}
+.svcs.two{grid-template-columns:1fr}@media(min-width:640px){.svcs.two{grid-template-columns:1fr 1fr}}
+.soonline{margin-top:18px;color:var(--muted);font-size:15px}.soonline a{font-weight:700;color:var(--ink)}.soonline a:hover{color:var(--accent-d)}
+
+/* ---- payment option tags ---- */
+.paytag{display:inline-block;font-size:12px;font-weight:800;padding:4px 10px;border-radius:99px;line-height:1.2;letter-spacing:.01em}
+.pay-finance{background:#E5F6EC;color:#0B6B33}.pay-rent_to_own{background:#E6EEFF;color:#1F4FB8}.pay-cash_only{background:#ECEFF1;color:#3A4658}
+.card .ph{position:relative}.card .ph .paytag{position:absolute;left:10px;top:10px;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.paywrap{margin-bottom:8px}
+
+</style>
+</head>
+<body>
+<noscript><div style="max-width:720px;margin:40px auto;padding:0 20px;font-family:Arial,sans-serif;line-height:1.6"><h1>Dealer Cars</h1><p>Dealer Cars is an online marketplace for used cars from hand-picked dealers in South Africa. Buyers browse vehicles and send an enquiry, and you can ask us to sell your car. This website needs JavaScript to work. Please turn it on in your browser settings and reload the page.</p></div></noscript>
+<div id="app"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+/* =====================================================================
+   DEALER CARS  -  one-file website
+   =====================================================================
+   SETUP: paste your own Supabase details between the quotes below
+   (Supabase > Project Settings > API: "Project URL" and the "anon public" key).
+   ===================================================================== */
+const CONFIG = {
+  SUPABASE_URL: "https://pgbmfqozaueuervqhddn.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_0jPoJqzSxFhILyATV1QljQ_X4zQ9bLa",
+  SITE_URL: "",           // optional: your web address, e.g. "https://dealercars.co.za" (leave empty and it is worked out automatically)
+  CONTACT_EMAIL: "",       // shown on the site when filled in, e.g. "hello@dealercars.co.za"
+  CONTACT_PHONE: "",       // shown on the site when filled in, e.g. "012 345 6789"
+  CONTACT_WHATSAPP: ""     // e.g. "27821234567" (country code, no + or spaces). Turns on the "WhatsApp us" buttons
+};
+
+const PROVINCES = ["Eastern Cape","Free State","Gauteng","KwaZulu-Natal","Limpopo","Mpumalanga","North West","Northern Cape","Western Cape"];
+const BODIES = ["Hatchback","Sedan","SUV","Bakkie","Coupe","Convertible","Van","Station wagon","Other"];
+const FUELS = ["Petrol","Diesel","Hybrid","Electric","Other"];
+const TRANS = ["Automatic","Manual"];
+const MAKES = ["Audi","BMW","Chevrolet","Citroen","Ford","Honda","Hyundai","Isuzu","Jaguar","Jeep","Kia","Land Rover","Mahindra","Mazda","Mercedes-Benz","Mini","Mitsubishi","Nissan","Opel","Peugeot","Renault","Subaru","Suzuki","Toyota","Volkswagen","Volvo"];
+const BUCKET = "vehicle-photos";
+const MAX_PHOTOS = 20, MIN_PHOTOS = 6;
+/* The Dealer Cars photo standard: what every photo shows, which shots are required, and the size rules */
+const PHOTO_LABELS = [["front", "Front"], ["rear", "Rear"], ["left", "Left side"], ["right", "Right side"], ["dash", "Dashboard"], ["odo", "Odometer (mileage)"], ["seats", "Seats"], ["boot", "Boot"], ["engine", "Engine"], ["wheels", "Wheels / tyres"], ["other", "Other"]];
+const PHOTO_REQ = ["front", "rear", "left", "right", "dash", "odo"];
+const PHOTO_EXTERIOR = ["front", "rear", "left", "right"];
+const PHOTO_RULES = { minW: 1200, minH: 800, maxMB: 15 };
+const labelName = (k) => { const x = PHOTO_LABELS.find(l => l[0] === k); return x ? x[1] : ""; };
+
+const $ = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+// descriptions keep the paragraphs the dealer typed
+function fmtText(s) {
+  const t = String(s == null ? "" : s).replace(/\r\n?/g, "\n").trim();
+  if (!t) return "";
+  return t.split(/\n{2,}/).map(p => `<p class="rt">${esc(p).replace(/\n/g, "<br>")}</p>`).join("");
+}
+const money = (n) => "R " + Math.round(Number(n) || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+const km = (n) => n == null || n === "" ? "" : Math.round(Number(n)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " km";
+const carTitle = (v) => [v.year, v.make, v.model, v.variant].filter(Boolean).join(" ");
+const dateStr = (d) => { try { return new Date(d).toLocaleDateString("en-ZA", { day: "numeric", month: "short", year: "numeric" }); } catch (_) { return ""; } };
+const initials = (s) => String(s || "?").split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join("").toUpperCase();
+const rand = () => Math.random().toString(36).slice(2, 10);
+const baseUrl = () => (CONFIG.SITE_URL || (location.origin + location.pathname.replace(/index\.html$/, ""))).replace(/\/$/, "");
+const isConfigured = () => /^https:\/\/.+/.test(CONFIG.SUPABASE_URL) && !/PASTE/.test(CONFIG.SUPABASE_URL) && !/PASTE/.test(CONFIG.SUPABASE_ANON_KEY);
+const photoUrl = (p) => p ? CONFIG.SUPABASE_URL.replace(/\/$/, "") + "/storage/v1/object/public/" + BUCKET + "/" + String(p).split("/").map(encodeURIComponent).join("/") : "";
+const waNumber = (ph) => { let d = String(ph || "").replace(/\D/g, ""); if (d.startsWith("0")) d = "27" + d.slice(1); return d; };
+
+const ICON = {
+  car: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 40h48M12 40l4-13a6 6 0 0 1 5.7-4.2h20.6A6 6 0 0 1 48 27l4 13"/><circle cx="19" cy="44" r="5"/><circle cx="45" cy="44" r="5"/></svg>',
+  pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg>',
+  shop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l1.5-5h15L21 10"/><path d="M4 10v10h16V10"/><path d="M9 20v-6h6v6"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.7 7L4 20l1.2-4.6A8 8 0 1 1 21 12z"/></svg>',
+  calc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></svg>',
+  upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>',
+  left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+  right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>',
+  menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+  share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>',
+  close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+};
+const LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#F26A1B"/><path d="M7 20h18M9 20l1.6-5.2a2 2 0 0 1 1.9-1.4h7a2 2 0 0 1 1.9 1.4L23 20" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11.5" cy="21.5" r="2" fill="#fff"/><circle cx="20.5" cy="21.5" r="2" fill="#fff"/></svg>';
+
+/* ---------- small UI helpers ---------- */
+let _toastT;
+function toast(msg) { const t = $("#toast"); if (!t) return; t.textContent = msg; t.classList.add("show"); clearTimeout(_toastT); _toastT = setTimeout(() => t.classList.remove("show"), 3600); }
+function confirmBox(title, text, okLabel, danger) {
+  return new Promise((resolve) => {
+    const bg = document.createElement("div"); bg.className = "modal-bg"; bg.setAttribute("role", "dialog"); bg.setAttribute("aria-modal", "true");
+    bg.innerHTML = `<div class="modal"><h3>${esc(title)}</h3><p>${esc(text)}</p><div class="row"><button class="btn btn-ghost" data-r="0">Cancel</button><button class="btn ${danger ? "btn-danger" : "btn-primary"}" data-r="1" id="cb_ok">${esc(okLabel || "OK")}</button></div></div>`;
+    document.body.appendChild(bg);
+    const done = (v) => { bg.remove(); resolve(v); };
+    bg.addEventListener("click", (e) => { const b = e.target.closest("[data-r]"); if (b) done(b.dataset.r === "1"); else if (e.target === bg) done(false); });
+    $("#cb_ok", bg).focus();
+  });
+}
+function setBusy(btn, on, label) { if (!btn) return; if (on) { btn.dataset.l = btn.textContent; btn.textContent = label || "Please wait…"; btn.disabled = true; } else { btn.textContent = btn.dataset.l || btn.textContent; btn.disabled = false; } }
+const niceErr = (e) => { const m = (e && (e.message || e.error_description)) || String(e || ""); if (/duplicate key|already registered|already been registered/i.test(m)) return "That e-mail address is already registered. Try logging in instead."; if (/Invalid login/i.test(m)) return "Wrong e-mail or password."; if (/Failed to fetch|NetworkError|network/i.test(m)) return "No internet connection. Please try again."; return m || "Something went wrong. Please try again."; };
+
+/* ---------- SEO (title, description, canonical, social tags, structured data) ---------- */
+function setMeta(sel, attr, val) { const el = document.querySelector(sel); if (el) el.setAttribute(attr, val); }
+function seo(o) {
+  const title = o.title || "Dealer Cars | Used cars for sale in South Africa";
+  const desc = o.desc || "Browse used cars for sale across South Africa on Dealer Cars. Cars from hand-picked dealers, with help from viewing to delivery.";
+  document.title = title;
+  setMeta('meta[name="description"]', "content", desc);
+  setMeta('meta[property="og:title"]', "content", title);
+  setMeta('meta[property="og:description"]', "content", desc);
+  const base = baseUrl();
+  setMeta('link[rel="canonical"]', "href", base + "/" + (o.path ? "#/" + o.path : ""));
+  let rb = document.querySelector('meta[name="robots"]');
+  if (o.noindex) { if (!rb) { rb = document.createElement("meta"); rb.name = "robots"; document.head.appendChild(rb); } rb.content = "noindex, nofollow"; }
+  else if (rb) rb.remove();
+  let ld = document.getElementById("ld_page");
+  if (ld) ld.remove();
+  if (o.jsonld) { ld = document.createElement("script"); ld.type = "application/ld+json"; ld.id = "ld_page"; ld.textContent = JSON.stringify(o.jsonld); document.head.appendChild(ld); }
+  const og = document.querySelector('meta[property="og:image"]'); if (og) og.remove();
+  if (o.image) { const m = document.createElement("meta"); m.setAttribute("property", "og:image"); m.content = o.image; document.head.appendChild(m); }
+}
+
+/* ---------- data layer (everything that talks to Supabase) ---------- */
+let sb = null;
+function client() { if (!sb) sb = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY); return sb; }
+const S = { session: null, dealer: undefined, isAdmin: undefined, cars: null, carsAt: 0, ptab: "vehicles", atab: "pending", resetMode: false };
+
+async function loadCars(force) {
+  if (!force && S.cars && Date.now() - S.carsAt < 60000) return S.cars;
+  const { data, error } = await client().from("public_vehicles").select("*").order("approved_at", { ascending: false }).limit(1000);
+  if (error) throw error;
+  S.cars = data || []; S.carsAt = Date.now(); return S.cars;
+}
+async function refreshSession() {
+  const { data } = await client().auth.getSession();
+  S.session = (data && data.session) || null;
+  if (!S.session) { S.dealer = undefined; S.isAdmin = undefined; }
+  return S.session;
+}
+async function loadMe() {
+  if (!S.session) return;
+  if (S.dealer === undefined) { const r = await client().from("dealers").select("*").eq("id", S.session.user.id).maybeSingle(); S.dealer = r.data || null; }
+  if (S.isAdmin === undefined) { const r = await client().rpc("is_admin"); S.isAdmin = r.data === true; }
+}
+async function signOut() { await client().auth.signOut(); S.session = null; S.dealer = undefined; S.isAdmin = undefined; S.ptab = "vehicles"; S.atab = "pending"; S.afilter = ""; }
+
+/* ---------- photos: shrink before upload ---------- */
+async function shrink(file, maxSide, quality) {
+  let bmp;
+  try { bmp = await createImageBitmap(file); }
+  catch (_) {
+    bmp = await new Promise((res, rej) => { const u = URL.createObjectURL(file), im = new Image(); im.onload = () => { res(im); }; im.onerror = () => rej(new Error("That file is not a picture we can read.")); im.src = u; });
+  }
+  const w = bmp.width || bmp.naturalWidth, h = bmp.height || bmp.naturalHeight, k = Math.min(1, maxSide / Math.max(w, h));
+  const c = document.createElement("canvas"); c.width = Math.max(1, Math.round(w * k)); c.height = Math.max(1, Math.round(h * k));
+  c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
+  return await new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error("Could not prepare that photo.")), "image/jpeg", quality));
+}
+const IMG_RX = /^image\/(jpeg|png|webp|heic|heif|gif|bmp)$/i;
+const isImg = (f) => f && (IMG_RX.test(f.type || "") || /\.(jpe?g|png|webp|heic|heif|gif|bmp)$/i.test(f.name || ""));
+async function uploadPhoto(file, folder) {
+  const blob = await shrink(file, 1600, 0.85);
+  const path = `${S.session.user.id}/${folder}/${rand()}${rand()}.jpg`;
+  const { error } = await client().storage.from(BUCKET).upload(path, blob, { contentType: "image/jpeg", upsert: false });
+  if (error) throw error;
+  return path;
+}
+
+/* ---------- small shared helpers ---------- */
+const saPhone = (v) => { let d = String(v || "").replace(/[^\d+]/g, ""); if (d.startsWith("+27")) d = "27" + d.slice(3); else if (d.startsWith("0")) d = "27" + d.slice(1); return d; };
+const SELL_BUCKET = "sell-photos";
+const stars = (n) => { n = Number(n) || 0; return n ? `<span class="stars" role="img" aria-label="Dealer Cars rating: ${n} out of 5">${"★".repeat(n)}<i>${"★".repeat(5 - n)}</i></span>` : ""; };
+function listedAgo(d) { if (!d) return ""; const days = Math.floor((Date.now() - new Date(d).getTime()) / 864e5); return days <= 0 ? "Listed today" : days === 1 ? "Listed yesterday" : days < 30 ? `Listed ${days} days ago` : days < 60 ? "Listed 1 month ago" : `Listed ${Math.floor(days / 30)} months ago`; }
+
+/* ---------- the Dealer Cars photo standard: check a file before it is accepted ---------- */
+async function imgSize(file) {
+  try { const b = await createImageBitmap(file); const r = { w: b.width, h: b.height }; if (b.close) b.close(); return r; }
+  catch (_) { return await new Promise((res, rej) => { const u = URL.createObjectURL(file), im = new Image(); im.onload = () => { URL.revokeObjectURL(u); res({ w: im.naturalWidth, h: im.naturalHeight }); }; im.onerror = () => rej(new Error("unreadable")); im.src = u; }); }
+}
+// returns "" when the photo follows the standard, otherwise one plain sentence saying what is wrong
+async function checkPhotoStandard(file) {
+  const nm = file.name || "A photo";
+  if (file.size > PHOTO_RULES.maxMB * 1048576) return `${nm} is bigger than ${PHOTO_RULES.maxMB} MB.`;
+  let s; try { s = await imgSize(file); } catch (_) { return `${nm} could not be read. Please use a JPG, PNG or WebP photo.`; }
+  if (s.w < PHOTO_RULES.minW || s.h < PHOTO_RULES.minH) return `${nm} is too small (${s.w} × ${s.h}). The minimum is ${PHOTO_RULES.minW} × ${PHOTO_RULES.minH} pixels.`;
+  if (s.h > s.w) return `${nm} is upright. Please turn your phone sideways and take it in landscape.`;
+  return "";
+}
+async function uploadBlob(blob, folder) {
+  const path = `${S.session.user.id}/${folder}/${rand()}${rand()}.jpg`;
+  const { error } = await client().storage.from(BUCKET).upload(path, blob, { contentType: "image/jpeg", upsert: false });
+  if (error) throw error;
+  return path;
+}
+
+/* ---------- background remover (runs in the dealer's own browser) ---------- */
+// The cut-out is made by the free IMG.LY "background-removal" library, loaded the first time it is used.
+// It is tried from two public CDNs. window.__DC_BG_ENGINE lets the automated tests plug in a stand-in.
+const BG_LIBS = ["https://esm.sh/@imgly/background-removal@1.5.8", "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.8/+esm"];
+let _bgFn = null;
+async function loadBgEngine() {
+  if (window.__DC_BG_ENGINE) return window.__DC_BG_ENGINE;
+  if (_bgFn) return _bgFn;
+  let last;
+  for (const u of BG_LIBS) { try { const m = await import(u); const fn = m.removeBackground || m.default; if (typeof fn === "function") { _bgFn = fn; return fn; } } catch (e) { last = e; console.warn("background remover from " + u + " failed", e); } }
+  throw last || new Error("The photo cleaner could not be loaded.");
+}
+async function cutOut(blob, onProgress) {
+  const fn = await loadBgEngine();
+  const cfg = { model: "isnet_fp16", output: { format: "image/png" }, progress: (key, cur, tot) => { if (onProgress && tot) onProgress(Math.min(100, Math.round(cur / tot * 100)), String(key || "")); } };
+  try { if (navigator.gpu) cfg.device = "gpu"; } catch (_) {}
+  const out = await fn(blob, cfg);
+  if (!out || !out.size) throw new Error("empty result");
+  return out;
+}
+// puts the cut-out car on one clean grey studio backdrop with a soft shadow, and returns a JPEG
+async function studioPhoto(cutBlob) {
+  const bmp = await createImageBitmap(cutBlob), w = bmp.width, h = bmp.height, k = Math.min(1, 1600 / Math.max(w, h));
+  const W = Math.max(1, Math.round(w * k)), H = Math.max(1, Math.round(h * k));
+  const c = document.createElement("canvas"); c.width = W; c.height = H; const x = c.getContext("2d");
+  const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#F6F7F9"); g.addColorStop(0.7, "#E9ECEF"); g.addColorStop(1, "#DADFE4"); x.fillStyle = g; x.fillRect(0, 0, W, H);
+  // where is the car? look at the transparent pixels on a small copy
+  const sw = Math.min(240, W), sh = Math.max(1, Math.round(H * sw / W)), s = document.createElement("canvas"); s.width = sw; s.height = sh; const sx = s.getContext("2d"); sx.drawImage(bmp, 0, 0, sw, sh);
+  const px = sx.getImageData(0, 0, sw, sh).data; let minX = sw, maxX = -1, maxY = -1;
+  for (let yy = 0; yy < sh; yy++) for (let xx = 0; xx < sw; xx++) if (px[(yy * sw + xx) * 4 + 3] > 40) { if (xx < minX) minX = xx; if (xx > maxX) maxX = xx; if (yy > maxY) maxY = yy; }
+  if (maxX > minX) { const cx = (minX + maxX) / 2 * W / sw, rx = (maxX - minX) / 2 * W / sw * 0.96, by = (maxY + 0.5) * H / sh;
+    x.save(); x.translate(cx, by - rx * 0.015); x.scale(1, 0.1); const rg = x.createRadialGradient(0, 0, 0, 0, 0, rx); rg.addColorStop(0, "rgba(0,0,0,.5)"); rg.addColorStop(1, "rgba(0,0,0,0)"); x.fillStyle = rg; x.beginPath(); x.arc(0, 0, rx, 0, Math.PI * 2); x.fill(); x.restore(); }
+  x.drawImage(bmp, 0, 0, W, H); if (bmp.close) bmp.close();
+  return await new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error("Could not prepare that photo.")), "image/jpeg", 0.88));
+}
+
+/* ---------- contact details (filled in once, in CONFIG at the top) ---------- */
+const hasContact = () => !!(CONFIG.CONTACT_WHATSAPP || CONFIG.CONTACT_EMAIL || CONFIG.CONTACT_PHONE);
+const waLink = (msg) => CONFIG.CONTACT_WHATSAPP ? "https://wa.me/" + CONFIG.CONTACT_WHATSAPP.replace(/\D/g, "") + (msg ? "?text=" + encodeURIComponent(msg) : "") : "";
+
+/* ---------- the Dealer Cars number plate cover (drawn on a photo) ---------- */
+/* estimated monthly instalment shown on every car (same maths as the finance calculator) */
+/* how a car can be bought: set by the dealer, changeable by the admin */
+const PAY = { finance: "Finance available", rent_to_own: "Rent to own", cash_only: "Cash only" };
+const payLabel = (k) => PAY[k] || "";
+const payTag = (k) => PAY[k] ? `<span class="paytag pay-${k}">${PAY[k]}</span>` : "";
+const showsInstalment = (v) => !v.payment_type || v.payment_type === "finance";   // rent to own and cash only: no finance estimate
+const EST = { dep: 0.10, rate: 12.5, months: 72 };
+const estMonthly = (price) => Math.round(financeCalc(Number(price) || 0, (Number(price) || 0) * EST.dep, EST.rate, EST.months, 0).monthly);
+const pmText = (price) => money(estMonthly(price)) + " p/m";
+const PRICE_STEPS = [40000, 60000, 80000, 100000, 150000, 200000, 300000, 400000, 600000, 800000, 1000000];
+const MONTHLY_STEPS = [1500, 2000, 3000, 4000, 5000, 7500, 10000, 15000];
+const budgetCap = (price) => [60000, 80000, 100000, 150000, 200000, 250000, 300000, 400000, 500000, 600000, 800000, 1000000].find(x => x >= price) || 1500000;
+const monthlyCap = (m) => MONTHLY_STEPS.find(x => x >= m) || 20000;
+const PLATE_RATIO = 110 / 520;
+function drawPlate(x, cx, cy, w, rotDeg, selected) {
+  const h = w * PLATE_RATIO, r = h * 0.14, pad = h * 0.13;
+  x.save(); x.translate(cx, cy); x.rotate((rotDeg || 0) * Math.PI / 180);
+  x.shadowColor = "rgba(0,0,0,.35)"; x.shadowBlur = h * 0.12; x.shadowOffsetY = h * 0.04;
+  x.beginPath(); x.roundRect(-w / 2, -h / 2, w, h, r); x.fillStyle = "#FFFFFF"; x.fill(); x.shadowColor = "transparent";
+  x.lineWidth = Math.max(1, h * 0.05); x.strokeStyle = "#16202E"; x.stroke();
+  const m = h - pad * 2, mx = -w / 2 + pad, my = -m / 2, s = m / 32;
+  x.save(); x.translate(mx, my); x.scale(s, s);
+  x.beginPath(); x.roundRect(0, 0, 32, 32, 8); x.fillStyle = "#F26A1B"; x.fill();
+  x.strokeStyle = "#fff"; x.lineWidth = 2; x.lineCap = "round"; x.lineJoin = "round"; x.stroke(new Path2D("M7 20h18M9 20l1.6-5.2a2 2 0 0 1 1.9-1.4h7a2 2 0 0 1 1.9 1.4L23 20"));
+  x.fillStyle = "#fff"; x.beginPath(); x.arc(11.5, 21.5, 2, 0, 7); x.fill(); x.beginPath(); x.arc(20.5, 21.5, 2, 0, 7); x.fill(); x.restore();
+  const tx = mx + m + pad * 1.2, avail = w / 2 - pad - tx; let fs = h * 0.5; x.textBaseline = "middle"; x.textAlign = "left";
+  x.font = `800 ${fs}px Inter, Arial, sans-serif`; const tw = x.measureText("DEALER CARS").width; if (tw > avail) { fs *= avail / tw; x.font = `800 ${fs}px Inter, Arial, sans-serif`; }
+  const w1 = x.measureText("DEALER ").width; x.fillStyle = "#16202E"; x.fillText("DEALER", tx, h * 0.02); x.fillStyle = "#F26A1B"; x.fillText("CARS", tx + w1, h * 0.02);
+  if (selected) { x.setLineDash([h * 0.1, h * 0.08]); x.lineWidth = Math.max(2, h * 0.04); x.strokeStyle = "#0B6BFF"; x.beginPath(); x.roundRect(-w / 2 - h * 0.08, -h / 2 - h * 0.08, w + h * 0.16, h + h * 0.16, r); x.stroke(); }
+  x.restore();
+}
+
+/* ====================== layout: nav + footer ====================== */
+const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+const HOW_STEPS = [
+  ["Find your car", "Browse cars from hand-picked dealers. Search by city, province, price or monthly instalment."],
+  ["Tell us what you like", "Send an enquiry on any car. We talk to the seller for you and answer your questions."],
+  ["We go with you to view it", "You do not have to go alone. We come with you to view the car."],
+  ["We help with the documentation", "We explain what paperwork is needed, help you with it and make sure nothing is missed."],
+  ["Delivery and support", "We are there when the car is delivered, and we help afterwards if you need anything."]
+];
+function navHtml(cur) {
+  const on = (k) => cur === k ? ' class="on"' : "";
+  const acct = S.session ? `<a href="#/portal" class="btn btn-dark btn-sm" id="nav_acct">My dealership</a>` : "";
+  const svcOn = ["sell", "finance", "rentals", "insurance", "spotters"].includes(cur);
+  return `<header class="nav"><div class="wrap nav-in">
+    <a class="logo" href="#/" aria-label="Dealer Cars home">${LOGO}<span>Dealer<b>Cars</b></span></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#/cars"${on("cars")}>Cars for sale</a>
+      <a href="#/about"${on("about")} id="nav_about">How we work</a>
+      <div class="dd${svcOn ? " on" : ""}" id="dd_services"><button type="button" id="dd_btn" aria-expanded="false" aria-haspopup="true">Services ${CHEV}</button>
+        <div class="menu" id="dd_menu" role="menu">
+          <a href="#/sell" role="menuitem" id="nav_sell">Sell your car<small>We help you sell it</small></a>
+          <a href="#/finance" role="menuitem" id="nav_finance">Finance calculator<small>Work out your monthly instalment</small></a>
+          <a href="#/rentals" role="menuitem" id="nav_rentals">Car rental <span class="soon">Coming soon</span><small>Rent a car</small></a>
+          <a href="#/insurance" role="menuitem" id="nav_insurance">Insurance <span class="soon">Coming soon</span><small>Cover for your car</small></a>
+          <a href="#/spotters" role="menuitem" id="nav_spotters">Spotters <span class="soon">Coming soon</span><small>Spotters network</small></a>
+        </div></div>
+      <a href="#/for-dealers"${on("fordealers")}>For dealers</a>${acct}
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">${ICON.menu}</button>
+  </div>
+  <div class="mnav" id="mnav">
+    <a href="#/cars">Cars for sale<small>Browse all cars</small></a>
+    <a href="#/about">How we work<small>We go with you, start to finish</small></a>
+    <div class="grp">Services</div>
+    <a href="#/sell">Sell your car<small>We help you sell it</small></a>
+    <a href="#/finance">Finance calculator<small>Work out your monthly instalment</small></a>
+    <a href="#/rentals">Car rental <span class="soon">Coming soon</span></a>
+    <a href="#/insurance">Insurance <span class="soon">Coming soon</span></a>
+    <a href="#/spotters">Spotters <span class="soon">Coming soon</span></a>
+    <div class="grp">For dealerships</div>
+    <a href="#/for-dealers">List your vehicles<small>Register or log in as a dealership</small></a>${S.session ? `<a href="#/portal" class="btn btn-dark btn-block">My dealership</a>` : ""}
+  </div></header>`;
+}
+function footerHtml() {
+  const c = [];
+  if (CONFIG.CONTACT_WHATSAPP) c.push(`<a href="${esc(waLink())}" target="_blank" rel="noopener" id="ft_wa">WhatsApp us</a>`);
+  if (CONFIG.CONTACT_PHONE) c.push(`<a href="tel:${esc(CONFIG.CONTACT_PHONE.replace(/[^\d+]/g, ""))}" id="ft_tel">${esc(CONFIG.CONTACT_PHONE)}</a>`);
+  if (CONFIG.CONTACT_EMAIL) c.push(`<a href="mailto:${esc(CONFIG.CONTACT_EMAIL)}">${esc(CONFIG.CONTACT_EMAIL)}</a>`);
+  return `<footer class="footer"><div class="wrap">
+    <div class="fgrid">
+      <div><a class="logo" href="#/">${LOGO}<span>Dealer<b>Cars</b></span></a><p style="margin-top:12px;max-width:340px;font-size:14.5px">Used cars for sale across South Africa, from hand-picked dealers.</p></div>
+      <div><h4>Buyers &amp; sellers</h4><a href="#/cars">Cars for sale</a><a href="#/sell">Sell your car</a><a href="#/finance">Finance calculator</a></div>
+      <div><h4>Coming soon</h4><a href="#/rentals">Car rental</a><a href="#/insurance">Insurance</a><a href="#/spotters">Spotters</a></div>
+      <div><h4>Dealers</h4><a href="#/for-dealers">List your vehicles</a><a href="#/login">Dealer login</a></div>
+      <div><h4>Company</h4><a href="#/about">About us</a><a href="#/terms">Terms of use</a><a href="#/privacy">Privacy policy</a>${c.join("")}</div>
+    </div>
+    <div class="copy">© ${new Date().getFullYear()} Dealer Cars. Vehicles are sold by the dealerships that list them.</div>
+  </div></footer>`;
+}
+function page(cur, inner) { return navHtml(cur) + `<main id="main">${inner}</main>` + footerHtml(); }
+function bindNav() {
+  bindDropdown();
+  const b = $("#burger"), m = $("#mnav"); if (!b || !m) return;
+  b.addEventListener("click", () => { const o = m.classList.toggle("open"); b.setAttribute("aria-expanded", o ? "true" : "false"); b.innerHTML = o ? ICON.close : ICON.menu; });
+  m.addEventListener("click", (e) => { if (e.target.closest("a")) m.classList.remove("open"); });
+}
+function bindDropdown() {
+  const dd = $("#dd_services"), btn = $("#dd_btn"); if (!dd || !btn) return;
+  const set = (o) => { dd.classList.toggle("open", o); btn.setAttribute("aria-expanded", o ? "true" : "false"); };
+  btn.addEventListener("click", (e) => { e.stopPropagation(); set(!dd.classList.contains("open")); });
+  dd.addEventListener("click", (e) => { if (e.target.closest("a")) set(false); });
+  document.addEventListener("click", (e) => { if (!dd.isConnected) return; if (!dd.contains(e.target)) set(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && dd.isConnected) { set(false); btn.focus(); } });
+}
+
+/* ====================== cards ====================== */
+function carCard(v) {
+  const img = v.photos && v.photos[0] ? `<img src="${esc(photoUrl(v.photos[0]))}" alt="${esc(carTitle(v))}" loading="lazy">` : `<div class="noimg">${ICON.car}</div>`;
+  const meta = [km(v.mileage), v.transmission, v.fuel_type].filter(Boolean).join(" · ");
+  const cnt = v.photos && v.photos.length > 1 ? `<span class="cnt">${v.photos.length} photos</span>` : "";
+  return `<a class="card" href="#/car/${esc(v.ref)}" data-car="${esc(v.ref)}"><div class="ph">${img}${payTag(v.payment_type)}${cnt}</div><div class="bd">
+    <div class="price">${money(v.price)}</div>${showsInstalment(v) ? `<div class="pm">${esc(pmText(v.price))} <i>est.</i></div>` : ""}<div class="ttl">${esc(carTitle(v))}</div>
+    <div class="meta">${esc(meta) || "&nbsp;"}</div>
+    <div class="loc">${ICON.pin}<span>${esc([v.city, v.province].filter(Boolean).join(", "))}</span></div>
+    <div class="cfoot">${v.rating ? stars(v.rating) : "<span></span>"}<span class="ago">${esc(listedAgo(v.approved_at))}</span></div></div></a>`;
+}
+function noCarsBlock() {
+  return `<div class="empty"><h3>New cars are being added</h3><p>Cars are being listed now, so check back soon.</p><a class="btn btn-primary" href="#/sell">Want to sell your car?</a></div>`;
+}
+const loadingBlock = () => `<div class="loading"><div class="spin"></div>Loading…</div>`;
+const failBlock = (what) => `<div class="empty"><h3>We couldn't load ${esc(what)}</h3><p>Please check your internet connection and try again.</p><button class="btn btn-dark" onclick="location.reload()">Try again</button></div>`;
+
+/* ====================== home ====================== */
+async function viewHome() {
+  seo({ path: "" });
+  let cars = [], err = false;
+  try { cars = await loadCars(); } catch (e) { console.warn(e); err = true; }
+  const makes = [...new Set(cars.map(c => c.make))].sort();
+  const opt = (arr) => arr.map(x => `<option>${esc(x)}</option>`).join("");
+  const places = [...new Set([...PROVINCES, ...cars.map(c => c.city).filter(Boolean)])].sort();
+  const html = page("home", `
+  <section class="hero"><svg class="road" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M-40 460 C 260 420, 520 300, 760 250 S 1120 120, 1260 40" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2.4" stroke-dasharray="3 16" stroke-linecap="round"/><path d="M-40 520 C 300 480, 560 360, 800 310 S 1140 190, 1260 110" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1.6" stroke-dasharray="3 14" stroke-linecap="round"/></svg>
+    <div class="wrap hero-in">
+      <span class="eyebrow">Used cars for sale</span>
+      <h1>Find your next car from <em>hand-picked dealers</em>.</h1>
+      <p class="lead">Browse used cars across South Africa, and we go with you from the first viewing to delivery.</p>
+      <form class="search" id="home_search" role="search">
+        <label class="sr" for="hs_make">Make</label><select class="ctrl" id="hs_make"><option value="">Any make</option>${opt(makes)}</select>
+        <label class="sr" for="hs_place">City or province</label><input class="ctrl" id="hs_place" list="hs_places" placeholder="City or province" autocomplete="off"><datalist id="hs_places">${places.map(x => `<option value="${esc(x)}">`).join("")}</datalist>
+        <label class="sr" for="hs_max">Maximum price</label><select class="ctrl" id="hs_max"><option value="">Any price</option>${PRICE_STEPS.map(p => `<option value="${p}">Up to ${money(p)}</option>`).join("")}</select>
+        <label class="sr" for="hs_mp">Maximum monthly instalment</label><select class="ctrl" id="hs_mp"><option value="">Any monthly instalment</option>${MONTHLY_STEPS.map(p => `<option value="${p}">Up to ${money(p)} p/m</option>`).join("")}</select>
+        <button class="btn btn-primary" type="submit" id="hs_go">Search cars</button>
+      </form>
+      <div class="chips" aria-label="Browse by body type">${["SUV", "Hatchback", "Sedan", "Bakkie"].map(b => `<a class="chip" href="#/cars?body=${encodeURIComponent(b)}">${b}</a>`).join("")}</div>
+    </div></section>
+  <section class="section"><div class="wrap">
+    <div class="sec-head"><div><h2>Latest cars</h2><p>Freshly listed by our dealers.</p></div><a class="link" href="#/cars">See all cars →</a></div>
+    ${err ? failBlock("the cars") : cars.length ? `<div class="cards four" id="home_cars">${cars.slice(0, 8).map(carCard).join("")}</div>` : noCarsBlock()}
+  </div></section>
+  <section class="section soft" id="home_services"><div class="wrap">
+    <div class="sec-head"><div><h2>Our services</h2><p>More than a car listing.</p></div></div>
+    <div class="svcs two">
+      <a class="svc" href="#/sell" id="svc_sell"><div class="ic">${ICON.car}</div><h3>Sell your car</h3><p>Tell us about your car and add photos. We help you sell it.</p><span class="go">Sell your car →</span></a>
+      <a class="svc" href="#/finance" id="svc_finance"><div class="ic">${ICON.calc}</div><h3>Finance calculator</h3><p>Work out your monthly instalment before you shop.</p><span class="go">Open the calculator →</span></a>
+    </div>
+    <p class="soonline" id="svc_soon">Coming soon: <a href="#/rentals">Car rental</a> · <a href="#/insurance">Insurance</a> · <a href="#/spotters">Spotters</a></p></div></section>
+  <section class="section soft" id="home_how"><div class="wrap">
+    <div class="sec-head"><div><h2>We go with you, start to finish</h2><p>Dealer Cars is more than a listing site.</p></div><a class="btn btn-ghost" href="#/about" id="home_about">See how we work</a></div>
+    <ol class="how">${HOW_STEPS.map((x, i) => `<li><span class="n">${i + 1}</span><b>${esc(x[0])}</b><p>${esc(x[1])}</p></li>`).join("")}</ol></div></section>
+  <section class="section"><div class="wrap"><div class="band">
+    <div><h2>Are you a dealership?</h2><p>Register your dealership, add your stock with photos, and we review each vehicle before it goes live. Buyers then send their enquiries to you.</p></div>
+    <div><a class="btn btn-primary" href="#/for-dealers" id="home_dealer_cta">List your vehicles</a></div>
+  </div></div></section>`);
+  return { html, bind() {
+    bindNav();
+    $("#home_search").addEventListener("submit", (e) => { e.preventDefault(); const q = new URLSearchParams(); const m = $("#hs_make").value, x = $("#hs_max").value, mp = $("#hs_mp").value, pl = $("#hs_place").value.trim();
+      if (m) q.set("make", m); if (x) q.set("max", x); if (mp) q.set("mp", mp);
+      if (pl) { const pr = PROVINCES.find(p => p.toLowerCase() === pl.toLowerCase()); if (pr) q.set("province", pr); else { const c = cars.find(v => v.city && v.city.toLowerCase() === pl.toLowerCase()); if (c) q.set("city", c.city); else q.set("q", pl); } }
+      location.hash = "#/cars" + (q.toString() ? "?" + q : ""); });
+  } };
+}
+
+/* ====================== browse ====================== */
+const SORTS = { newest: "Listing duration: newest first", oldest: "Listing duration: longest first", price_asc: "Price: low to high", price_desc: "Price: high to low", km_asc: "Mileage: low to high", km_desc: "Mileage: high to low", rating: "Rating: highest first", year_desc: "Year: newest first" };
+function filterCars(cars, f) {
+  const q = (f.q || "").toLowerCase().trim().split(/\s+/).filter(Boolean);
+  const r = cars.filter(v => {
+    if (f.make && v.make !== f.make) return false;
+    if (f.province && v.province !== f.province) return false;
+    if (f.city && String(v.city || "").toLowerCase() !== f.city.toLowerCase()) return false;
+    if (f.body && v.body_type !== f.body) return false;
+    if (f.fuel && v.fuel_type !== f.fuel) return false;
+    if (f.trans && v.transmission !== f.trans) return false;
+    if (f.max && Number(v.price) > Number(f.max)) return false;
+    if (f.min && Number(v.price) < Number(f.min)) return false;
+    if (f.mp && (!showsInstalment(v) || estMonthly(v.price) > Number(f.mp))) return false;
+    if (f.pay && v.payment_type !== f.pay) return false;
+    if (f.year && Number(v.year) < Number(f.year)) return false;
+    if (f.km && (v.mileage == null || Number(v.mileage) > Number(f.km))) return false;
+    if (f.rating && Number(v.rating || 0) < Number(f.rating)) return false;
+    if (q.length) { const hay = [v.make, v.model, v.variant, v.colour, v.year, v.body_type, v.city, v.province].join(" ").toLowerCase(); if (!q.every(t => hay.includes(t))) return false; }
+    return true;
+  });
+  const t = (d) => new Date(d).getTime(), big = 1e12;
+  const by = { newest: (a, b) => t(b.approved_at) - t(a.approved_at), oldest: (a, b) => t(a.approved_at) - t(b.approved_at), price_asc: (a, b) => a.price - b.price, price_desc: (a, b) => b.price - a.price, year_desc: (a, b) => b.year - a.year,
+    km_asc: (a, b) => (a.mileage == null ? big : a.mileage) - (b.mileage == null ? big : b.mileage), km_desc: (a, b) => (b.mileage == null ? -1 : b.mileage) - (a.mileage == null ? -1 : a.mileage),
+    rating: (a, b) => (b.rating || 0) - (a.rating || 0) || t(b.approved_at) - t(a.approved_at) };
+  return r.sort(by[f.sort] || by.newest);
+}
+// headline + page title that follow the search ("Cars for sale in Johannesburg under R 100 000")
+function listTitle(f) {
+  const where = f.city || f.province, what = (f.make ? f.make + " cars" : f.body ? f.body + "s" : "Cars") + " for sale", cap = f.max ? " under " + money(f.max) : f.mp ? " with instalments up to " + money(f.mp) + " p/m" : "";
+  const h = what + (where ? " in " + where : "") + cap;
+  return { h, title: h + " | Dealer Cars", desc: `${h}. Browse used cars from hand-picked dealers on Dealer Cars. Search by city, province, price or monthly instalment.` };
+}
+async function viewCars(query) {
+  seo({ title: "Used cars for sale | Dealer Cars", desc: "Browse used cars for sale across South Africa from hand-picked dealers. Search by city, province, price or monthly instalment.", path: "cars" });
+  let cars = [], err = false;
+  try { cars = await loadCars(); } catch (e) { console.warn(e); err = true; }
+  const f = Object.assign({ q: "", make: "", province: "", city: "", pay: "", body: "", fuel: "", trans: "", min: "", max: "", mp: "", year: "", km: "", rating: "", sort: "newest" }, Object.fromEntries(new URLSearchParams(query || "")));
+  const makes = [...new Set(cars.map(c => c.make))].sort();
+  const sel = (id, label, arr, val, any) => `<div class="field"><label for="${id}">${label}</label><select class="ctrl" id="${id}"><option value="">${any}</option>${arr.map(x => `<option${x === val ? " selected" : ""}>${esc(x)}</option>`).join("")}</select></div>`;
+  const selv = (id, label, pairs, val, any) => `<div class="field"><label for="${id}">${label}</label><select class="ctrl" id="${id}"><option value="">${any}</option>${pairs.map(([v, t]) => `<option value="${v}"${String(v) === String(val) ? " selected" : ""}>${t}</option>`).join("")}</select></div>`;
+  const cities = [...new Set(cars.map(c => c.city).filter(Boolean))].sort();
+  const years = []; for (let y = new Date().getFullYear(); y >= 2005; y--) years.push(y);
+  const html = page("cars", `
+  <div class="wrap"><div class="page-head"><h1 id="list_h1">Cars for sale</h1><p>Cars from hand-picked dealers.</p></div>
+  <div class="browse">
+    <aside><button class="ftoggle" id="ftoggle" aria-expanded="false" type="button"><span>Filters</span><span id="fcount"></span></button>
+    <form class="filters fbody" id="fbody" onsubmit="return false"><h3>Filter cars</h3>
+      <div class="field"><label for="f_q">Search</label><input class="ctrl" id="f_q" type="search" placeholder="City, province or make" value="${esc(f.q)}"></div>
+      ${selv("f_pay", "How to buy", Object.entries(PAY), f.pay, "Any (finance, rent to own, cash)")}${sel("f_province", "Province", PROVINCES, f.province, "Any province")}${sel("f_city", "City", cities, f.city, "Any city")}${sel("f_make", "Make", makes, f.make, "Any make")}${sel("f_body", "Body type", BODIES, f.body, "Any body type")}
+      ${selv("f_min", "Price from", PRICE_STEPS.map(p => [p, "From " + money(p)]), f.min, "No minimum")}
+      ${selv("f_max", "Maximum price", PRICE_STEPS.map(p => [p, "Up to " + money(p)]), f.max, "Any price")}
+      ${selv("f_mp", "Maximum monthly instalment", MONTHLY_STEPS.map(p => [p, "Up to " + money(p) + " p/m"]), f.mp, "Any monthly instalment")}<div class="hint" style="font-size:12px;color:var(--muted);margin:-8px 0 12px">Monthly instalments are estimates: ${EST.dep * 100}% deposit, ${EST.rate}% over ${EST.months} months.</div>
+      ${selv("f_km", "Maximum mileage", [20000, 50000, 100000, 150000, 200000].map(k => [k, "Up to " + km(k)]), f.km, "Any mileage")}
+      ${selv("f_year", "Year from", years.map(y => [y, y]), f.year, "Any year")}
+      ${selv("f_rating", "Dealer Cars rating", [[3, "3 stars and up"], [4, "4 stars and up"], [5, "5 stars"]], f.rating, "Any rating")}
+      ${sel("f_fuel", "Fuel", FUELS, f.fuel, "Any fuel")}${sel("f_trans", "Gearbox", TRANS, f.trans, "Any gearbox")}
+      <button class="btn btn-ghost btn-block" type="button" id="f_clear">Clear filters</button>
+    </form></aside>
+    <section><div class="resbar"><div class="count" id="rescount"></div><div class="sortbox"><label for="f_sort">Sort by</label><select class="ctrl" id="f_sort">${Object.entries(SORTS).map(([k, v]) => `<option value="${k}"${k === f.sort ? " selected" : ""}>${v}</option>`).join("")}</select></div></div>
+    <div id="results">${err ? failBlock("the cars") : ""}</div><div style="text-align:center;margin-top:22px"><button class="btn btn-ghost" id="more" hidden>Show more cars</button></div></section>
+  </div></div>`);
+  return { html, bind() {
+    bindNav(); if (err) return;
+    let shown = 24;
+    const ids = ["f_q", "f_make", "f_pay", "f_province", "f_city", "f_body", "f_fuel", "f_trans", "f_min", "f_max", "f_mp", "f_year", "f_km", "f_rating", "f_sort"], keys = ["q", "make", "pay", "province", "city", "body", "fuel", "trans", "min", "max", "mp", "year", "km", "rating", "sort"];
+    const read = () => Object.fromEntries(keys.map((k, i) => [k, $("#" + ids[i]).value]));
+    const paint = () => {
+      const cur = read(), list = filterCars(cars, cur), active = Object.entries(cur).filter(([k, v]) => v && k !== "sort").length;
+      $("#rescount").textContent = list.length === 1 ? "1 car found" : list.length + " cars found";
+      $("#fcount").textContent = active ? active + " active" : "";
+      { const t = listTitle(cur); $("#list_h1").textContent = t.h; seo({ title: t.title, desc: t.desc, path: "cars" }); }
+      const box = $("#results");
+      if (!cars.length) box.innerHTML = noCarsBlock();
+      else if (!list.length) box.innerHTML = `<div class="empty"><h3>No cars match those filters</h3><p>Try removing a filter or searching for something broader.</p><button class="btn btn-dark" id="f_clear2">Clear filters</button></div>`;
+      else box.innerHTML = `<div class="cards">${list.slice(0, shown).map(carCard).join("")}</div>`;
+      $("#more").hidden = list.length <= shown;
+      const c2 = $("#f_clear2"); if (c2) c2.addEventListener("click", clear);
+      const q = new URLSearchParams(); Object.entries(cur).forEach(([k, v]) => { if (v && !(k === "sort" && v === "newest")) q.set(k, v); });
+      history.replaceState(null, "", "#/cars" + (q.toString() ? "?" + q : ""));
+    };
+    const clear = () => { ids.slice(0, -1).forEach(id => $("#" + id).value = ""); shown = 24; paint(); };
+    let t; $("#f_q").addEventListener("input", () => { clearTimeout(t); t = setTimeout(() => { shown = 24; paint(); }, 180); });
+    ids.slice(1).forEach(id => $("#" + id).addEventListener("change", () => { shown = 24; paint(); }));
+    $("#f_clear").addEventListener("click", clear);
+    $("#more").addEventListener("click", () => { shown += 24; paint(); });
+    $("#ftoggle").addEventListener("click", () => { const o = $("#fbody").classList.toggle("open"); $("#ftoggle").setAttribute("aria-expanded", o ? "true" : "false"); });
+    paint();
+  } };
+}
+
+/* ====================== one car ====================== */
+async function viewCar(ref) {
+  let v = null, err = false;
+  try { const r = await client().from("public_vehicles").select("*").eq("ref", ref).maybeSingle(); if (r.error) throw r.error; v = r.data; } catch (e) { console.warn(e); err = true; }
+  if (err) { seo({ noindex: true }); return { html: page("cars", `<div class="wrap" style="padding:40px 20px">${failBlock("this car")}</div>`), bind: bindNav }; }
+  if (!v) {
+    seo({ title: "Car no longer available | Dealer Cars", noindex: true });
+    return { html: page("cars", `<div class="wrap" style="padding:50px 20px"><div class="empty"><h3>This car is no longer available</h3><p>It may have been sold or taken down.</p><a class="btn btn-primary" href="#/cars">See other cars</a></div></div>`), bind: bindNav };
+  }
+  const title = carTitle(v), imgs = v.photos || [], lbls = v.photo_labels || [], cap = (i) => labelName(lbls[i]);
+  const url = baseUrl() + "/#/car/" + v.ref, place = [v.city, v.province].filter(Boolean).join(", "), shareText = `${title} - ${money(v.price)} - ${place}\n${url}`;
+  const cap0 = budgetCap(v.price), pm = estMonthly(v.price), mcap = monthlyCap(pm), inst = showsInstalment(v);
+  seo({ title: `${title} for sale in ${v.city} | ${money(v.price)} | Dealer Cars`, desc: `${title} for sale in ${v.city}, ${v.province}: ${km(v.mileage) ? km(v.mileage) + ", " : ""}${money(v.price)}${inst ? ", about " + money(pm) + " a month" : v.payment_type ? ", " + payLabel(v.payment_type).toLowerCase() : ""}. One of the cars for sale under ${money(cap0)}. Send an enquiry to Dealer Cars.`, path: "car/" + v.ref, image: imgs[0] ? photoUrl(imgs[0]) : "",
+    jsonld: { "@context": "https://schema.org", "@type": "Car", name: title, brand: { "@type": "Brand", name: v.make }, model: v.model, vehicleModelDate: String(v.year), mileageFromOdometer: v.mileage == null ? undefined : { "@type": "QuantitativeValue", value: v.mileage, unitCode: "KMT" }, vehicleTransmission: v.transmission, fuelType: v.fuel_type, bodyType: v.body_type, color: v.colour, image: imgs.slice(0, 5).map(photoUrl), url, offers: { "@type": "Offer", price: String(v.price), priceCurrency: "ZAR", availability: "https://schema.org/InStock", seller: { "@type": "Organization", name: "Dealer Cars" } } } });
+  const specs = [["Year", v.year], ["Mileage", km(v.mileage)], ["Gearbox", v.transmission], ["Fuel", v.fuel_type], ["Body", v.body_type], ["Colour", v.colour], ["Location", [v.city, v.province].filter(Boolean).join(", ")], ["Reference", v.ref]].filter(s => s[1]);
+  const feats = (v.features || "").split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
+  const html = page("cars", `<div class="wrap"><div class="crumbs"><a href="#/cars">← All cars</a></div>
+  <div class="cdetail"><div class="stack">
+    <div class="gallery"><div class="main" id="g_main">${imgs.length ? `<img id="g_img" src="${esc(photoUrl(imgs[0]))}" alt="${esc(title)}">${imgs.length > 1 ? `<button class="arrow l" id="g_prev" aria-label="Previous photo">${ICON.left}</button><button class="arrow r" id="g_next" aria-label="Next photo">${ICON.right}</button><span class="pos" id="g_pos">1 / ${imgs.length}${cap(0) ? " · " + esc(cap(0)) : ""}</span>` : ""}` : `<div class="noimg" style="color:#52607a">${ICON.car}</div>`}</div>
+      ${imgs.length > 1 ? `<div class="thumbs" id="g_thumbs">${imgs.map((p, i) => `<button type="button" data-i="${i}" class="${i ? "" : "on"}" aria-label="Photo ${i + 1}${cap(i) ? ": " + esc(cap(i)) : ""}" title="${esc(cap(i))}"><img src="${esc(photoUrl(p))}" alt="${esc(cap(i))}" loading="lazy"></button>`).join("")}</div>` : ""}</div>
+    <div class="panel"><h2>About this car</h2><div class="desc">${fmtText(v.description)}</div>${feats.length ? `<h3 style="margin-top:22px;font-size:17px">Features</h3><div class="tags">${feats.map(f => `<span class="tag">${esc(f)}</span>`).join("")}</div>` : ""}</div>
+  </div>
+  <aside class="stack sticky">
+    <div class="panel"><div class="cprice">${money(v.price)}</div>${v.payment_type ? `<div class="paywrap" id="car_pay">${payTag(v.payment_type)}</div>` : ""}${inst ? `<div class="cpm" id="car_pm">Est. <b>${esc(money(pm))}</b> per month <span>(${EST.dep * 100}% deposit, ${EST.rate}% over ${EST.months} months)</span></div>` : v.payment_type === "rent_to_own" ? `<div class="cpm" id="car_pm">Ask us for the monthly amount and how rent to own works.</div>` : `<div class="cpm" id="car_pm">Cash purchase only.</div>`}<h1 class="ctitle">${esc(title)}</h1><div class="cloc" id="car_loc">${ICON.pin.replace("<svg", '<svg width="16" height="16"')}<span>${esc([v.city, v.province].filter(Boolean).join(", "))}</span></div><div class="cmeta">${v.rating ? stars(v.rating) + '<span class="rl">Dealer Cars rating</span>' : ""}<span class="ago">${esc(listedAgo(v.approved_at))}</span></div>
+      <div class="specs">${specs.map(s => `<div><span>${s[0]}</span><b>${esc(s[1])}</b></div>`).join("")}</div>
+      <button type="button" class="btn btn-ghost btn-block" id="sh_btn" style="margin-top:16px">${ICON.share} Share this car</button></div>
+    ${inst ? `<div class="panel fin-cta"><b>Planning to finance?</b><p>Work out what this car could cost you each month.</p><a class="btn btn-ghost btn-block" id="car_fin" href="#/finance?price=${esc(String(Math.round(v.price)))}">Calculate finance</a></div>` : ""}
+    <div class="panel" id="inq_panel"><h2>Ask about this car</h2><p style="color:var(--muted);font-size:14.5px;margin-bottom:14px">Send us your details and the seller will contact you about this car.${CONFIG.CONTACT_WHATSAPP ? ` Or <a id="car_wa" href="${esc(waLink("Hi Dealer Cars, I am interested in the " + title + " (" + v.ref + ") " + url))}" target="_blank" rel="noopener">WhatsApp us about this car</a>.` : ""}</p>
+      <form id="inq_form" novalidate><div id="inq_msg"></div>
+        <div class="field"><label for="i_name">Your name</label><input class="ctrl" id="i_name" autocomplete="name" required></div>
+        <div class="grid2"><div class="field"><label for="i_phone">Phone</label><input class="ctrl" id="i_phone" type="tel" autocomplete="tel" inputmode="tel"></div><div class="field"><label for="i_email">E-mail</label><input class="ctrl" id="i_email" type="email" autocomplete="email"></div></div>
+        <div class="hint" style="font-size:12.5px;color:var(--muted);margin:-6px 0 12px">Give a phone number or an e-mail address, so we can reply.</div>
+        <div class="field"><label for="i_msg">Message</label><textarea class="ctrl" id="i_msg" rows="4" maxlength="900">Hi, I'm interested in the ${esc(title)} (${esc(v.ref)}). Is it still available?</textarea></div>
+        <button class="btn btn-primary btn-block" type="submit" id="inq_send">Send enquiry</button>
+        <p style="font-size:12.5px;color:var(--muted);margin-top:10px">By sending, you agree that Dealer Cars and the seller may use your details to answer your enquiry. See our <a href="#/privacy">privacy policy</a>.</p></form></div>
+  </aside></div>
+  <section class="seoblock" id="car_seo"><h2>${esc(v.make)} ${esc(v.model)} for sale in ${esc(v.city)}</h2>
+    <p>Looking for a used ${esc(title)} in ${esc(v.city)}, ${esc(v.province)}? This one is priced at ${esc(money(v.price))}, ${inst ? `which works out at about ${esc(money(pm))} a month on our example finance terms` : v.payment_type === "rent_to_own" ? "and it is available on rent to own" : "and it is a cash purchase"}. It is one of the cars for sale under ${esc(money(cap0))} on Dealer Cars, from hand-picked dealers, and we can go with you to view it, help with the documentation and support you at delivery.</p>
+    <div class="seolinks" id="car_seolinks">
+      <a href="#/cars?city=${encodeURIComponent(v.city)}">Cars for sale in ${esc(v.city)}</a>
+      <a href="#/cars?province=${encodeURIComponent(v.province)}">Cars for sale in ${esc(v.province)}</a>
+      <a href="#/cars?max=${cap0}">Cars for sale under ${esc(money(cap0))}</a>
+      <a href="#/cars?city=${encodeURIComponent(v.city)}&max=${cap0}">Cars for sale in ${esc(v.city)} under ${esc(money(cap0))}</a>
+      <a href="#/cars?make=${encodeURIComponent(v.make)}&city=${encodeURIComponent(v.city)}">${esc(v.make)} cars for sale in ${esc(v.city)}</a>
+      ${v.body_type ? `<a href="#/cars?body=${encodeURIComponent(v.body_type)}&city=${encodeURIComponent(v.city)}">${esc(v.body_type)}s for sale in ${esc(v.city)}</a>` : ""}
+      ${inst ? `<a href="#/cars?mp=${mcap}">Cars with instalments up to ${esc(money(mcap))} p/m</a>` : `<a href="#/cars?pay=${esc(v.payment_type)}">${esc(payLabel(v.payment_type))} cars for sale</a>`}
+    </div></section></div>`);
+  return { html, bind() {
+    bindNav();
+    let i = 0; const show = (n) => { if (!imgs.length) return; i = (n + imgs.length) % imgs.length; const im = $("#g_img"); if (im) im.src = photoUrl(imgs[i]); const p = $("#g_pos"); if (p) p.textContent = (i + 1) + " / " + imgs.length + (cap(i) ? " · " + cap(i) : ""); $$("#g_thumbs button").forEach(b => b.classList.toggle("on", Number(b.dataset.i) === i)); const tb = $("#g_thumbs button.on"); if (tb && tb.scrollIntoView) tb.scrollIntoView({ block: "nearest", inline: "center" }); };
+    const pv = $("#g_prev"), nx = $("#g_next"); if (pv) pv.addEventListener("click", () => show(i - 1)); if (nx) nx.addEventListener("click", () => show(i + 1));
+    const th = $("#g_thumbs"); if (th) th.addEventListener("click", (e) => { const b = e.target.closest("button[data-i]"); if (b) show(Number(b.dataset.i)); });
+    let x0 = null; const gm = $("#g_main"); if (gm) { gm.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; }, { passive: true }); gm.addEventListener("touchend", (e) => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1)); x0 = null; }); }
+    const onKey = (e) => { if (!document.getElementById("g_main")) { document.removeEventListener("keydown", onKey); return; } if (e.target.closest && e.target.closest("input,textarea,select")) return; if (e.key === "ArrowLeft") show(i - 1); if (e.key === "ArrowRight") show(i + 1); };
+    document.addEventListener("keydown", onKey);
+    if (gm) gm.addEventListener("click", (e) => { if (e.target.id !== "g_img") return; const lb = document.createElement("div"); lb.className = "lb"; lb.innerHTML = `<img src="${esc(photoUrl(imgs[i]))}" alt="">`; lb.addEventListener("click", () => lb.remove()); document.body.appendChild(lb); });
+    const copy = async () => { try { await navigator.clipboard.writeText(url); } catch (_) { const t = document.createElement("textarea"); t.value = url; t.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); } catch (__) {} t.remove(); } toast("Link copied. Paste it into WhatsApp or anywhere to share this car."); };
+    $("#sh_btn").addEventListener("click", async () => { if (navigator.share) { try { await navigator.share({ title, text: `${title} - ${money(v.price)} - ${place}`, url }); } catch (e) { if (e && e.name !== "AbortError") copy(); } } else copy(); });
+    $("#inq_form").addEventListener("submit", async (e) => {
+      e.preventDefault(); const btn = $("#inq_send"), box = $("#inq_msg"); box.innerHTML = "";
+      const name = $("#i_name").value.trim(), phone = $("#i_phone").value.trim(), email = $("#i_email").value.trim(), msg = $("#i_msg").value.trim();
+      const bad = (t) => { box.innerHTML = `<div class="err" role="alert">${esc(t)}</div>`; };
+      if (name.length < 2) return bad("Please enter your name.");
+      if (!phone && !email) return bad("Please give a phone number or an e-mail address.");
+      if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return bad("That e-mail address does not look right.");
+      if (msg.length < 2) return bad("Please write a short message.");
+      setBusy(btn, true, "Sending…");
+      const { error } = await client().rpc("submit_inquiry", { p_vehicle: v.id, p_name: name, p_phone: phone, p_email: email, p_message: msg });
+      setBusy(btn, false);
+      if (error) return bad(niceErr(error));
+      $("#inq_panel").innerHTML = `<h2>Enquiry sent</h2><div class="ok" role="status">Thank you, ${esc(name.split(" ")[0])}. We have your message and the seller will contact you.</div><a class="btn btn-ghost btn-block" href="#/cars">See more cars</a>`;
+    });
+  } };
+}
+
+/* ====================== static pages ====================== */
+async function viewForDealers() {
+  seo({ title: "List your vehicles | For dealerships | Dealer Cars", desc: "Dealerships: register on Dealer Cars, add your vehicles with photos, and and get enquiries from buyers.", path: "for-dealers" });
+  const html = page("fordealers", `<section class="hero" style="padding-bottom:56px"><div class="wrap hero-in"><span class="eyebrow">For dealerships</span><h1>Put your stock in front of <em>buyers</em>.</h1>
+    <p class="lead">Create your dealership account, add your vehicles with photos, and receive buyer enquiries directly. We approve every vehicle before it goes live.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px"><a class="btn btn-primary" href="#/login?tab=register" id="fd_register">Register your dealership</a><a class="btn btn-line" href="#/login" id="fd_login">Dealer login</a></div></div></section>
+  <section class="section"><div class="wrap"><div class="sec-head"><div><h2>How it works</h2></div></div>
+    <ol class="steps" style="padding:0;max-width:720px"><li><b>Register your dealership</b>Create an account with your dealership details. It takes a couple of minutes.</li>
+      <li><b>Add your vehicles</b>Enter the details and upload photos. Drag and drop works, so a whole batch can go in at once.</li>
+      <li><b>We approve each vehicle</b>Our team reviews every vehicle before it goes live. If something needs fixing, we tell you why.</li>
+      <li><b>Buyers send enquiries</b>Your cars appear on Dealer Cars. Buyer enquiries reach you, and you follow them up.</li></ol>
+    <div class="note" style="max-width:720px;margin-top:20px"><b>Your details stay private.</b> Buyers never see your dealership name, phone number or e-mail. They see the car, its photos, price and the town it is in, and they contact you through an enquiry on Dealer Cars.</div>
+    <div style="margin-top:28px"><a class="btn btn-primary" href="#/login?tab=register">Get started</a></div></div></section>`);
+  return { html, bind: bindNav };
+}
+async function viewLegal(kind) {
+  const terms = kind === "terms";
+  seo({ title: (terms ? "Terms of use" : "Privacy policy") + " | Dealer Cars", path: kind });
+  const body = terms ? `<h2>About Dealer Cars</h2><p>Dealer Cars is an online platform where independent sellers list used vehicles and buyers send enquiries about them. Dealer Cars is not the seller of any vehicle, and is not a party to any sale between a buyer and a dealership.</p>
+    <h2>Listings</h2><p>Every vehicle is listed by an independent seller. Dealer Cars reviews vehicles before they go live, but we cannot guarantee that a listing is complete or free of mistakes. Buyers should inspect the vehicle, check its documents and confirm the price and condition with the seller before paying anything.</p>
+    <h2>Dealerships</h2><p>Dealerships must only list vehicles they are entitled to sell, with accurate details and photos. Dealer Cars may decline, remove or suspend any listing or dealership account at its discretion.</p>
+    <h2>Enquiries</h2><p>When you send an enquiry, your details and message are passed to the seller so they can reply to you.</p>
+    <h2>Selling your car</h2><p>If you send us a request to sell your car, our team reviews it and may contact you. We do not guarantee a sale, a price, a buyer or a time frame. You must only submit a car you own or are authorised to sell, with accurate details.</p>
+    <h2>Finance calculator</h2><p>The finance calculator gives an estimate only. It is not a quote or an offer of credit. Actual repayments depend on the lender, your credit record and the fees charged.</p>
+    <h2>Changes</h2><p>We may update these terms from time to time. Continued use of the site means you accept the updated terms.</p>`
+    : `<h2>What we collect</h2><p>When you send an enquiry we collect your name, phone number and/or e-mail address and your message. When you ask us to sell your car we also collect your WhatsApp number, e-mail, location, and your car's details and photos. When a dealership registers we collect its business and contact details, and the vehicle details and photos it uploads.</p>
+    <h2>How we use it</h2><p>Enquiry details are shared with the seller of the car you asked about, and are visible to the Dealer Cars team, so the enquiry can be answered. Details you give when you ask us to sell your car (your contact details, your car's details and photos) are used by the Dealer Cars team to assess the car and contact you. We do not sell your personal information. Seller and dealership contact details are never shown publicly.</p>
+    <h2>Your rights</h2><p>You can ask us to show, correct or delete the personal information we hold about you. Please contact us using the details at the bottom of the site.</p>
+    <h2>Storage and security</h2><p>Your information is stored with our hosting provider, Supabase, and protected with access rules so that people only see what they are allowed to see.</p>`;
+  return { html: page("", `<div class="narrow legal" style="padding:36px 20px 56px"><h1 style="font-size:clamp(28px,4vw,38px);margin-bottom:18px">${terms ? "Terms of use" : "Privacy policy"}</h1>${body}</div>`), bind: bindNav };
+}
+
+/* ====================== services: sell your car, finance calculator, coming-soon pages ====================== */
+
+const SELL_AGREEMENT_VERSION = "1.0";
+const SELL_AGREEMENT = "By submitting this form, I confirm that the information I have supplied about my vehicle is accurate, and that I own the vehicle or have the authority to submit it for sale. I agree to give truthful information about the vehicle's condition, mileage, history and ownership.\n\nI understand that Dealer Cars reviews my request and does not guarantee a sale, a selling price, a buyer or a time frame. I give Dealer Cars permission to market or share the relevant vehicle information with potential buyers and trusted partners. I confirm that I will not knowingly give false or misleading information. I understand that any fees or charges that apply will be explained to me before I agree to them.";
+const SELL_CONSENT = "I consent to Dealer Cars contacting me (including on WhatsApp) about this request and using my details and my car's details and photos to assess and sell my car.";
+const SELL_MIN_PHOTOS = 3, SELL_MAX_PHOTOS = 15;
+const newUuid = () => (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : "xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx".replace(/[x]/g, (c) => (Math.random() * 16 | 0).toString(16));
+
+/* ---------- Sell your car ---------- */
+async function viewSell() {
+  seo({ title: "Sell your car | Dealer Cars", desc: "Want to sell your car? Fill in the form and add a few photos. Our team reviews your car and gets back to you with the next steps.", path: "sell" });
+  const opt = (arr, ph) => `<option value="">${ph || "Choose…"}</option>` + arr.map(x => `<option>${esc(x)}</option>`).join("");
+  const radio = (id, arr) => `<div class="chips" role="radiogroup" id="${id}">${arr.map((x) => `<label class="chip"><input type="radio" name="${id}" value="${esc(x)}">${esc(x)}</label>`).join("")}</div>`;
+  const yr = new Date().getFullYear();
+  const html = page("sell", `<section class="hero" style="padding-bottom:46px"><div class="wrap hero-in"><span class="eyebrow">Sell your car</span><h1>Sell your car. <em>Get approved.</em></h1>
+    <p class="lead">Tell us about your car and add a few photos. Our team reviews your details and comes back to you with the next steps.</p></div></section>
+  <div class="narrow" style="padding:30px 20px 60px" id="sell_wrap">
+    <form class="sellform" id="sell_form" novalidate><div id="sell_err"></div>
+      <fieldset><legend>About you</legend><p class="sub">So we know who to speak to.</p>
+        <div class="grid3"><div class="field"><label for="s_title">Title</label><select class="ctrl" id="s_title">${opt(["Mr", "Miss", "Mrs", "Ms"])}</select></div>
+          <div class="field"><label for="s_first">First name</label><input class="ctrl" id="s_first" autocomplete="given-name"></div>
+          <div class="field"><label for="s_sur">Surname</label><input class="ctrl" id="s_sur" autocomplete="family-name"></div></div>
+        <div class="grid2"><div class="field"><label for="s_wa">WhatsApp / mobile number</label><input class="ctrl" id="s_wa" type="tel" autocomplete="tel" inputmode="tel"></div>
+          <div class="field"><label for="s_email">E-mail</label><input class="ctrl" id="s_email" type="email" autocomplete="email"></div></div>
+        <div class="grid2"><div class="field"><label for="s_prov">Province</label><select class="ctrl" id="s_prov">${opt(PROVINCES)}</select></div>
+          <div class="field"><label for="s_city">City / town / suburb</label><input class="ctrl" id="s_city" autocomplete="address-level2"></div></div>
+        <div class="grid2"><div class="field"><span class="lab">Private seller or a business?</span>${radio("s_stype", ["Private seller", "Business"])}</div>
+          <div class="field"><span class="lab">Are you the registered owner?</span>${radio("s_owner", ["Yes", "No"])}</div></div>
+      </fieldset>
+      <fieldset><legend>Your car</legend><p class="sub">The more accurate this is, the faster we can come back to you.</p>
+        <div class="grid3"><div class="field"><label for="s_make">Make</label><input class="ctrl" id="s_make" list="s_makes" autocomplete="off"><datalist id="s_makes">${MAKES.map(m => `<option value="${esc(m)}">`).join("")}</datalist></div>
+          <div class="field"><label for="s_model">Model</label><input class="ctrl" id="s_model" autocomplete="off"></div>
+          <div class="field"><label for="s_variant">Variant <span class="hint">(optional)</span></label><input class="ctrl" id="s_variant" autocomplete="off"></div></div>
+        <div class="grid3"><div class="field"><label for="s_year">Year</label><input class="ctrl" id="s_year" type="number" inputmode="numeric" min="1980" max="${yr + 1}"></div>
+          <div class="field"><label for="s_km">Mileage (km)</label><input class="ctrl" id="s_km" type="number" inputmode="numeric" min="0"></div>
+          <div class="field"><label for="s_colour">Colour <span class="hint">(optional)</span></label><input class="ctrl" id="s_colour"></div></div>
+        <div class="grid2"><div class="field"><label for="s_trans">Gearbox</label><select class="ctrl" id="s_trans">${opt(TRANS)}</select></div>
+          <div class="field"><label for="s_fuel">Fuel</label><select class="ctrl" id="s_fuel">${opt(FUELS.slice(0, 4))}</select></div></div>
+        <div class="grid2"><div class="field"><label for="s_reg">Registration (number plate) <span class="hint">(optional)</span></label><input class="ctrl" id="s_reg" autocapitalize="characters"></div>
+          <div class="field"><label for="s_vin">VIN / chassis number</label><input class="ctrl" id="s_vin" autocapitalize="characters" autocomplete="off"></div></div>
+        <div class="grid2"><div class="field"><span class="lab">Full service history?</span>${radio("s_fsh", ["Yes", "Partial", "No"])}</div>
+          <div class="field"><span class="lab">Accident history?</span>${radio("s_acc", ["None", "Minor", "Major"])}</div></div>
+        <div class="field"><span class="lab">Any outstanding finance?</span>${radio("s_fin", ["Yes", "No"])}</div>
+        <div class="field" id="s_settle_f" hidden><label for="s_settle">Settlement amount (R)</label><input class="ctrl" id="s_settle" type="number" inputmode="numeric" min="0"></div>
+        <div class="field"><label for="s_price">Asking price (R)</label><input class="ctrl" id="s_price" type="number" inputmode="numeric" min="1"></div>
+        <div class="field"><label for="s_notes">Anything else about the car? <span class="hint">(optional)</span></label><textarea class="ctrl" id="s_notes" rows="4" maxlength="2000" placeholder="Service history, extras, problems, reason for selling…"></textarea></div>
+      </fieldset>
+      <fieldset><legend>Photos</legend><p class="sub">Add at least ${SELL_MIN_PHOTOS} photos: front, back, sides, interior, dashboard and odometer. You can drag and drop them here.</p>
+        <label class="drop" id="s_dz" for="s_files">${ICON.upload}<b>Drag photos here, or tap to choose</b><span>Up to ${SELL_MAX_PHOTOS} photos</span></label>
+        <input type="file" id="s_files" accept="image/*" multiple hidden>
+        <div class="pgrid" id="s_grid"></div>
+        <div class="field" style="margin-top:18px"><label for="s_rc">Proof of ownership (registration certificate) <span class="hint">(optional, you can send it later)</span></label><input class="ctrl" id="s_rc" type="file" accept="image/*"></div>
+      </fieldset>
+      <fieldset><legend>Agreement</legend><div class="agree" id="s_agree">${SELL_AGREEMENT.split("\n\n").map(t => `<p>${esc(t)}</p>`).join("")}</div>
+        <label class="check" style="margin-top:12px"><input type="checkbox" id="s_accept"><span>I have read and accept the Seller Agreement.</span></label>
+        <label class="check" style="margin-top:8px"><input type="checkbox" id="s_consent"><span>${esc(SELL_CONSENT)}</span></label>
+      </fieldset>
+      <div class="hpot" aria-hidden="true"><label>Website<input id="s_hp" tabindex="-1" autocomplete="off"></label></div>
+      <button class="btn btn-primary btn-block" type="submit" id="s_go" style="padding:16px">Submit my car</button>
+      <p style="font-size:12.5px;color:var(--muted);margin-top:12px;text-align:center">See our <a href="#/privacy">privacy policy</a> for how your details are used.</p>
+    </form></div>`);
+  return { html, bind() {
+    bindNav();
+    const ph = []; let rc = null, sending = false, folder = "";   // folder is kept across retries so all photos of one request stay together
+    const val = (id) => ($("#" + id) ? $("#" + id).value.trim() : "");
+    const pick = (name) => { const r = document.querySelector(`input[name="${name}"]:checked`); return r ? r.value : ""; };
+    const paint = () => {
+      $("#s_grid").innerHTML = ph.map((x, i) => `<div class="pt${i === 0 ? " cover" : ""}"><img src="${esc(x.url)}" alt="Photo ${i + 1}">${i === 0 ? '<span class="lbl">Main</span>' : ""}<button type="button" class="rm" data-rm="${i}" aria-label="Remove photo ${i + 1}" style="position:absolute;right:6px;top:6px;border:0;border-radius:99px;background:rgba(15,26,44,.8);color:#fff;width:28px;height:28px;cursor:pointer;font-size:16px;line-height:1">×</button></div>`).join("");
+    };
+    const addFiles = (files) => {
+      const list = Array.from(files || []).filter(isImg); let skipped = 0;
+      if (files && files.length > list.length) toast("Only photos can be added here.");
+      for (const f of list) { if (ph.length >= SELL_MAX_PHOTOS) { skipped++; continue; } ph.push({ file: f, url: URL.createObjectURL(f), path: null }); }
+      if (skipped) toast("You can add up to " + SELL_MAX_PHOTOS + " photos.");
+      paint();
+    };
+    const dz = $("#s_dz"), fi = $("#s_files");
+    fi.addEventListener("change", () => { addFiles(fi.files); fi.value = ""; });
+    ["dragenter", "dragover"].forEach(ev => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.add("over"); }));
+    ["dragleave", "drop"].forEach(ev => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.remove("over"); }));
+    dz.addEventListener("drop", (e) => { if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files); });
+    $("#s_grid").addEventListener("click", (e) => { const b = e.target.closest("[data-rm]"); if (!b) return; ph.splice(Number(b.dataset.rm), 1); paint(); });
+    $$('input[name="s_fin"]').forEach(r => r.addEventListener("change", () => { $("#s_settle_f").hidden = pick("s_fin") !== "Yes"; }));
+    $("#s_rc").addEventListener("change", (e) => { rc = (e.target.files && e.target.files[0] && isImg(e.target.files[0])) ? { file: e.target.files[0], path: null } : null; });
+
+    $("#sell_form").addEventListener("submit", async (e) => {
+      e.preventDefault(); if (sending) return;
+      const box = $("#sell_err"); box.innerHTML = "";
+      const bad = (t, id) => { box.innerHTML = `<div class="err" role="alert">${esc(t)}</div>`; const el = id && $("#" + id); if (el && el.focus) el.focus(); else box.scrollIntoView({ block: "center" }); };
+      const d = { title: val("s_title"), first_name: val("s_first"), surname: val("s_sur"), whatsapp: val("s_wa"), email: val("s_email"), province: val("s_prov"), city: val("s_city"),
+        seller_type: pick("s_stype"), registered_owner: pick("s_owner"), make: val("s_make"), model: val("s_model"), variant: val("s_variant"), year: val("s_year"), mileage: val("s_km"), colour: val("s_colour"),
+        transmission: val("s_trans"), fuel: val("s_fuel"), registration: val("s_reg"), vin: val("s_vin"), full_service_history: pick("s_fsh"), accident_history: pick("s_acc"), outstanding_finance: pick("s_fin"),
+        settlement_amount: val("s_settle"), asking_price: val("s_price"), notes: val("s_notes") };
+      if (!d.title) return bad("Please choose your title.", "s_title");
+      if (d.first_name.length < 2) return bad("Please enter your first name.", "s_first");
+      if (d.surname.length < 2) return bad("Please enter your surname.", "s_sur");
+      if (saPhone(d.whatsapp).length < 9) return bad("Please enter a WhatsApp or mobile number we can reach you on.", "s_wa");
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)) return bad("Please enter a valid e-mail address.", "s_email");
+      if (!d.province) return bad("Please choose your province.", "s_prov");
+      if (d.city.length < 2) return bad("Please enter your city or town.", "s_city");
+      if (!d.seller_type) return bad("Please say whether you are a private seller or a business.");
+      if (!d.registered_owner) return bad("Please say whether you are the registered owner.");
+      if (!d.make) return bad("Please enter the make of the car.", "s_make");
+      if (!d.model) return bad("Please enter the model of the car.", "s_model");
+      const yn = Number(d.year); if (!(yn >= 1980 && yn <= yr + 1)) return bad("Please enter the year of the car (for example " + (yr - 5) + ").", "s_year");
+      if (d.mileage === "" || !(Number(d.mileage) >= 0)) return bad("Please enter the mileage in km.", "s_km");
+      if (!d.transmission) return bad("Please choose the gearbox.", "s_trans");
+      if (!d.fuel) return bad("Please choose the fuel type.", "s_fuel");
+      if (d.vin.length < 5) return bad("Please enter the VIN / chassis number (it is on the licence disc or the registration certificate).", "s_vin");
+      if (!d.full_service_history) return bad("Please say whether the car has a full service history.");
+      if (!d.accident_history) return bad("Please say whether the car has been in an accident.");
+      if (!d.outstanding_finance) return bad("Please say whether there is outstanding finance.");
+      if (!(Number(d.asking_price) > 0)) return bad("Please enter your asking price.", "s_price");
+      if (ph.length < SELL_MIN_PHOTOS) return bad("Please add at least " + SELL_MIN_PHOTOS + " photos of the car.", "s_files");
+      if (!$("#s_accept").checked) return bad("Please accept the Seller Agreement to continue.", "s_accept");
+      if (!$("#s_consent").checked) return bad("Please tick the consent box to continue.", "s_consent");
+      if ($("#s_hp").value) return showDone("SC-" + rand().slice(0, 6).toUpperCase(), d);   // a robot filled the hidden field: pretend it worked, send nothing
+      sending = true; const btn = $("#s_go"); setBusy(btn, true, "Sending…");
+      try {
+        if (!folder) folder = newUuid();
+        const upOne = async (f, name) => { const blob = await shrink(f, 1600, 0.82); const path = `${folder}/${name}`; const r = await client().storage.from(SELL_BUCKET).upload(path, blob, { contentType: "image/jpeg", upsert: false }); if (r.error && !/exists|duplicate/i.test(r.error.message || "")) throw r.error; return path; };
+        for (let i = 0; i < ph.length; i++) { if (!ph[i].path) { btn.textContent = `Uploading photo ${i + 1} of ${ph.length}…`; ph[i].path = await upOne(ph[i].file, `${i}-photo.jpg`); } }
+        if (rc && !rc.path) { btn.textContent = "Uploading document…"; rc.path = await upOne(rc.file, "rc1.jpg"); }
+        btn.textContent = "Sending…";
+        const photos = ph.map(x => x.path).concat(rc ? [rc.path] : []);
+        const payload = Object.assign({}, d, { photos, consent: "true", agreement: "true", agreement_version: SELL_AGREEMENT_VERSION });
+        const r = await client().rpc("submit_sell_request", { p: payload });
+        if (r.error) { const m = String(r.error.message || ""); const e2 = new Error(m); e2.friendly = !/fetch|network|jwt|permission|violates|relation|function/i.test(m); throw e2; }
+        showDone(r.data, d);
+      } catch (x) {
+        console.warn(x); sending = false; setBusy(btn, false);
+        bad(x && x.friendly ? x.message : /Failed to fetch|network/i.test((x && x.message) || "") ? "No internet connection. Please try again." : "We couldn't send your car just now. Please try again in a moment. Your details are still here.");
+      }
+    });
+    function showDone(ref, d) {
+      $("#sell_wrap").innerHTML = `<div class="panel" style="text-align:center;padding:34px 22px" id="sell_done"><div class="ic" style="width:56px;height:56px;border-radius:50%;background:var(--ok-t);color:var(--ok);display:grid;place-items:center;margin:0 auto 12px"><span style="width:28px;height:28px;display:block">${ICON.check}</span></div>
+        <h2 style="margin-bottom:8px">Thank you, ${esc(d.first_name)}</h2><p style="color:var(--muted);max-width:460px;margin:0 auto 10px">We have received your car. Our team will review it and contact you on WhatsApp or e-mail. Your reference is:</p>
+        <div class="refbadge" id="sell_ref">${esc(ref)}</div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px"><a class="btn btn-primary" href="#/cars">Browse cars</a><a class="btn btn-ghost" href="#/">Back to home</a></div></div>`;
+      window.scrollTo(0, 0);
+    }
+  } };
+}
+
+/* ---------- Finance calculator ---------- */
+function financeCalc(price, deposit, ratePct, months, balloonPct) {
+  const P = Math.max(0, Number(price) || 0), dep = Math.min(P, Math.max(0, Number(deposit) || 0)), n = Math.max(1, Math.round(Number(months) || 1));
+  const financed = P - dep, B = Math.min(financed, P * Math.max(0, Number(balloonPct) || 0) / 100), i = Math.max(0, Number(ratePct) || 0) / 1200;
+  const pmt = financed <= 0 ? 0 : i === 0 ? (financed - B) / n : (financed - B / Math.pow(1 + i, n)) * i / (1 - Math.pow(1 + i, -n));
+  const repay = pmt * n + B;
+  return { financed, balloon: B, monthly: pmt, repayable: repay, interest: Math.max(0, repay - financed) };
+}
+async function viewFinance(query) {
+  seo({ title: "Car finance calculator | Dealer Cars", desc: "Work out your monthly car instalment. Enter the price, your deposit, the interest rate and the term to see an estimate of what you would pay each month.", path: "finance" });
+  const q = new URLSearchParams(query || ""), price0 = Number(q.get("price")) > 0 ? Math.round(Number(q.get("price"))) : 250000;
+  const terms = [12, 24, 36, 48, 60, 72, 84];
+  const html = page("finance", `<section class="hero" style="padding-bottom:46px"><div class="wrap hero-in"><span class="eyebrow">Finance calculator</span><h1>Work out your <em>monthly instalment</em>.</h1>
+    <p class="lead">Enter the car's price, your deposit, the interest rate and the term to see what you could pay each month.</p></div></section>
+  <div class="wrap"><div class="fcalc" style="padding:30px 0 56px">
+    <form class="panel" id="fc_form" onsubmit="return false" novalidate><h2 style="margin-bottom:14px">Your details</h2>
+      <div class="field"><label for="fc_price">Vehicle price (R)</label><input class="ctrl" id="fc_price" type="number" inputmode="decimal" min="0" step="1000" value="${price0}"></div>
+      <div class="field"><label for="fc_dep">Deposit (R)</label><input class="ctrl" id="fc_dep" type="number" inputmode="decimal" min="0" step="1000" value="${Math.round(price0 * 0.1)}"><span class="hint" id="fc_dep_pct"></span></div>
+      <div class="grid2"><div class="field"><label for="fc_rate">Interest rate (% per year)</label><input class="ctrl" id="fc_rate" type="number" inputmode="decimal" min="0" max="40" step="0.25" value="12.5"></div>
+        <div class="field"><label for="fc_term">Repayment term</label><select class="ctrl" id="fc_term">${terms.map(t => `<option value="${t}"${t === 72 ? " selected" : ""}>${t} months (${t / 12} ${t === 12 ? "year" : "years"})</option>`).join("")}</select></div></div>
+      <div class="field"><label for="fc_balloon">Balloon / residual payment <span class="hint">(optional, paid at the end)</span></label><select class="ctrl" id="fc_balloon">${[0, 10, 20, 30, 40].map(b => `<option value="${b}">${b ? b + "% of the price" : "None"}</option>`).join("")}</select></div>
+      <div id="fc_err"></div>
+    </form>
+    <div class="stack"><div class="panel result" id="fc_out" aria-live="polite"><div class="lab">Estimated monthly instalment</div><div class="big" id="fc_monthly">-</div>
+      <div class="rows"><div><span>Amount financed</span><b id="fc_financed">-</b></div><div><span>Balloon payment</span><b id="fc_bal">-</b></div><div><span>Total interest</span><b id="fc_interest">-</b></div><div><span>Total you will repay</span><b id="fc_total">-</b></div></div></div>
+      <div class="note" style="margin:0">This is an estimate only, not a quote or an offer of credit. The rate shown is an example: use the rate your bank or finance provider offers you. Fees such as initiation and monthly service fees, and insurance, are not included.</div>
+      <a class="btn btn-primary btn-block" href="#/cars" id="fc_browse">Browse cars</a></div>
+  </div></div>`);
+  return { html, bind() {
+    bindNav();
+    const num = (id) => Number($("#" + id).value);
+    const calc = () => {
+      const P = num("fc_price"), dep = num("fc_dep"), r = num("fc_rate"), n = num("fc_term"), b = num("fc_balloon"), err = $("#fc_err"); err.innerHTML = "";
+      $("#fc_dep_pct").textContent = P > 0 && dep >= 0 ? `${Math.round(dep / P * 1000) / 10}% of the price` : "";
+      const out = (t) => { ["fc_monthly", "fc_financed", "fc_bal", "fc_interest", "fc_total"].forEach(id => $("#" + id).textContent = t); };
+      if (!(P > 0)) { out("-"); err.innerHTML = `<div class="err">Enter the vehicle price.</div>`; return; }
+      if (dep < 0 || dep > P) { out("-"); err.innerHTML = `<div class="err">The deposit must be between R 0 and the price.</div>`; return; }
+      if (!(r >= 0 && r <= 40)) { out("-"); err.innerHTML = `<div class="err">Enter an interest rate between 0 and 40.</div>`; return; }
+      const c = financeCalc(P, dep, r, n, b);
+      $("#fc_monthly").textContent = money(c.monthly); $("#fc_financed").textContent = money(c.financed); $("#fc_bal").textContent = c.balloon ? money(c.balloon) : "None"; $("#fc_interest").textContent = money(c.interest); $("#fc_total").textContent = money(c.repayable);
+    };
+    $("#fc_form").addEventListener("input", calc); $("#fc_form").addEventListener("change", calc); calc();
+  } };
+}
+
+/* ---------- "Coming soon" pages (Insurance, Spotters) ---------- */
+async function viewSoon(kind) {
+  const c = kind === "insurance"
+    ? { cur: "insurance", eyebrow: "Insurance", h: "Vehicle insurance is <em>coming soon</em>.", lead: "Soon you will be able to get cover for your car right here. Check back shortly.", title: "Vehicle insurance, coming soon | Dealer Cars", path: "insurance" }
+    : kind === "rentals"
+    ? { cur: "rentals", eyebrow: "Car rental", h: "Car rental is <em>coming soon</em>.", lead: "Soon you will be able to rent a car right here. Check back shortly.", title: "Car rental, coming soon | Dealer Cars", path: "rentals" }
+    : { cur: "spotters", eyebrow: "Spotters", h: "Spotters are <em>coming soon</em>.", lead: "We are building a way for spotters to connect buyers and sellers. Check back shortly.", title: "Spotters, coming soon | Dealer Cars", path: "spotters" };
+  seo({ title: c.title, desc: c.lead, path: c.path });
+  const html = page(c.cur, `<section class="hero" style="padding-bottom:56px"><div class="wrap hero-in"><span class="eyebrow">${c.eyebrow}</span><h1>${c.h}</h1><p class="lead">${c.lead}</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px"><a class="btn btn-primary" href="#/cars" id="soon_cars">Browse cars</a><a class="btn btn-line" href="#/sell" id="soon_sell">Sell your car</a></div></div></section>`);
+  return { html, bind: bindNav };
+}
+
+/* ====================== about us / how we work ====================== */
+function viewAbout() {
+  seo({ title: "About Dealer Cars | How we work", desc: "Dealer Cars is more than a listing site. We go with you to view the car, help with the documentation, and support you at delivery and afterwards.", path: "about" });
+  const ct = [];
+  if (CONFIG.CONTACT_WHATSAPP) ct.push(`<a class="btn btn-primary" id="ab_wa" href="${esc(waLink("Hi Dealer Cars, I would like some help finding a car."))}" target="_blank" rel="noopener">WhatsApp us</a>`);
+  if (CONFIG.CONTACT_PHONE) ct.push(`<a class="btn btn-ghost" id="ab_tel" href="tel:${esc(CONFIG.CONTACT_PHONE.replace(/[^\d+]/g, ""))}">Call ${esc(CONFIG.CONTACT_PHONE)}</a>`);
+  if (CONFIG.CONTACT_EMAIL) ct.push(`<a class="btn btn-ghost" id="ab_mail" href="mailto:${esc(CONFIG.CONTACT_EMAIL)}">${esc(CONFIG.CONTACT_EMAIL)}</a>`);
+  const detail = [
+    ["Find your car", "Browse cars from hand-picked dealers. Search by city, province, price or monthly instalment, and sort the list the way you like. Each car shows its photos, where it is and what it could cost you each month. Found one you like? Tap Share to send it to family or friends on WhatsApp or any other app."],
+    ["Tell us what you like", "Send an enquiry on the car, or message us. We speak to the seller on your behalf, check that the car is still available and answer your questions, so you are not chasing around."],
+    ["We go with you to view the car", "Buying a car can be stressful, and it is easy to miss things when you are on your own. We arrange the viewing and come with you, so you have someone on your side when you look at the car."],
+    ["We help with the documentation", "There is a lot of paperwork in buying a car. We explain what is needed, help you with it and make sure nothing is missed, so there are no surprises later."],
+    ["Delivery, and support afterwards", "We are there when the car is delivered to you. If you need any help afterwards, you do not have to work it out alone. You can come back to us."]
+  ];
+  const html = page("about", `<div class="wrap"><div class="page-head"><h1>We do not just list cars. We help you buy one.</h1><p style="max-width:720px">Dealer Cars is a car marketplace with people behind it. Our cars come from hand-picked dealers. When you find one you like, we stay with you from your first message to the day the car is delivered, and after.</p></div>
+    <section class="section" style="padding-top:8px"><h2 style="margin-bottom:6px">How we work</h2><p style="color:var(--muted);margin-bottom:18px">From finding a car to driving it home, in five steps.</p>
+      <ol class="how big" id="ab_steps">${detail.map((x, i) => `<li><span class="n">${i + 1}</span><b>${esc(x[0])}</b><p>${esc(x[1])}</p></li>`).join("")}</ol></section>
+    <section class="section"><h2 style="margin-bottom:14px">Why buyers choose Dealer Cars</h2>
+      <div class="props"><div class="prop"><div class="ic">${ICON.shield}</div><h3>Hand-picked dealers</h3><p>Cars come from dealers we choose to work with, and every car follows our photo standard.</p></div>
+        <div class="prop"><div class="ic">${ICON.pin}</div><h3>You can see where it is</h3><p>Every car shows its city and province, so you know where it is before you enquire.</p></div>
+        <div class="prop"><div class="ic">${ICON.chat}</div><h3>Someone on your side</h3><p>We go with you to view, help with the documentation and support you at delivery.</p></div></div></section>
+    <section class="section"><h2 style="margin-bottom:14px">Common questions</h2><div class="faq">
+      <details><summary>Who sells the cars?</summary><p>The cars are listed by dealerships that work with Dealer Cars, and we help you through the whole buying process.</p></details>
+      <details><summary>Can I see the car before I buy?</summary><p>Yes. We arrange the viewing and come with you.</p></details>
+      <details><summary>What if I need help after I get the car?</summary><p>We support you at delivery, and you can come back to us if you need help afterwards.</p></details>
+      <details><summary>I want to sell my car. Can you help?</summary><p>Yes. Use the <a href="#/sell">Sell your car</a> page, send us the details and photos, and our team will be in touch.</p></details></div></section>
+    <section class="section" style="padding-bottom:56px"><div class="band"><div><h2>Ready to find your car?</h2><p>Browse cars from hand-picked dealers, or get in touch and we will help you.</p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary" href="#/cars" id="ab_cars">See cars for sale</a>${ct.join("")}</div></div></section>
+  </div>`);
+  return { html, bind: bindNav };
+}
+
+/* ====================== login / register ====================== */
+const AGREEMENT = `<p><b>Dealer Agreement</b></p>
+<p>1. I am authorised to represent this dealership and the details I give are correct.</p>
+<p>2. I will only list vehicles that my dealership is entitled to sell, with accurate details, prices and photos.</p>
+<p>3. Every vehicle is reviewed by Dealer Cars before it goes live. Dealer Cars may decline or remove any vehicle, and may suspend a dealership account, at its discretion.</p>
+<p>4. Buyer enquiries are sent to my dealership and to Dealer Cars. I will follow them up promptly and treat buyers' details as confidential and use them only to answer the enquiry.</p>
+<p>5. Dealer Cars is a listing platform. It is not the seller of any vehicle and is not a party to any sale.</p>
+<p>6. I consent to Dealer Cars storing my dealership's details and vehicle information and showing listed vehicles to buyers. I understand that buyers will not see my dealership's name, location, phone number or e-mail.</p>`;
+const PEND_KEY = "dc_pending_reg";
+const lsGet = (k) => { try { return localStorage.getItem(k); } catch (_) { return null; } };
+const lsSet = (k, v) => { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (_) {} };
+
+function dealerFieldsHtml(p, withAccount) {
+  p = p || {};
+  return `<div class="field"><label for="r_biz">Dealership name</label><input class="ctrl" id="r_biz" autocomplete="organization" value="${esc(p.business_name || "")}"></div>
+  <div class="grid2"><div class="field"><label for="r_person">Contact person</label><input class="ctrl" id="r_person" autocomplete="name" value="${esc(p.contact_person || "")}"></div>
+  <div class="field"><label for="r_phone">Phone</label><input class="ctrl" id="r_phone" type="tel" autocomplete="tel" inputmode="tel" value="${esc(p.phone || "")}"></div></div>
+  <div class="grid2"><div class="field"><label for="r_prov">Province</label><select class="ctrl" id="r_prov"><option value="">Choose…</option>${PROVINCES.map(x => `<option${x === p.province ? " selected" : ""}>${x}</option>`).join("")}</select></div>
+  <div class="field"><label for="r_city">Town / city</label><input class="ctrl" id="r_city" autocomplete="address-level2" value="${esc(p.city || "")}"></div></div>
+  ${withAccount ? `<div class="field"><label for="r_email">E-mail (you log in with this)</label><input class="ctrl" id="r_email" type="email" autocomplete="email" value="${esc(p.email || "")}"></div>
+  <div class="field"><label for="r_pass">Password</label><input class="ctrl" id="r_pass" type="password" autocomplete="new-password"><span class="hint">At least 8 characters.</span></div>` : ""}
+  <div class="agree" tabindex="0" aria-label="Dealer agreement">${AGREEMENT}</div>
+  <label class="check" style="margin-bottom:16px"><input type="checkbox" id="r_terms"><span>I have read and agree to the Dealer Agreement.</span></label>`;
+}
+function readDealerFields() {
+  return { business_name: $("#r_biz").value.trim(), contact_person: $("#r_person").value.trim(), phone: $("#r_phone").value.trim(), province: $("#r_prov").value, city: $("#r_city").value.trim(), email: $("#r_email") ? $("#r_email").value.trim() : "", terms_accepted: $("#r_terms").checked };
+}
+function checkDealerFields(p, needPass, pass) {
+  if (p.business_name.length < 2) return "Please enter your dealership name.";
+  if (p.contact_person.length < 2) return "Please enter the contact person's name.";
+  if (p.phone.replace(/\D/g, "").length < 9) return "Please enter a valid phone number.";
+  if (!p.province) return "Please choose your province.";
+  if (p.city.length < 2) return "Please enter your town or city.";
+  if (needPass) { if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(p.email)) return "Please enter a valid e-mail address."; if ((pass || "").length < 8) return "Your password must be at least 8 characters."; }
+  if (!p.terms_accepted) return "Please tick the box to accept the Dealer Agreement.";
+  return "";
+}
+async function registerDealerRow(p) {
+  const { error } = await client().rpc("dealer_register", { p: { business_name: p.business_name, contact_person: p.contact_person, phone: p.phone, email: p.email, province: p.province, city: p.city, terms_accepted: true } });
+  if (error) throw error;
+  S.dealer = undefined; lsSet(PEND_KEY, null);
+}
+async function afterLogin() {
+  await refreshSession(); S.dealer = undefined; S.isAdmin = undefined; S.ptab = "vehicles"; await loadMe();
+  const pend = lsGet(PEND_KEY);
+  if (S.session && !S.dealer && pend) { try { const p = JSON.parse(pend); if ((p.email || "").toLowerCase() === (S.session.user.email || "").toLowerCase()) { await registerDealerRow(p); await loadMe(); } } catch (e) { console.warn(e); } }
+  location.hash = S.isAdmin && !S.dealer ? "#/admin" : "#/portal";
+}
+async function viewLogin(query) {
+  seo({ title: "Dealer login | Dealer Cars", noindex: true });
+  if (S.session && !S.resetMode) { setTimeout(() => { location.hash = "#/portal"; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; }
+  const q = new URLSearchParams(query || ""); let tab = q.get("tab") === "register" ? "register" : "login";
+  if (S.resetMode) tab = "newpass";
+  const html = page("", `<div class="wrap"><div class="authwrap"><h1 style="font-size:clamp(26px,4vw,34px);margin-bottom:6px" id="auth_h">Dealer account</h1><p style="color:var(--muted);margin-bottom:18px">For dealerships. Buyers don't need an account.</p>
+    <div class="tabs" role="tablist"><button type="button" role="tab" data-tab="login" class="${tab === "login" ? "on" : ""}" id="tab_login">Log in</button><button type="button" role="tab" data-tab="register" class="${tab === "register" ? "on" : ""}" id="tab_register">Register</button></div>
+    <div id="auth_box"></div></div></div>`);
+  return { html, bind() {
+    bindNav(); const box = $("#auth_box");
+    const msg = (t, cls) => { const m = $("#auth_msg"); if (m) m.innerHTML = t ? `<div class="${cls || "err"}" role="alert">${esc(t)}</div>` : ""; };
+    const showLogin = () => {
+      box.innerHTML = `<form id="login_form" novalidate><div id="auth_msg"></div><div class="field"><label for="l_email">E-mail</label><input class="ctrl" id="l_email" type="email" autocomplete="username"></div>
+        <div class="field"><label for="l_pass">Password</label><input class="ctrl" id="l_pass" type="password" autocomplete="current-password"></div>
+        <button class="btn btn-primary btn-block" id="l_go" type="submit">Log in</button><p style="text-align:center;margin-top:14px"><a href="#" id="l_forgot" class="link">Forgot your password?</a></p></form>`;
+      $("#login_form").addEventListener("submit", async (e) => { e.preventDefault(); const email = $("#l_email").value.trim(), pass = $("#l_pass").value; if (!email || !pass) return msg("Please enter your e-mail and password.");
+        setBusy($("#l_go"), true, "Logging in…"); const { error } = await client().auth.signInWithPassword({ email, password: pass }); if (error) { setBusy($("#l_go"), false); return msg(niceErr(error)); }
+        try { await afterLogin(); } catch (x) { setBusy($("#l_go"), false); msg(niceErr(x)); } });
+      $("#l_forgot").addEventListener("click", async (e) => { e.preventDefault(); const email = $("#l_email").value.trim(); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return msg("Type your e-mail address above first, then tap this link again.");
+        const { error } = await client().auth.resetPasswordForEmail(email, { redirectTo: location.href.split("#")[0] }); if (error) return msg(niceErr(error)); msg("We sent a link to " + email + ". Open it to choose a new password.", "ok"); });
+    };
+    const showRegister = () => {
+      box.innerHTML = `<form id="reg_form" novalidate><div id="auth_msg"></div>${dealerFieldsHtml({}, true)}<button class="btn btn-primary btn-block" id="r_go" type="submit">Create my dealership account</button>
+        <p style="font-size:13px;color:var(--muted);margin-top:12px;text-align:center">You can add vehicles straight away. Each vehicle is reviewed before it goes live.</p></form>`;
+      $("#reg_form").addEventListener("submit", async (e) => { e.preventDefault(); const p = readDealerFields(), pass = $("#r_pass").value, bad = checkDealerFields(p, true, pass); if (bad) return msg(bad);
+        setBusy($("#r_go"), true, "Creating your account…");
+        const { data, error } = await client().auth.signUp({ email: p.email, password: pass });
+        if (error) { setBusy($("#r_go"), false); return msg(niceErr(error)); }
+        if (data && data.session) { try { await refreshSession(); await registerDealerRow(p); await loadMe(); toast("Welcome to Dealer Cars"); location.hash = "#/portal"; } catch (x) { setBusy($("#r_go"), false); msg(niceErr(x)); } }
+        else { lsSet(PEND_KEY, JSON.stringify(p)); box.innerHTML = `<div class="ok" role="status">Almost there! We sent a confirmation link to <b>${esc(p.email)}</b>. Open it, then come back here and log in. Your dealership details are saved.</div><button class="btn btn-dark btn-block" id="goLogin">Go to log in</button>`; $("#goLogin").addEventListener("click", () => { $$(".tabs button").forEach(b => b.classList.toggle("on", b.dataset.tab === "login")); showLogin(); }); } });
+    };
+    const showNewPass = () => {
+      box.innerHTML = `<form id="np_form" novalidate><div id="auth_msg"></div><p style="margin-bottom:14px">Choose a new password for your account.</p><div class="field"><label for="np1">New password</label><input class="ctrl" id="np1" type="password" autocomplete="new-password"></div><button class="btn btn-primary btn-block" id="np_go" type="submit">Save new password</button></form>`;
+      $("#np_form").addEventListener("submit", async (e) => { e.preventDefault(); if ($("#np1").value.length < 8) return msg("Your password must be at least 8 characters."); const { error } = await client().auth.updateUser({ password: $("#np1").value }); if (error) return msg(niceErr(error)); S.resetMode = false; toast("Password changed"); await afterLogin(); });
+    };
+    $(".tabs").addEventListener("click", (e) => { const b = e.target.closest("[data-tab]"); if (!b) return; $$(".tabs button").forEach(x => x.classList.toggle("on", x === b)); (b.dataset.tab === "register" ? showRegister : showLogin)(); });
+    (tab === "register" ? showRegister : tab === "newpass" ? showNewPass : showLogin)();
+  } };
+}
+
+/* ====================== dealer portal ====================== */
+const statusBadge = (s) => ({ Pending: `<span class="badge warn">Waiting for approval</span>`, Approved: `<span class="badge ok">Live</span>`, Declined: `<span class="badge bad">Not approved</span>`, Sold: `<span class="badge dark">Sold</span>` }[s] || `<span class="badge">${esc(s)}</span>`);
+async function viewPortal() {
+  seo({ title: "My dealership | Dealer Cars", noindex: true });
+  await refreshSession();
+  if (!S.session) { setTimeout(() => { location.hash = "#/login"; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; }
+  try { await loadMe(); } catch (e) { console.warn(e); }
+  const pend = lsGet(PEND_KEY);
+  if (!S.dealer && pend) { try { const p = JSON.parse(pend); if ((p.email || "").toLowerCase() === (S.session.user.email || "").toLowerCase()) { await registerDealerRow(p); await loadMe(); } } catch (e) { console.warn(e); } }
+  if (!S.dealer) {
+    const html = page("", `<div class="wrap"><div class="authwrap"><h1 style="font-size:28px;margin-bottom:6px">Finish setting up your dealership</h1><p style="color:var(--muted);margin-bottom:18px">Your login works. Now tell us about your dealership.</p>
+      ${S.isAdmin ? `<div class="note">You are an admin. <a href="#/admin" class="link">Open the admin area</a> instead if you don't have a dealership.</div>` : ""}
+      <form id="fin_form" novalidate><div id="auth_msg"></div>${dealerFieldsHtml({ email: S.session.user.email }, false)}<button class="btn btn-primary btn-block" id="r_go" type="submit">Save my dealership</button></form>
+      <p style="text-align:center;margin-top:16px"><a href="#" id="p_out" class="link">Log out</a></p></div></div>`);
+    return { html, bind() { bindNav(); $("#p_out").addEventListener("click", async (e) => { e.preventDefault(); await signOut(); location.hash = "#/"; });
+      $("#fin_form").addEventListener("submit", async (e) => { e.preventDefault(); const p = readDealerFields(); p.email = S.session.user.email; const bad = checkDealerFields(p, false); if (bad) { $("#auth_msg").innerHTML = `<div class="err">${esc(bad)}</div>`; return; }
+        setBusy($("#r_go"), true, "Saving…"); try { await registerDealerRow(p); await loadMe(); render(); } catch (x) { setBusy($("#r_go"), false); $("#auth_msg").innerHTML = `<div class="err">${esc(niceErr(x))}</div>`; } }); } };
+  }
+  const d = S.dealer, uid = S.session.user.id;
+  let vehicles = [], inquiries = [], err = "";
+  try {
+    const [a, b] = await Promise.all([client().from("vehicles").select("*").eq("dealer_id", uid).order("created_at", { ascending: false }), client().from("inquiries").select("*").eq("dealer_id", uid).order("created_at", { ascending: false })]);
+    if (a.error) throw a.error; if (b.error) throw b.error; vehicles = a.data || []; inquiries = b.data || [];
+  } catch (e) { console.warn(e); err = niceErr(e); }
+  const newInq = inquiries.filter(i => i.status === "New").length, pendingN = vehicles.filter(v => v.status === "Pending").length;
+  const vmap = Object.fromEntries(vehicles.map(v => [v.id, v]));
+  const tab = S.ptab || "vehicles";
+  const vehiclesTab = () => !vehicles.length ? `<div class="empty"><h3>You haven't added a vehicle yet</h3><p>Add your first vehicle with photos. Our team reviews it, then it goes live for buyers to see.</p><a class="btn btn-primary" href="#/portal/add" id="empty_add">Add your first vehicle</a></div>` :
+    vehicles.map(v => `<div class="vrow" data-vid="${esc(v.id)}"><div class="th">${v.photos && v.photos[0] ? `<img src="${esc(photoUrl(v.photos[0]))}" alt="" loading="lazy">` : ""}</div>
+      <div><h3>${esc(carTitle(v))}</h3><div class="sm">${money(v.price)} · ${esc(v.city)} · ${esc(v.ref)}</div><div style="margin-top:8px">${statusBadge(v.status)}</div>${v.status === "Declined" && v.decline_reason ? `<div class="reason"><b>Why:</b> ${esc(v.decline_reason)}. Edit the vehicle and save it to send it for approval again.</div>` : ""}${v.status === "Pending" ? `<div class="sm" style="margin-top:6px">Our team is reviewing this vehicle. It will appear on the site once approved.</div>` : ""}</div>
+      <div class="acts"><a class="btn btn-ghost btn-sm" href="#/portal/edit/${esc(v.id)}" data-act="edit">Edit</a>${v.status === "Approved" ? `<a class="btn btn-ghost btn-sm" href="#/car/${esc(v.ref)}">View live</a><button class="btn btn-ghost btn-sm" data-act="sold">Mark as sold</button>` : ""}${v.status === "Sold" ? `<button class="btn btn-ghost btn-sm" data-act="unsold">Back on sale</button>` : ""}<button class="btn btn-danger btn-sm" data-act="del">Delete</button></div></div>`).join("");
+  const inquiriesTab = () => !inquiries.length ? `<div class="empty"><h3>No enquiries yet</h3><p>When a buyer sends an enquiry about one of your cars, it shows up here.</p></div>` :
+    inquiries.map(i => { const v = vmap[i.vehicle_id]; const wa = i.phone ? waNumber(i.phone) : "";
+      return `<div class="irow ${i.status === "New" ? "new" : ""}" data-iid="${esc(i.id)}"><div class="top"><div><b>${esc(i.name)}</b> ${i.status === "New" ? `<span class="badge warn">New</span>` : `<span class="badge">Handled</span>`}</div><span style="color:var(--muted);font-size:13.5px">${dateStr(i.created_at)}</span></div>
+      <div style="font-size:14px;color:var(--muted)">About: ${v ? `<a href="#/portal/edit/${esc(v.id)}" class="link">${esc(carTitle(v))}</a> (${esc(v.ref)})` : "a vehicle that was removed"}</div><div class="msg">${esc(i.message)}</div>
+      <div class="acts" style="display:flex;gap:8px;flex-wrap:wrap">${i.phone ? `<a class="btn btn-primary btn-sm" href="tel:${esc(i.phone)}">Call ${esc(i.phone)}</a><a class="btn btn-ghost btn-sm" href="https://wa.me/${esc(wa)}" target="_blank" rel="noopener">WhatsApp</a>` : ""}${i.email ? `<a class="btn btn-ghost btn-sm" href="mailto:${esc(i.email)}">E-mail</a>` : ""}<button class="btn btn-ghost btn-sm" data-act="istatus" data-to="${i.status === "New" ? "Handled" : "New"}">${i.status === "New" ? "Mark as handled" : "Mark as new"}</button></div></div>`; }).join("");
+  const profileTab = () => `<form id="prof_form" class="panel" style="max-width:760px" novalidate><div id="prof_msg"></div>
+    <p style="color:var(--muted);margin-bottom:14px">Only the Dealer Cars team sees these details. Buyers never see your dealership name, location, phone number or e-mail: they only see your cars.</p>
+    <div class="grid2"><div class="field"><label for="p_person">Contact person</label><input class="ctrl" id="p_person" value="${esc(d.contact_person)}"></div><div class="field"><label for="p_phone">Phone (private)</label><input class="ctrl" id="p_phone" value="${esc(d.phone)}"></div></div>
+    <div class="grid2"><div class="field"><label for="p_prov">Province</label><select class="ctrl" id="p_prov">${PROVINCES.map(x => `<option${x === d.province ? " selected" : ""}>${x}</option>`).join("")}</select></div><div class="field"><label for="p_city">Town / city</label><input class="ctrl" id="p_city" value="${esc(d.city)}"></div></div>
+    <button class="btn btn-primary" type="submit" id="prof_save">Save details</button></form>`;
+  const html = page("", `<div class="wrap"><div class="ptop"><div><h1>${esc(d.business_name)}</h1><div style="color:var(--muted)">${esc(d.city)}, ${esc(d.province)}</div></div><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary" href="#/portal/add" id="p_add">+ Add a vehicle</a><button class="btn btn-ghost" id="p_out">Log out</button></div></div>
+    ${S.isAdmin ? `<div class="note">You are also an admin. <a class="link" href="#/admin">Open the admin area</a>.</div>` : ""}
+    ${err ? `<div class="err">${esc(err)}</div>` : ""}
+    <div class="ptabs" role="tablist"><button data-t="vehicles" class="${tab === "vehicles" ? "on" : ""}" id="pt_vehicles">My vehicles${pendingN ? `<span class="n">${pendingN}</span>` : ""}</button><button data-t="inquiries" class="${tab === "inquiries" ? "on" : ""}" id="pt_inquiries">Enquiries${newInq ? `<span class="n">${newInq}</span>` : ""}</button><button data-t="profile" class="${tab === "profile" ? "on" : ""}" id="pt_profile">My details</button></div>
+    <div id="ptab" style="padding-bottom:56px">${tab === "vehicles" ? vehiclesTab() : tab === "inquiries" ? inquiriesTab() : profileTab()}</div></div>`);
+  return { html, bind() {
+    bindNav();
+    $("#p_out").addEventListener("click", async () => { await signOut(); location.hash = "#/"; });
+    $(".ptabs").addEventListener("click", (e) => { const b = e.target.closest("[data-t]"); if (b) { S.ptab = b.dataset.t; render(); } });
+    $("#ptab").addEventListener("click", async (e) => {
+      const b = e.target.closest("button[data-act]"); if (!b) return;
+      const row = b.closest("[data-vid]"), irow = b.closest("[data-iid]"), act = b.dataset.act;
+      try {
+        if (act === "sold" || act === "unsold") { const { error } = await client().rpc("dealer_set_sold", { p_id: row.dataset.vid, p_sold: act === "sold" }); if (error) throw error; S.cars = null; toast(act === "sold" ? "Marked as sold" : "Back on sale"); render(); }
+        else if (act === "del") { const v = vmap[row.dataset.vid]; if (await confirmBox("Delete this vehicle?", `${carTitle(v)} will be removed for good, together with its enquiries.`, "Delete vehicle", true)) { const { error } = await client().rpc("dealer_delete_vehicle", { p_id: v.id }); if (error) throw error; try { await client().storage.from(BUCKET).remove(v.photos || []); } catch (_) {} S.cars = null; toast("Vehicle deleted"); render(); } }
+        else if (act === "istatus") { const { error } = await client().rpc("set_inquiry_status", { p_id: irow.dataset.iid, p_status: b.dataset.to }); if (error) throw error; render(); }
+      } catch (x) { toast(niceErr(x)); }
+    });
+    if (tab === "profile") bindProfile(d);
+  } };
+}
+function bindProfile(d) {
+  $("#prof_form").addEventListener("submit", async (e) => {
+    e.preventDefault(); const btn = $("#prof_save"), box = $("#prof_msg"); box.innerHTML = "";
+    const p = { contact_person: $("#p_person").value, phone: $("#p_phone").value, province: $("#p_prov").value, city: $("#p_city").value };
+    setBusy(btn, true, "Saving…"); const { error } = await client().rpc("dealer_save_profile", { p }); setBusy(btn, false);
+    if (error) { box.innerHTML = `<div class="err">${esc(niceErr(error))}</div>`; return; }
+    S.dealer = undefined; await loadMe(); box.innerHTML = `<div class="ok" role="status">Details saved.</div>`; toast("Details saved");
+  });
+}
+
+/* ====================== add / edit a vehicle ====================== */
+let VF = null;
+async function viewVehicleForm(id) {
+  seo({ title: (id ? "Edit vehicle" : "Add a vehicle") + " | Dealer Cars", noindex: true });
+  await refreshSession();
+  if (!S.session) { setTimeout(() => { location.hash = "#/login"; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; }
+  await loadMe(); if (!S.dealer) { setTimeout(() => { location.hash = "#/portal"; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; }
+  let v = null;
+  if (id) { const r = await client().from("vehicles").select("*").eq("id", id).eq("dealer_id", S.session.user.id).maybeSingle(); v = r.data; if (!v) { setTimeout(() => { location.hash = "#/portal"; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; } }
+  const d = S.dealer;
+  VF = { id: v ? v.id : null, key: rand(), photos: (v ? v.photos : []).map((p, i) => ({ path: p, url: photoUrl(p), up: false, label: (v.photo_labels && v.photo_labels[i]) || "" })) };
+  const val = (k, def) => esc(v && v[k] != null ? v[k] : (def == null ? "" : def));
+  const sel = (idn, arr, cur, ph) => `<select class="ctrl" id="${idn}"><option value="">${ph}</option>${arr.map(x => `<option${x === cur ? " selected" : ""}>${esc(x)}</option>`).join("")}</select>`;
+  const html = page("", `<div class="wrap"><div class="crumbs"><a href="#/portal">← My vehicles</a></div>
+    <h1 style="font-size:clamp(26px,4vw,34px)" id="vf_h">${v ? "Edit vehicle" : "Add a vehicle"}</h1>
+    <p style="color:var(--muted);margin:6px 0 18px">${v && v.status === "Approved" ? "This car is live. Saving your changes sends it back to our team for approval, and it is hidden until approved." : "Our team reviews every vehicle before it goes live."}</p>
+    <form id="vf" novalidate style="max-width:860px;padding-bottom:60px">
+      <div class="panel" style="margin-bottom:18px"><h2>Photos</h2>
+        <div class="pstd" id="pstd"><b>The Dealer Cars photo standard</b>
+          <ul><li>Landscape photos only (turn your phone sideways), at least ${PHOTO_RULES.minW} × ${PHOTO_RULES.minH} pixels, JPG, PNG or WebP, up to ${PHOTO_RULES.maxMB} MB each.</li>
+            <li>At least ${MIN_PHOTOS} photos and up to ${MAX_PHOTOS}. These six are required: <b>front, rear, left side, right side, dashboard and odometer</b> (showing the mileage).</li>
+            <li>The first photo is the cover and must be the <b>front</b> of the car. We move it to the top for you.</li>
+            <li>The whole car in the frame, in daylight, no people, no watermarks, and no phone numbers or text added to the photo.</li>
+            <li>Please cover the number plate with the Dealer Cars plate (button under each photo). It protects your privacy and the privacy of the car\u2019s previous owner.</li>
+            <li>Say what each photo shows using the box under it. Our team can decline cars that do not follow this.</li></ul>
+          <div class="pcheck" id="ph_check" aria-live="polite"></div></div>
+        <div id="photoarea"><label class="drop" id="dz" for="vf_files">${ICON.upload}<b>Drag and drop your photos here</b><span>or tap to choose several at once. Name them 1, 2, 3 in the order of the checklist and we label them for you.</span><input type="file" id="vf_files" accept="image/*" multiple hidden></label>
+        <div id="ph_rejects"></div>
+        <div class="bgbar"><button type="button" class="btn btn-ghost btn-sm" id="bg_all">Remove the background from the front, rear and side photos</button><span class="hint">Optional. Gives the car a clean grey studio backdrop. The first time it needs to download the cleaner, which can take a minute. You can undo it on each photo.</span></div>
+        <div class="pgrid" id="pgrid"></div></div><div id="ph_hint" class="hint" style="margin-top:10px;font-size:13px;color:var(--muted)"></div></div>
+      <div class="panel" style="margin-bottom:18px"><h2>Vehicle details</h2>
+        <div class="grid3"><div class="field"><label for="v_make">Make</label><input class="ctrl" id="v_make" list="makes" autocomplete="off" value="${val("make")}"><datalist id="makes">${MAKES.map(m => `<option value="${m}">`).join("")}</datalist></div>
+          <div class="field"><label for="v_model">Model</label><input class="ctrl" id="v_model" value="${val("model")}"></div>
+          <div class="field"><label for="v_variant">Variant (optional)</label><input class="ctrl" id="v_variant" placeholder="e.g. 1.0 TSI Comfortline" value="${val("variant")}"></div></div>
+        <div class="grid3"><div class="field"><label for="v_year">Year</label><input class="ctrl" id="v_year" type="number" inputmode="numeric" min="1950" max="${new Date().getFullYear() + 1}" value="${val("year")}"></div>
+          <div class="field"><label for="v_price">Price (R)</label><input class="ctrl" id="v_price" type="number" inputmode="numeric" min="1" value="${val("price")}"></div>
+          <div class="field"><label for="v_mileage">Mileage (km)</label><input class="ctrl" id="v_mileage" type="number" inputmode="numeric" min="0" value="${val("mileage")}"></div></div>
+        <div class="grid3"><div class="field"><label for="v_trans">Gearbox</label>${sel("v_trans", TRANS, v && v.transmission, "Choose…")}</div><div class="field"><label for="v_fuel">Fuel</label>${sel("v_fuel", FUELS, v && v.fuel_type, "Choose…")}</div><div class="field"><label for="v_body">Body type</label>${sel("v_body", BODIES, v && v.body_type, "Choose…")}</div></div>
+        <div class="grid3"><div class="field"><label for="v_colour">Colour</label><input class="ctrl" id="v_colour" value="${val("colour")}"></div><div class="field"><label for="v_prov">Province</label>${sel("v_prov", PROVINCES, v ? v.province : d.province, "Choose…")}</div><div class="field"><label for="v_city">Town / city</label><input class="ctrl" id="v_city" value="${val("city", d.city)}"></div></div>
+        <div class="field"><label for="v_pay">How can this car be bought?</label><select class="ctrl" id="v_pay"><option value="">Choose…</option>${Object.entries(PAY).map(([k, t]) => `<option value="${k}"${v && v.payment_type === k ? " selected" : ""}>${t}</option>`).join("")}</select><span class="hint">Buyers see this on the car. Choose "Finance available" if the buyer can finance it, "Rent to own" if you offer that, or "Cash only".</span></div>
+        <div class="field"><label for="v_desc">Description</label><textarea class="ctrl" id="v_desc" rows="7" placeholder="Condition, service history, extras, reason for selling…">${esc(v ? v.description : "")}</textarea><span class="hint">Press Enter twice to start a new paragraph. Buyers will see your paragraphs as you type them.</span></div>
+        <div class="field"><label for="v_feat">Features (optional)</label><textarea class="ctrl" id="v_feat" rows="2" placeholder="Aircon, electric windows, Bluetooth, leather seats…">${esc(v ? v.features || "" : "")}</textarea><span class="hint">Separate with commas or new lines.</span></div></div>
+      <div id="vf_msg"></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary" id="vf_save" type="submit">${v ? "Save and send for approval" : "Submit for approval"}</button><a class="btn btn-ghost" href="#/portal">Cancel</a></div>
+    </form></div>`);
+  return { html, bind() {
+    bindNav(); paintPhotos();
+    const area = $("#photoarea"), dz = $("#dz");
+    const hasFiles = (e) => e.dataTransfer && Array.from(e.dataTransfer.types || []).includes("Files");
+    ["dragenter", "dragover"].forEach(ev => area.addEventListener(ev, (e) => { if (!hasFiles(e)) return; e.preventDefault(); dz.classList.add("over"); }));
+    area.addEventListener("dragleave", (e) => { if (!area.contains(e.relatedTarget)) dz.classList.remove("over"); });
+    area.addEventListener("drop", (e) => { if (!hasFiles(e)) return; e.preventDefault(); dz.classList.remove("over"); addFiles(Array.from(e.dataTransfer.files)); });
+    // a photo dropped just outside the box must not make the browser leave the page
+    const guard = (e) => { if (!document.getElementById("vf")) { window.removeEventListener("dragover", guard); window.removeEventListener("drop", guard); return; } if (hasFiles(e)) e.preventDefault(); };
+    window.addEventListener("dragover", guard); window.addEventListener("drop", guard);
+    $("#vf_files").addEventListener("change", (e) => { addFiles(Array.from(e.target.files)); e.target.value = ""; });
+    $("#pgrid").addEventListener("click", (e) => { const b = e.target.closest("button[data-pa]"); if (!b) return; const i = Number(b.dataset.i), a = b.dataset.pa, P = VF.photos;
+      if (a === "left" && i > 0) [P[i - 1], P[i]] = [P[i], P[i - 1]]; else if (a === "right" && i < P.length - 1) [P[i + 1], P[i]] = [P[i], P[i + 1]]; else if (a === "del") P.splice(i, 1);
+      else if (a === "bg") { cleanPhoto(P[i], VF); return; } else if (a === "plate") { plateEditor(P[i], VF); return; } else if (a === "undo") { const t = P[i], h = t.hist && t.hist.pop(); if (h) Object.assign(t, h); }
+      paintPhotos(); });
+    $("#pgrid").addEventListener("change", (e) => { const sel = e.target.closest("select[data-lbl]"); if (!sel) return; VF.photos[Number(sel.dataset.i)].label = sel.value; paintPhotos(); });
+    $("#bg_all").addEventListener("click", async () => { const mine = VF, todo = mine.photos.filter(t => !t.clean && !t.up && !t.busy && PHOTO_EXTERIOR.includes(t.label)); if (!todo.length) { toast("Label your front, rear and side photos first, then try again."); return; } for (const t of todo) { if (VF !== mine) return; await cleanPhoto(t, mine, true); } });
+    $("#vf").addEventListener("submit", save);
+  } };
+}
+function normalizeOrder() { const P = VF.photos, i = P.findIndex(t => t.label === "front"); if (i > 0) P.unshift(P.splice(i, 1)[0]); }
+function missingShots() { const have = new Set(VF.photos.map(t => t.label)); return PHOTO_REQ.filter(k => !have.has(k)); }
+function paintPhotos() {
+  const g = $("#pgrid"); if (!g) return; const P = VF.photos;
+  g.innerHTML = P.map((p, i) => `<div class="pcell"><div class="pt ${i === 0 ? "cover" : ""}" data-i="${i}"><img src="${esc(p.url)}" alt="Photo ${i + 1}">${i === 0 ? `<span class="lbl">Cover</span>` : ""}${p.clean ? `<span class="lbl2">Clean background</span>` : ""}${p.plate ? `<span class="lbl3">Plate covered</span>` : ""}${p.up ? `<div class="up">Uploading…</div>` : p.busy ? `<div class="up">${esc(p.busy)}</div>` : `<div class="bar">${i > 0 ? `<button type="button" data-pa="left" data-i="${i}" aria-label="Move earlier">←</button>` : ""}${i < P.length - 1 ? `<button type="button" data-pa="right" data-i="${i}" aria-label="Move later">→</button>` : ""}<button type="button" class="x" data-pa="del" data-i="${i}" aria-label="Remove photo">✕</button></div>`}</div>
+    <select class="ctrl plbl${p.label ? "" : " need"}" data-lbl data-i="${i}" aria-label="What photo ${i + 1} shows"><option value="">What does this show?</option>${PHOTO_LABELS.map(([k, n]) => `<option value="${k}"${p.label === k ? " selected" : ""}>${n}</option>`).join("")}</select>
+    ${p.up || p.busy ? "" : `<div class="tools">${p.clean ? "" : `<button type="button" class="btn btn-ghost btn-sm" data-pa="bg" data-i="${i}">Remove background</button>`}<button type="button" class="btn btn-ghost btn-sm" data-pa="plate" data-i="${i}">${p.plate ? "Edit plate cover" : "Cover number plate"}</button>${p.hist && p.hist.length ? `<button type="button" class="btn btn-ghost btn-sm" data-pa="undo" data-i="${i}">Undo last change</button>` : ""}</div>`}</div>`).join("");
+  const miss = missingShots(), pc = $("#ph_check");
+  if (pc) pc.innerHTML = PHOTO_REQ.map(k => `<span class="${miss.includes(k) ? "no" : "yes"}">${miss.includes(k) ? "○" : "✓"} ${esc(labelName(k))}</span>`).join("");
+  const h = $("#ph_hint"); if (h) h.textContent = P.length + " of " + MAX_PHOTOS + " photos" + (P.length < MIN_PHOTOS ? " · add at least " + (MIN_PHOTOS - P.length) + " more" : "") + (miss.length ? " · still needed: " + miss.map(labelName).join(", ") : "");
+  const ba = $("#bg_all"); if (ba) ba.disabled = P.some(t => t.busy);
+}
+async function addFiles(files) {
+  const imgs = files.filter(isImg), skipped = files.length - imgs.length, rejects = [];
+  if (skipped) rejects.push(skipped === 1 ? "One file wasn't a photo and was skipped." : skipped + " files weren't photos and were skipped.");
+  imgs.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+  const ok = [];
+  for (const f of imgs) { const why = await checkPhotoStandard(f); if (why) rejects.push(why); else ok.push(f); }
+  const room = MAX_PHOTOS - VF.photos.length; if (ok.length > room) rejects.push(`You can add up to ${MAX_PHOTOS} photos. ${ok.length - room} didn't fit.`);
+  const box = $("#ph_rejects"); if (box) box.innerHTML = rejects.length ? `<div class="err" role="alert"><b>These photos were not added:</b><ul>${rejects.map(r => `<li>${esc(r)}</li>`).join("")}</ul></div>` : "";
+  const take = ok.slice(0, Math.max(0, room)), mine = VF;
+  // label in order: the next required shot that is still missing, then "other"
+  const have = new Set(mine.photos.map(t => t.label));
+  const nextLabel = () => { const k = PHOTO_REQ.find(x => !have.has(x)) || "other"; have.add(k); return k; };
+  const tiles = take.map(f => { const t = { path: null, url: URL.createObjectURL(f), up: true, file: f, label: nextLabel() }; mine.photos.push(t); return [t, f]; });
+  paintPhotos();
+  for (const [t, f] of tiles) {
+    try { t.path = await uploadPhoto(f, mine.key); t.up = false; }
+    catch (e) { console.warn(e); toast(niceErr(e)); const i = mine.photos.indexOf(t); if (i >= 0) mine.photos.splice(i, 1); }
+    if (VF === mine) paintPhotos();
+  }
+}
+// remove the background of one photo: cut the car out, put it on a clean studio backdrop, upload the new picture
+async function cleanPhoto(t, mine, quiet) {
+  if (!t || t.up || t.busy || t.clean) return;
+  const say = (m) => { t.busy = m; if (VF === mine) paintPhotos(); };
+  say("Preparing…");
+  try {
+    const src = t.file || await (await fetch(t.url)).blob();
+    let last = -1; const cut = await cutOut(src, (pct) => { if (pct !== last) { last = pct; say("Cleaning… " + pct + "%"); } });
+    say("Finishing…"); const out = await studioPhoto(cut), path = await uploadBlob(out, mine.key);
+    (t.hist = t.hist || []).push({ path: t.path, url: t.url, file: t.file, clean: !!t.clean, plate: !!t.plate }); t.path = path; t.url = URL.createObjectURL(out); t.file = out; t.clean = true;
+  } catch (e) { console.warn(e); toast(quiet ? "One photo could not be cleaned. You can still use it as it is." : "Sorry, the background could not be removed from that photo. Check your internet connection and try again, or use the photo as it is."); }
+  t.busy = null; if (VF === mine) paintPhotos();
+}
+async function save(e) {
+  e.preventDefault(); const box = $("#vf_msg"), btn = $("#vf_save"); box.innerHTML = "";
+  const bad = (t) => { box.innerHTML = `<div class="err" role="alert">${esc(t)}</div>`; box.scrollIntoView({ block: "center", behavior: "smooth" }); };
+  const g = (id) => $("#" + id).value.trim();
+  const year = Number(g("v_year")), price = Number(g("v_price")), mileage = g("v_mileage");
+  if (g("v_make").length < 2) return bad("Please enter the make, for example Toyota.");
+  if (!g("v_model")) return bad("Please enter the model, for example Corolla.");
+  if (!(year >= 1950 && year <= new Date().getFullYear() + 1)) return bad("Please enter a valid year.");
+  if (!(price > 0)) return bad("Please enter the price in rand.");
+  if (mileage !== "" && !(Number(mileage) >= 0)) return bad("Mileage must be a number.");
+  if (!$("#v_prov").value) return bad("Please choose the province.");
+  if (g("v_city").length < 2) return bad("Please enter the town or city.");
+  if (!$("#v_pay").value) return bad("Please say how this car can be bought: finance available, rent to own or cash only.");
+  if (g("v_desc").length < 10) return bad("Please write a short description (at least a sentence).");
+  if (VF.photos.some(p => p.up)) return bad("Please wait, your photos are still uploading.");
+  if (VF.photos.some(p => p.busy)) return bad("Please wait, a photo is still being cleaned.");
+  if (VF.photos.length < MIN_PHOTOS) return bad(`Please add at least ${MIN_PHOTOS} photos. The standard needs the front, rear, left side, right side, dashboard and odometer.`);
+  if (VF.photos.some(t => !t.label)) return bad("Please say what each photo shows. Use the box under each photo.");
+  { const miss = missingShots(); if (miss.length) return bad("Our photo standard also needs: " + miss.map(labelName).join(", ") + ". Please add or relabel your photos."); }
+  normalizeOrder();
+  const p = { id: VF.id || undefined, make: g("v_make"), model: g("v_model"), variant: g("v_variant"), year, price, mileage, transmission: $("#v_trans").value, fuel_type: $("#v_fuel").value, body_type: $("#v_body").value, colour: g("v_colour"), province: $("#v_prov").value, city: g("v_city"), description: $("#v_desc").value, features: $("#v_feat").value, photos: VF.photos.map(x => x.path), photo_labels: VF.photos.map(x => x.label), payment_type: $("#v_pay").value };
+  setBusy(btn, true, "Saving…"); const { data, error } = await client().rpc("dealer_save_vehicle", { p }); setBusy(btn, false);
+  if (error) return bad(niceErr(error));
+  S.cars = null; S.ptab = "vehicles"; toast("Saved. Our team will review it shortly."); VF = null; location.hash = "#/portal";
+}
+
+// the Dealer Cars number plate cover: the dealer drags a Dealer Cars plate over the real plate, sizes and turns it, and applies it
+async function plateEditor(t, mine) {
+  if (!t || t.up || t.busy) return;
+  let bmp; try { const blob = t.file || await (await fetch(t.url)).blob(); bmp = await createImageBitmap(blob); } catch (e) { console.warn(e); toast("Sorry, that photo could not be opened. Please try again."); return; }
+  const k = Math.min(1, 1600 / bmp.width), W = Math.round(bmp.width * k), H = Math.round(bmp.height * k);
+  const plates = [{ cx: 0.5, cy: 0.7, w: 0.25, rot: 0 }]; let sel = 0;
+  const bg = document.createElement("div"); bg.className = "modal-bg plbg"; bg.id = "pl_modal"; bg.setAttribute("role", "dialog"); bg.setAttribute("aria-modal", "true");
+  bg.innerHTML = `<div class="modal plm"><button type="button" class="plx" id="pl_x" aria-label="Close">✕</button><h3>Cover the number plate</h3><p style="margin-bottom:8px">Drag the Dealer Cars plate over the real number plate. Use <b>Bigger / Smaller</b> and <b>Turn</b> to fit it. Tap <b>Add another plate</b> if there is more than one plate in the photo.</p>
+    <div class="plstage"><canvas id="pl_cv" width="${W}" height="${H}" aria-label="Photo with the Dealer Cars plate. Drag the plate to move it."></canvas></div>
+    <div class="plfoot"><div class="plctl">
+      <div class="plrow"><span>Size</span><button type="button" class="btn btn-ghost btn-sm" id="pl_sm" aria-label="Smaller">− Smaller</button><input type="range" id="pl_size" min="6" max="45" step="1" aria-label="Plate size"><button type="button" class="btn btn-ghost btn-sm" id="pl_bg" aria-label="Bigger">+ Bigger</button></div>
+      <div class="plrow"><span>Turn</span><button type="button" class="btn btn-ghost btn-sm" id="pl_tl" aria-label="Turn left">↺ Left</button><input type="range" id="pl_rot" min="-35" max="35" step="1" aria-label="Turn the plate"><button type="button" class="btn btn-ghost btn-sm" id="pl_tr" aria-label="Turn right">↻ Right</button></div></div>
+    <div class="row"><button type="button" class="btn btn-ghost btn-sm" id="pl_add">Add another plate</button><button type="button" class="btn btn-ghost btn-sm" id="pl_del">Remove this plate</button><span style="flex:1"></span><button type="button" class="btn btn-ghost" id="pl_cancel">Cancel</button><button type="button" class="btn btn-primary" id="pl_apply">Apply to photo</button></div></div></div>`;
+  document.body.appendChild(bg);
+  const cv = bg.querySelector("#pl_cv"), cx = cv.getContext("2d"), size = bg.querySelector("#pl_size"), rot = bg.querySelector("#pl_rot");
+  const paint = (final) => { cx.clearRect(0, 0, W, H); cx.drawImage(bmp, 0, 0, W, H); plates.forEach((p, i) => drawPlate(cx, p.cx * W, p.cy * H, p.w * W, p.rot, !final && i === sel)); };
+  const sync = () => { const p = plates[sel]; size.value = Math.round(p.w * 100); rot.value = p.rot; bg.querySelector("#pl_del").disabled = plates.length < 2; bg.querySelector("#pl_add").disabled = plates.length >= 3; paint(); };
+  const pos = (e) => { const r = cv.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width * W, y: (e.clientY - r.top) / r.height * H }; };
+  const hit = (x, y) => { for (let i = plates.length - 1; i >= 0; i--) { const p = plates[i], w = p.w * W, h = w * PLATE_RATIO, a = -p.rot * Math.PI / 180, dx = x - p.cx * W, dy = y - p.cy * H, lx = dx * Math.cos(a) - dy * Math.sin(a), ly = dx * Math.sin(a) + dy * Math.cos(a); if (Math.abs(lx) <= w / 2 + 12 && Math.abs(ly) <= h / 2 + 12) return i; } return -1; };
+  let drag = null;
+  cv.addEventListener("pointerdown", (e) => { const q = pos(e), i = hit(q.x, q.y); if (i < 0) return; sel = i; drag = { dx: plates[i].cx * W - q.x, dy: plates[i].cy * H - q.y }; try { cv.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); sync(); });
+  cv.addEventListener("pointermove", (e) => { if (!drag) return; const q = pos(e), p = plates[sel]; p.cx = Math.min(1, Math.max(0, (q.x + drag.dx) / W)); p.cy = Math.min(1, Math.max(0, (q.y + drag.dy) / H)); paint(); });
+  const stop = () => { drag = null; }; cv.addEventListener("pointerup", stop); cv.addEventListener("pointercancel", stop);
+  size.addEventListener("input", () => { plates[sel].w = Number(size.value) / 100; paint(); });
+  rot.addEventListener("input", () => { plates[sel].rot = Number(rot.value); paint(); });
+  const nudge = (id, fn) => bg.querySelector(id).addEventListener("click", () => { fn(plates[sel]); sync(); });
+  nudge("#pl_sm", p => { p.w = Math.max(0.06, p.w - 0.02); }); nudge("#pl_bg", p => { p.w = Math.min(0.45, p.w + 0.02); });
+  nudge("#pl_tl", p => { p.rot = Math.max(-35, p.rot - 3); }); nudge("#pl_tr", p => { p.rot = Math.min(35, p.rot + 3); });
+  cv.addEventListener("wheel", (e) => { e.preventDefault(); const p = plates[sel]; p.w = Math.min(0.45, Math.max(0.06, p.w + (e.deltaY < 0 ? 0.01 : -0.01))); sync(); }, { passive: false });
+  bg.querySelector("#pl_add").addEventListener("click", () => { if (plates.length >= 3) return; plates.push({ cx: 0.5, cy: 0.5 + plates.length * 0.08, w: 0.25, rot: 0 }); sel = plates.length - 1; sync(); });
+  bg.querySelector("#pl_del").addEventListener("click", () => { if (plates.length < 2) return; plates.splice(sel, 1); sel = Math.max(0, sel - 1); sync(); });
+  const onKey = (e) => { if (e.key === "Escape") close(); };
+  const close = () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = prevOv; if (bmp.close) bmp.close(); bg.remove(); };
+  const prevOv = document.body.style.overflow; document.body.style.overflow = "hidden"; document.addEventListener("keydown", onKey);
+  bg.querySelector("#pl_cancel").addEventListener("click", close); bg.querySelector("#pl_x").addEventListener("click", close);
+  let downOnBg = false; bg.addEventListener("pointerdown", (e) => { downOnBg = e.target === bg; }); bg.addEventListener("click", (e) => { if (e.target === bg && downOnBg) close(); });
+  bg.querySelector("#pl_apply").addEventListener("click", async (e) => {
+    const btn = e.currentTarget; setBusy(btn, true, "Applying…");
+    try {
+      paint(true);
+      const out = await new Promise((res, rej) => cv.toBlob(b => b ? res(b) : rej(new Error("Could not prepare that photo.")), "image/jpeg", 0.9));
+      const path = await uploadBlob(out, mine.key);
+      (t.hist = t.hist || []).push({ path: t.path, url: t.url, file: t.file, clean: !!t.clean, plate: !!t.plate });
+      t.path = path; t.url = URL.createObjectURL(out); t.file = out; t.plate = true;
+      close(); if (VF === mine) paintPhotos(); toast("Plate covered. You can undo this on the photo.");
+    } catch (err) { console.warn(err); setBusy(btn, false); paint(); toast("Sorry, the plate could not be added. Please try again."); }
+  });
+  sync();
+}
+
+/* ====================== admin ====================== */
+function reasonBox(title, text) {
+  return new Promise((resolve) => {
+    const bg = document.createElement("div"); bg.className = "modal-bg"; bg.setAttribute("role", "dialog");
+    bg.innerHTML = `<div class="modal"><h3>${esc(title)}</h3><p>${esc(text)}</p><div class="field"><textarea class="ctrl" id="rb_text" rows="3" placeholder="e.g. Photos are too dark. Please retake them in daylight."></textarea></div><div id="rb_err"></div><div class="row"><button class="btn btn-ghost" data-r="0">Cancel</button><button class="btn btn-danger" data-r="1" id="rb_ok">Send reason</button></div></div>`;
+    document.body.appendChild(bg); $("#rb_text", bg).focus();
+    bg.addEventListener("click", (e) => { const b = e.target.closest("[data-r]"); if (b && b.dataset.r === "1") { const t = $("#rb_text", bg).value.trim(); if (t.length < 3) { $("#rb_err", bg).innerHTML = `<div class="err">Please type a short reason for the dealer.</div>`; return; } bg.remove(); resolve(t); } else if ((b && b.dataset.r === "0") || e.target === bg) { bg.remove(); resolve(null); } });
+  });
+}
+async function viewAdmin() {
+  seo({ title: "Admin | Dealer Cars", noindex: true });
+  await refreshSession();
+  if (!S.session) {
+    const html = page("", `<div class="wrap"><div class="authwrap"><h1 style="font-size:30px;margin-bottom:6px">Admin login</h1><p style="color:var(--muted);margin-bottom:18px">For the Dealer Cars team.</p><form id="ad_form" novalidate><div id="ad_msg"></div>
+      <div class="field"><label for="ad_email">E-mail</label><input class="ctrl" id="ad_email" type="email" autocomplete="username"></div><div class="field"><label for="ad_pass">Password</label><input class="ctrl" id="ad_pass" type="password" autocomplete="current-password"></div>
+      <button class="btn btn-primary btn-block" id="ad_go" type="submit">Log in</button></form></div></div>`);
+    return { html, bind() { bindNav(); $("#ad_form").addEventListener("submit", async (e) => { e.preventDefault(); setBusy($("#ad_go"), true, "Logging in…");
+      const { error } = await client().auth.signInWithPassword({ email: $("#ad_email").value.trim(), password: $("#ad_pass").value }); if (error) { setBusy($("#ad_go"), false); $("#ad_msg").innerHTML = `<div class="err">${esc(niceErr(error))}</div>`; return; }
+      await refreshSession(); S.dealer = undefined; S.isAdmin = undefined; render(); }); } };
+  }
+  await loadMe();
+  if (!S.isAdmin) {
+    return { html: page("", `<div class="wrap"><div class="authwrap"><div class="empty"><h3>This account is not an admin</h3><p>You are logged in as ${esc(S.session.user.email || "")}. Ask the site owner to make this e-mail an admin, or log in with a different account.</p><button class="btn btn-dark" id="ad_out">Log out</button></div></div></div>`), bind() { bindNav(); $("#ad_out").addEventListener("click", async () => { await signOut(); render(); }); } };
+  }
+  let vehicles = [], dealers = [], inquiries = [], sells = [], err = "";
+  try {
+    const [a, b, c, e4] = await Promise.all([client().from("vehicles").select("*").order("created_at", { ascending: false }), client().from("dealers").select("*").order("created_at", { ascending: false }), client().from("inquiries").select("*").order("created_at", { ascending: false }), client().from("sell_requests").select("*").order("created_at", { ascending: false })]);
+    if (a.error) throw a.error; if (b.error) throw b.error; if (c.error) throw c.error; if (e4.error) throw e4.error; vehicles = a.data || []; dealers = b.data || []; inquiries = c.data || []; sells = e4.data || [];
+  } catch (e) { console.warn(e); err = niceErr(e); }
+  const dmap = Object.fromEntries(dealers.map(d => [d.id, d])), vmap = Object.fromEntries(vehicles.map(v => [v.id, v]));
+  const pending = vehicles.filter(v => v.status === "Pending"), tab = S.atab || "pending";
+  const vcard = (v, full) => { const d = dmap[v.dealer_id] || {};
+    return `<div class="arow" data-vid="${esc(v.id)}"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h3 style="font-size:19px">${esc(carTitle(v))}</h3><div style="color:var(--muted);font-size:14px">${money(v.price)} · ${esc(v.city)}, ${esc(v.province)} · ${esc(v.ref)} · added ${dateStr(v.created_at)}${v.rating ? " · " + v.rating + " star" + (v.rating === 1 ? "" : "s") : ""}</div></div><div>${statusBadge(v.status)}</div></div>
+      <div class="ph">${(v.photos || []).map((p, i) => `<img src="${esc(photoUrl(p))}" alt="${esc(labelName((v.photo_labels || [])[i]))}" title="${esc(labelName((v.photo_labels || [])[i]))}" data-zoom="${esc(photoUrl(p))}" loading="lazy">`).join("") || `<span style="color:var(--muted)">No photos</span>`}</div>
+      ${full ? `<div class="kv"><div><span>Mileage:</span> ${esc(km(v.mileage) || "-")}</div><div><span>Gearbox / fuel:</span> ${esc([v.transmission, v.fuel_type].filter(Boolean).join(" / ") || "-")}</div><div><span>Body / colour:</span> ${esc([v.body_type, v.colour].filter(Boolean).join(" / ") || "-")}</div><div><span>Dealership:</span> <b>${esc(d.business_name || "?")}</b></div><div><span>Contact:</span> ${esc(d.contact_person || "")} ${esc(d.phone || "")}</div><div><span>E-mail:</span> ${esc(d.email || "")}</div><div><span>Photos shown:</span> ${esc((v.photo_labels || []).map(labelName).filter(Boolean).join(", ") || "not labelled")}</div></div><div class="desc" style="margin:12px 0;font-size:15px">${fmtText(v.description)}</div>${v.features ? `<p style="font-size:14px;color:var(--ink2)"><b>Features:</b> ${esc(v.features)}</p>` : ""}` : `<div style="font-size:14px;color:var(--muted)">${esc(d.business_name || "?")}</div>`}
+      ${v.status === "Declined" && v.decline_reason ? `<div class="reason">Reason sent: ${esc(v.decline_reason)}</div>` : ""}
+      ${v.status !== "Sold" ? `<div class="raterow"><label for="rt_${esc(v.id)}"><b>Dealer Cars rating</b> <span class="hint">(buyers see this and can sort by it)</span></label><select class="ctrl" id="rt_${esc(v.id)}" data-rate>${[["", "Not rated"], [5, "5 stars"], [4, "4 stars"], [3, "3 stars"], [2, "2 stars"], [1, "1 star"]].map(([n, t]) => `<option value="${n}"${String(v.rating || "") === String(n) ? " selected" : ""}>${t}</option>`).join("")}</select>${v.status === "Approved" ? `<button class="btn btn-ghost btn-sm" data-a="rate">Save rating</button>` : ""}</div>` : ""}
+      ${v.status !== "Sold" ? `<div class="raterow"><label for="py_${esc(v.id)}"><b>How it can be bought</b> <span class="hint">(shown on the car)</span></label><select class="ctrl" id="py_${esc(v.id)}" data-pay><option value="">Not set</option>${Object.entries(PAY).map(([k, t]) => `<option value="${k}"${v.payment_type === k ? " selected" : ""}>${t}</option>`).join("")}</select><button class="btn btn-ghost btn-sm" data-a="pay">Save</button></div>` : ""}
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${v.status === "Pending" || v.status === "Declined" ? `<button class="btn btn-primary btn-sm" data-a="approve">Approve</button>` : ""}${v.status === "Pending" ? `<button class="btn btn-danger btn-sm" data-a="decline">Decline…</button>` : ""}${v.status === "Approved" ? `<a class="btn btn-ghost btn-sm" href="#/car/${esc(v.ref)}">View live</a><button class="btn btn-danger btn-sm" data-a="decline">Take down…</button>` : ""}</div></div>`; };
+  const tabs = {
+    pending: () => pending.length ? pending.map(v => vcard(v, true)).join("") : `<div class="empty"><h3>Nothing waiting</h3><p>All vehicles have been reviewed. New ones appear here as soon as a dealership submits them.</p></div>`,
+    cars: () => { const f = S.afilter || ""; const l = vehicles.filter(v => !f || v.status === f); return `<div class="field" style="max-width:240px"><label for="a_f">Show</label><select class="ctrl" id="a_f"><option value="">All vehicles (${vehicles.length})</option>${["Pending", "Approved", "Declined", "Sold"].map(s => `<option${s === f ? " selected" : ""}>${s}</option>`).join("")}</select></div>` + (l.length ? l.map(v => vcard(v, false)).join("") : `<div class="empty"><h3>No vehicles</h3></div>`); },
+    dealers: () => dealers.length ? dealers.map(d => { const n = vehicles.filter(v => v.dealer_id === d.id).length; return `<div class="arow" data-did="${esc(d.id)}"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h3 style="font-size:19px">${esc(d.business_name)}</h3><div style="color:var(--muted);font-size:14px">${esc(d.city)}, ${esc(d.province)} · registered ${dateStr(d.created_at)} · ${n} vehicle${n === 1 ? "" : "s"}</div></div><div>${d.status === "Active" ? `<span class="badge ok">Active</span>` : `<span class="badge bad">Suspended</span>`}</div></div>
+      <div class="kv" style="margin-top:10px"><div><span>Contact:</span> ${esc(d.contact_person)}</div><div><span>Phone:</span> <a href="tel:${esc(d.phone)}">${esc(d.phone)}</a></div><div><span>E-mail:</span> <a href="mailto:${esc(d.email)}">${esc(d.email)}</a></div></div>
+      <div style="margin-top:12px"><button class="btn ${d.status === "Active" ? "btn-danger" : "btn-primary"} btn-sm" data-a="dstatus" data-to="${d.status === "Active" ? "Suspended" : "Active"}">${d.status === "Active" ? "Suspend dealership" : "Reactivate dealership"}</button></div></div>`; }).join("") : `<div class="empty"><h3>No dealerships yet</h3><p>They appear here once they register.</p></div>`,
+    sells: () => sells.length ? sells.map(r => { const d = r.details || {}; return `<div class="arow" data-sid="${esc(r.id)}"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h3 style="font-size:19px">${esc(r.year)} ${esc(r.make)} ${esc(r.model)}${r.variant ? " " + esc(r.variant) : ""}</h3><div style="color:var(--muted);font-size:14px">${esc(money(r.asking_price))} asking · ${esc(km(r.mileage))} · ${esc(r.ref)} · received ${dateStr(r.created_at)}</div></div><div><span class="badge ${r.status === "New" ? "warn" : r.status === "Approved" ? "ok" : r.status === "Declined" ? "bad" : ""}">${esc(r.status)}</span></div></div>
+      <div class="kv" style="margin-top:10px"><div><span>Seller:</span> <b>${esc([r.title, r.first_name, r.surname].filter(Boolean).join(" "))}</b> (${esc(r.seller_type)}, owner: ${esc(r.registered_owner)})</div><div><span>WhatsApp:</span> <a href="https://wa.me/${esc(waNumber(r.whatsapp))}" target="_blank" rel="noopener">${esc(r.whatsapp)}</a></div><div><span>E-mail:</span> <a href="mailto:${esc(r.email)}">${esc(r.email)}</a></div><div><span>Location:</span> ${esc(r.city)}, ${esc(r.province)}</div>
+        <div><span>Gearbox / fuel:</span> ${esc([d.transmission, d.fuel].filter(Boolean).join(" / ") || "-")}</div><div><span>Colour / plate:</span> ${esc([d.colour, d.registration].filter(Boolean).join(" / ") || "-")}</div><div><span>VIN:</span> ${esc(d.vin || "-")}</div><div><span>Service history:</span> ${esc(d.full_service_history || "-")} · <span>Accidents:</span> ${esc(d.accident_history || "-")}</div><div><span>Outstanding finance:</span> ${esc(d.outstanding_finance || "-")}${d.settlement_amount ? " (settlement R " + esc(d.settlement_amount) + ")" : ""}</div></div>
+      ${d.notes ? `<div class="desc" style="margin:12px 0;font-size:15px">${fmtText(d.notes)}</div>` : ""}
+      <div class="ph" data-photos="${esc((r.photos || []).join("|"))}"><button class="btn btn-ghost btn-sm" data-a="sphotos">Show ${(r.photos || []).length} photos</button></div>
+      <div class="field" style="margin-top:12px;max-width:520px"><label for="sn_${esc(r.id)}">Note (only you see this)</label><input class="ctrl" id="sn_${esc(r.id)}" data-snote value="${esc(r.admin_note || "")}" maxlength="500"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">${["Contacted", "Approved", "Declined", "Closed", "New"].filter(x => x !== r.status).map(x => `<button class="btn ${x === "Approved" ? "btn-primary" : x === "Declined" ? "btn-danger" : "btn-ghost"} btn-sm" data-a="sstatus" data-to="${x}">${x === "New" ? "Mark as new" : "Mark as " + x.toLowerCase()}</button>`).join("")}</div></div>`; }).join("") : `<div class="empty"><h3>No sell requests yet</h3><p>When someone fills in the Sell your car form, it appears here with their photos.</p></div>`,
+    inquiries: () => inquiries.length ? inquiries.map(i => { const v = vmap[i.vehicle_id], d = dmap[i.dealer_id] || {}; return `<div class="irow ${i.status === "New" ? "new" : ""}"><div class="top"><div><b>${esc(i.name)}</b> ${i.status === "New" ? `<span class="badge warn">New</span>` : `<span class="badge">Handled</span>`}</div><span style="color:var(--muted);font-size:13.5px">${dateStr(i.created_at)}</span></div>
+      <div style="font-size:14px;color:var(--muted)">${v ? esc(carTitle(v)) + " (" + esc(v.ref) + ")" : "removed vehicle"} → ${esc(d.business_name || "?")}</div><div class="msg">${esc(i.message)}</div><div style="font-size:14px">${i.phone ? `<a href="tel:${esc(i.phone)}">${esc(i.phone)}</a> ` : ""}${i.email ? `<a href="mailto:${esc(i.email)}">${esc(i.email)}</a>` : ""}</div></div>`; }).join("") : `<div class="empty"><h3>No enquiries yet</h3></div>`
+  };
+  const html = page("", `<div class="wrap"><div class="ptop"><div><h1>Admin</h1><div style="color:var(--muted)">${esc(S.session.user.email || "")}</div></div><div style="display:flex;gap:10px"><button class="btn btn-ghost" id="ad_out">Log out</button></div></div>
+    ${err ? `<div class="err">${esc(err)}</div>` : ""}
+    <div class="ptabs" role="tablist"><button data-t="pending" class="${tab === "pending" ? "on" : ""}" id="at_pending">To approve${pending.length ? `<span class="n">${pending.length}</span>` : ""}</button><button data-t="cars" class="${tab === "cars" ? "on" : ""}" id="at_cars">All vehicles</button><button data-t="dealers" class="${tab === "dealers" ? "on" : ""}" id="at_dealers">Dealerships (${dealers.length})</button><button data-t="sells" class="${tab === "sells" ? "on" : ""}" id="at_sells">Sell requests${sells.filter(r => r.status === "New").length ? `<span class="n">${sells.filter(r => r.status === "New").length}</span>` : ""}</button><button data-t="inquiries" class="${tab === "inquiries" ? "on" : ""}" id="at_inquiries">Enquiries (${inquiries.length})</button></div>
+    <div id="atab" style="padding-bottom:56px">${tabs[tab]()}</div></div>`);
+  return { html, bind() {
+    bindNav();
+    $("#ad_out").addEventListener("click", async () => { await signOut(); render(); });
+    $(".ptabs").addEventListener("click", (e) => { const b = e.target.closest("[data-t]"); if (b) { S.atab = b.dataset.t; render(); } });
+    const f = $("#a_f"); if (f) f.addEventListener("change", () => { S.afilter = f.value; render(); });
+    $("#atab").addEventListener("click", async (e) => {
+      const z = e.target.closest("[data-zoom]"); if (z) { const lb = document.createElement("div"); lb.className = "lb"; lb.innerHTML = `<img src="${esc(z.dataset.zoom)}" alt="">`; lb.addEventListener("click", () => lb.remove()); document.body.appendChild(lb); return; }
+      const b = e.target.closest("button[data-a]"); if (!b) return; const a = b.dataset.a, row = b.closest("[data-vid]"), drow = b.closest("[data-did]"), srow = b.closest("[data-sid]");
+      try {
+        if (a === "approve") { const rt = $("[data-rate]", row), { error } = await client().rpc("admin_review_vehicle", { p_id: row.dataset.vid, p_decision: "Approved", p_reason: null, p_rating: rt && rt.value ? Number(rt.value) : null }); if (error) throw error; S.cars = null; toast("Approved. It is live now."); render(); }
+        else if (a === "pay") { const sp = $("[data-pay]", row); const { error } = await client().rpc("admin_set_vehicle_payment", { p_id: row.dataset.vid, p_payment: sp.value || null }); if (error) throw error; S.cars = null; toast("Saved."); render(); }
+        else if (a === "rate") { const rt = $("[data-rate]", row); const { error } = await client().rpc("admin_set_vehicle_rating", { p_id: row.dataset.vid, p_rating: rt.value ? Number(rt.value) : null }); if (error) throw error; S.cars = null; toast("Rating saved."); render(); }
+        else if (a === "sstatus") { const note = $("[data-snote]", srow).value; const { error } = await client().rpc("admin_set_sell_status", { p_id: srow.dataset.sid, p_status: b.dataset.to, p_note: note || null }); if (error) throw error; toast("Saved."); render(); }
+        else if (a === "sphotos") { const box = b.parentElement, paths = box.dataset.photos.split("|").filter(Boolean); b.disabled = true; b.textContent = "Loading…"; const r = await client().storage.from(SELL_BUCKET).createSignedUrls(paths, 3600); if (r.error) throw r.error; box.innerHTML = (r.data || []).filter(x => x.signedUrl).map(x => `<img src="${esc(x.signedUrl)}" alt="" data-zoom="${esc(x.signedUrl)}" loading="lazy">`).join("") || `<span style="color:var(--muted)">No photos</span>`; }
+        else if (a === "decline") { const v = vmap[row.dataset.vid]; const r = await reasonBox(v.status === "Approved" ? "Take this car down" : "Decline this car", "The dealership will see this reason and can fix the car and send it again."); if (r == null) return; const { error } = await client().rpc("admin_review_vehicle", { p_id: v.id, p_decision: "Declined", p_reason: r }); if (error) throw error; S.cars = null; toast("Sent back to the dealership."); render(); }
+        else if (a === "dstatus") { const d = dmap[drow.dataset.did], to = b.dataset.to; if (!(await confirmBox(to === "Suspended" ? "Suspend this dealership?" : "Reactivate this dealership?", to === "Suspended" ? `${d.business_name} and all its cars will disappear from the site until you reactivate it.` : `${d.business_name} and its approved cars will show on the site again.`, to === "Suspended" ? "Suspend" : "Reactivate", to === "Suspended"))) return; const { error } = await client().rpc("admin_set_dealer_status", { p_id: d.id, p_status: to }); if (error) throw error; S.cars = null; S.dealers = null; toast("Done."); render(); }
+      } catch (x) { toast(niceErr(x)); }
+    });
+  } };
+}
+
+/* ====================== router + start ====================== */
+let _rid = 0;
+function parseHash() {
+  const raw = (location.hash || "").replace(/^#\/?/, ""); const [path, query] = raw.split("?"); return { path: path.replace(/\/+$/, ""), query: query || "" };
+}
+async function resolveView() {
+  const { path, query } = parseHash(), p = path.split("/");
+  switch (p[0]) {
+    case "": return viewHome();
+    case "cars": return viewCars(query);
+    case "car": return p[1] ? viewCar(decodeURIComponent(p[1])) : viewCars("");
+    case "spotters": return viewSoon("spotters");
+    case "insurance": return viewSoon("insurance");
+    case "rentals": return viewSoon("rentals");
+    case "finance": return viewFinance(query);
+    case "sell": return viewSell();
+    case "about": return viewAbout();
+    case "for-dealers": return viewForDealers();
+    case "login": return viewLogin(query);
+    case "portal": return p[1] === "add" ? viewVehicleForm(null) : p[1] === "edit" && p[2] ? viewVehicleForm(decodeURIComponent(p[2])) : viewPortal();
+    case "admin": return viewAdmin();
+    case "terms": return viewLegal("terms");
+    case "privacy": return viewLegal("privacy");
+    default: return viewHome();
+  }
+}
+function setupScreen() {
+  seo({ title: "Dealer Cars", noindex: true });
+  $("#app").innerHTML = `<div style="max-width:620px;margin:12vh auto;padding:0 20px;text-align:center"><div class="logo" style="justify-content:center;margin-bottom:18px;font-size:26px">${LOGO}<span>Dealer<b>Cars</b></span></div><h1 style="font-size:28px;margin-bottom:10px">Almost ready</h1><p style="color:var(--muted)">This site is not connected to its database yet. If you are the owner: open <b>index.html</b>, find <b>CONFIG</b> near the top of the script, and paste in your Supabase project URL and anon key. The setup steps are in README_STEPS.txt.</p></div>`;
+}
+async function render() {
+  const my = ++_rid, app = $("#app");
+  if (!isConfigured()) return setupScreen();
+  const timer = setTimeout(() => { if (my === _rid && !app.innerHTML) app.innerHTML = navHtml("") + loadingBlock(); }, 250);
+  let v;
+  try { v = await resolveView(); }
+  catch (e) { console.error(e); v = { html: page("", `<div class="wrap" style="padding:50px 20px">${failBlock("this page")}</div>`), bind: bindNav }; seo({ noindex: true }); }
+  clearTimeout(timer);
+  if (my !== _rid) return;
+  app.innerHTML = v.html; window.scrollTo(0, 0);
+  try { v.bind && v.bind(); } catch (e) { console.error(e); }
+  const h = $("#main h1"); if (h) { h.setAttribute("tabindex", "-1"); }
+}
+window.addEventListener("hashchange", render);
+function siteLd() {
+  if (document.getElementById("ld_site")) return; const s = document.createElement("script"); s.type = "application/ld+json"; s.id = "ld_site";
+  s.textContent = JSON.stringify({ "@context": "https://schema.org", "@graph": [{ "@type": "Organization", name: "Dealer Cars", url: baseUrl() + "/", description: "An online marketplace for used cars from hand-picked dealers in South Africa." }, { "@type": "WebSite", name: "Dealer Cars", url: baseUrl() + "/" }] });
+  document.head.appendChild(s);
+}
+(async function start() {
+  siteLd();
+  if (isConfigured()) {
+    try {
+      client().auth.onAuthStateChange((ev, session) => { if (ev === "PASSWORD_RECOVERY") { S.resetMode = true; S.session = session || S.session; if (location.hash === "#/login") render(); else location.hash = "#/login"; } });
+      await refreshSession();
+    } catch (e) { console.warn(e); }
+  }
+  render();
+})();
+
+</script>
+</body>
+</html>
