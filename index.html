@@ -458,11 +458,10 @@ const MAKES = ["Audi","BMW","Chevrolet","Citroen","Ford","Honda","Hyundai","Isuz
 const BUCKET = "vehicle-photos";
 const MAX_PHOTOS = 20, MIN_PHOTOS = 6;
 /* The Dealer Cars photo standard: what every photo shows, which shots are required, and the size rules */
-const PHOTO_LABELS = [["front", "Front"], ["rear", "Rear"], ["left", "Left side"], ["right", "Right side"], ["dash", "Dashboard"], ["odo", "Odometer (mileage)"], ["seats", "Seats"], ["boot", "Boot"], ["engine", "Engine"], ["wheels", "Wheels / tyres"], ["other", "Other"]];
-const PHOTO_REQ = ["front", "rear", "left", "right", "dash", "odo"];
-const PHOTO_EXTERIOR = ["front", "rear", "left", "right"];
+/* No labels any more: dealers just upload the photos in the order of the checklist (front, rear, left, right, dashboard, odometer, then the rest) */
+const PHOTO_ORDER = ["Front", "Rear", "Left side", "Right side", "Dashboard", "Odometer (mileage)"];
+const PHOTO_EXTERIOR_N = 4;   // the first four photos are the outside of the car (used by "remove background from the outside photos")
 const PHOTO_RULES = { minW: 1200, minH: 800, maxMB: 15 };
-const labelName = (k) => { const x = PHOTO_LABELS.find(l => l[0] === k); return x ? x[1] : ""; };
 
 const $ = (s, r) => (r || document).querySelector(s);
 const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
@@ -576,9 +575,9 @@ async function shrink(file, maxSide, quality) {
 }
 const IMG_RX = /^image\/(jpeg|png|webp|heic|heif|gif|bmp)$/i;
 const isImg = (f) => f && (IMG_RX.test(f.type || "") || /\.(jpe?g|png|webp|heic|heif|gif|bmp)$/i.test(f.name || ""));
-async function uploadPhoto(file, folder) {
+async function uploadPhoto(file, folder, owner) {
   const blob = await shrink(file, 1600, 0.85);
-  const path = `${S.session.user.id}/${folder}/${rand()}${rand()}.jpg`;
+  const path = `${owner || S.session.user.id}/${folder}/${rand()}${rand()}.jpg`;
   const { error } = await client().storage.from(BUCKET).upload(path, blob, { contentType: "image/jpeg", upsert: false });
   if (error) throw error;
   return path;
@@ -604,8 +603,8 @@ async function checkPhotoStandard(file) {
   if (s.h > s.w) return `${nm} is upright. Please turn your phone sideways and take it in landscape.`;
   return "";
 }
-async function uploadBlob(blob, folder) {
-  const path = `${S.session.user.id}/${folder}/${rand()}${rand()}.jpg`;
+async function uploadBlob(blob, folder, owner) {
+  const path = `${owner || S.session.user.id}/${folder}/${rand()}${rand()}.jpg`;
   const { error } = await client().storage.from(BUCKET).upload(path, blob, { contentType: "image/jpeg", upsert: false });
   if (error) throw error;
   return path;
@@ -706,7 +705,7 @@ function navHtml(cur) {
         <div class="menu" id="dd_menu" role="menu">
           <a href="#/sell" role="menuitem" id="nav_sell">Sell your car<small>We help you sell it</small></a>
           <a href="#/finance" role="menuitem" id="nav_finance">Finance calculator<small>Work out your monthly instalment</small></a>
-          <a href="#/rentals" role="menuitem" id="nav_rentals">Car rental <span class="soon">Coming soon</span><small>Rent a car</small></a>
+          <a href="#/rent-to-own" role="menuitem" id="nav_rentals">Rent to own <span class="soon">Coming soon</span><small>Blacklisted? Credit problems?</small></a>
           <a href="#/insurance" role="menuitem" id="nav_insurance">Insurance <span class="soon">Coming soon</span><small>Cover for your car</small></a>
           <a href="#/spotters" role="menuitem" id="nav_spotters">Spotters <span class="soon">Coming soon</span><small>Spotters network</small></a>
         </div></div>
@@ -720,7 +719,7 @@ function navHtml(cur) {
     <div class="grp">Services</div>
     <a href="#/sell">Sell your car<small>We help you sell it</small></a>
     <a href="#/finance">Finance calculator<small>Work out your monthly instalment</small></a>
-    <a href="#/rentals">Car rental <span class="soon">Coming soon</span></a>
+    <a href="#/rent-to-own">Rent to own <span class="soon">Coming soon</span></a>
     <a href="#/insurance">Insurance <span class="soon">Coming soon</span></a>
     <a href="#/spotters">Spotters <span class="soon">Coming soon</span></a>
     <div class="grp">For dealerships</div>
@@ -736,7 +735,7 @@ function footerHtml() {
     <div class="fgrid">
       <div><a class="logo" href="#/">${LOGO}<span>Dealer<b>Cars</b></span></a><p style="margin-top:12px;max-width:340px;font-size:14.5px">Used cars for sale across South Africa, from hand-picked dealers.</p></div>
       <div><h4>Buyers &amp; sellers</h4><a href="#/cars">Cars for sale</a><a href="#/sell">Sell your car</a><a href="#/finance">Finance calculator</a></div>
-      <div><h4>Coming soon</h4><a href="#/rentals">Car rental</a><a href="#/insurance">Insurance</a><a href="#/spotters">Spotters</a></div>
+      <div><h4>Coming soon</h4><a href="#/rent-to-own">Rent to own</a><a href="#/insurance">Insurance</a><a href="#/spotters">Spotters</a></div>
       <div><h4>Dealers</h4><a href="#/for-dealers">List your vehicles</a><a href="#/login">Dealer login</a></div>
       <div><h4>Company</h4><a href="#/about">About us</a><a href="#/terms">Terms of use</a><a href="#/privacy">Privacy policy</a>${c.join("")}</div>
     </div>
@@ -809,7 +808,7 @@ async function viewHome() {
       <a class="svc" href="#/sell" id="svc_sell"><div class="ic">${ICON.car}</div><h3>Sell your car</h3><p>Tell us about your car and add photos. We help you sell it.</p><span class="go">Sell your car →</span></a>
       <a class="svc" href="#/finance" id="svc_finance"><div class="ic">${ICON.calc}</div><h3>Finance calculator</h3><p>Work out your monthly instalment before you shop.</p><span class="go">Open the calculator →</span></a>
     </div>
-    <p class="soonline" id="svc_soon">Coming soon: <a href="#/rentals">Car rental</a> · <a href="#/insurance">Insurance</a> · <a href="#/spotters">Spotters</a></p></div></section>
+    <p class="soonline" id="svc_soon">Coming soon: <a href="#/rent-to-own">Rent to own</a> · <a href="#/insurance">Insurance</a> · <a href="#/spotters">Spotters</a></p></div></section>
   <section class="section soft" id="home_how"><div class="wrap">
     <div class="sec-head"><div><h2>We go with you, start to finish</h2><p>Dealer Cars is more than a listing site.</p></div><a class="btn btn-ghost" href="#/about" id="home_about">See how we work</a></div>
     <ol class="how">${HOW_STEPS.map((x, i) => `<li><span class="n">${i + 1}</span><b>${esc(x[0])}</b><p>${esc(x[1])}</p></li>`).join("")}</ol></div></section>
@@ -926,7 +925,7 @@ async function viewCar(ref) {
     seo({ title: "Car no longer available | Dealer Cars", noindex: true });
     return { html: page("cars", `<div class="wrap" style="padding:50px 20px"><div class="empty"><h3>This car is no longer available</h3><p>It may have been sold or taken down.</p><a class="btn btn-primary" href="#/cars">See other cars</a></div></div>`), bind: bindNav };
   }
-  const title = carTitle(v), imgs = v.photos || [], lbls = v.photo_labels || [], cap = (i) => labelName(lbls[i]);
+  const title = carTitle(v), imgs = v.photos || [], cap = () => "";
   const url = baseUrl() + "/#/car/" + v.ref, place = [v.city, v.province].filter(Boolean).join(", "), shareText = `${title} - ${money(v.price)} - ${place}\n${url}`;
   const cap0 = budgetCap(v.price), pm = estMonthly(v.price), mcap = monthlyCap(pm), inst = showsInstalment(v);
   seo({ title: `${title} for sale in ${v.city} | ${money(v.price)} | Dealer Cars`, desc: `${title} for sale in ${v.city}, ${v.province}: ${km(v.mileage) ? km(v.mileage) + ", " : ""}${money(v.price)}${inst ? ", about " + money(pm) + " a month" : v.payment_type ? ", " + payLabel(v.payment_type).toLowerCase() : ""}. One of the cars for sale under ${money(cap0)}. Send an enquiry to Dealer Cars.`, path: "car/" + v.ref, image: imgs[0] ? photoUrl(imgs[0]) : "",
@@ -1003,7 +1002,6 @@ async function viewForDealers() {
       <li><b>Add your vehicles</b>Enter the details and upload photos. Drag and drop works, so a whole batch can go in at once.</li>
       <li><b>We approve each vehicle</b>Our team reviews every vehicle before it goes live. If something needs fixing, we tell you why.</li>
       <li><b>Buyers send enquiries</b>Your cars appear on Dealer Cars. Every buyer enquiry comes to the Dealer Cars team first. We pass the right ones on to you, and you follow them up.</li></ol>
-    <div class="note" style="max-width:720px;margin-top:20px"><b>Your details stay private.</b> Buyers never see your dealership name, phone number or e-mail. They see the car, its photos, price and the town it is in, and they contact you through an enquiry on Dealer Cars.</div>
     <div style="margin-top:28px"><a class="btn btn-primary" href="#/login?tab=register">Get started</a></div></div></section>`);
   return { html, bind: bindNav };
 }
@@ -1218,7 +1216,7 @@ async function viewSoon(kind) {
   const c = kind === "insurance"
     ? { cur: "insurance", eyebrow: "Insurance", h: "Vehicle insurance is <em>coming soon</em>.", lead: "Soon you will be able to get cover for your car right here. Check back shortly.", title: "Vehicle insurance, coming soon | Dealer Cars", path: "insurance" }
     : kind === "rentals"
-    ? { cur: "rentals", eyebrow: "Car rental", h: "Car rental is <em>coming soon</em>.", lead: "Soon you will be able to rent a car right here. Check back shortly.", title: "Car rental, coming soon | Dealer Cars", path: "rentals" }
+    ? { cur: "rentals", eyebrow: "Rent to own", h: "Blacklisted? Having issues with your credit?", lead: "<b>Rent to own coming soon.</b> Check back shortly.", title: "Rent to own, coming soon | Dealer Cars", path: "rent-to-own" }
     : { cur: "spotters", eyebrow: "Spotters", h: "Spotters are <em>coming soon</em>.", lead: "We are building a way for spotters to connect buyers and sellers. Check back shortly.", title: "Spotters, coming soon | Dealer Cars", path: "spotters" };
   seo({ title: c.title, desc: c.lead, path: c.path });
   const html = page(c.cur, `<section class="hero" style="padding-bottom:56px"><div class="wrap hero-in"><span class="eyebrow">${c.eyebrow}</span><h1>${c.h}</h1><p class="lead">${c.lead}</p>
@@ -1419,33 +1417,37 @@ function bindProfile(d) {
 
 /* ====================== add / edit a vehicle ====================== */
 let VF = null;
-async function viewVehicleForm(id) {
-  seo({ title: (id ? "Edit vehicle" : "Add a vehicle") + " | Dealer Cars", noindex: true });
+async function viewVehicleForm(id, admin) {
+  seo({ title: (admin ? "Admin: edit vehicle" : id ? "Edit vehicle" : "Add a vehicle") + " | Dealer Cars", noindex: true });
   await refreshSession();
-  if (!S.session) { setTimeout(() => { location.hash = "#/login"; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; }
-  await loadMe(); if (!S.dealer) { setTimeout(() => { location.hash = "#/portal"; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; }
+  const back = admin ? "#/admin" : "#/portal", away = () => { setTimeout(() => { location.hash = back; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; };
+  if (!S.session) { setTimeout(() => { location.hash = admin ? "#/admin" : "#/login"; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; }
+  await loadMe();
+  if (admin) { if (!S.isAdmin || !id) return away(); }
+  else if (!S.dealer) return away();
   let v = null;
-  if (id) { const r = await client().from("vehicles").select("*").eq("id", id).eq("dealer_id", S.session.user.id).maybeSingle(); v = r.data; if (!v) { setTimeout(() => { location.hash = "#/portal"; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; } }
-  const d = S.dealer;
-  VF = { id: v ? v.id : null, key: rand(), photos: (v ? v.photos : []).map((p, i) => ({ path: p, url: photoUrl(p), up: false, label: (v.photo_labels && v.photo_labels[i]) || "" })) };
+  if (id) { const q = client().from("vehicles").select("*").eq("id", id); const r = await (admin ? q : q.eq("dealer_id", S.session.user.id)).maybeSingle(); v = r.data; if (!v) return away(); }
+  const d = S.dealer || {};
+  // admin edits upload into the dealer's own photo folder, so the dealer can still edit the car later
+  VF = { id: v ? v.id : null, key: rand(), admin: !!admin, owner: admin ? v.dealer_id : S.session.user.id, orig: v ? (v.photos || []).slice() : [], photos: (v ? v.photos : []).map((p) => ({ path: p, url: photoUrl(p), up: false })) };
   const val = (k, def) => esc(v && v[k] != null ? v[k] : (def == null ? "" : def));
   const sel = (idn, arr, cur, ph) => `<select class="ctrl" id="${idn}"><option value="">${ph}</option>${arr.map(x => `<option${x === cur ? " selected" : ""}>${esc(x)}</option>`).join("")}</select>`;
-  const html = page("", `<div class="wrap"><div class="crumbs"><a href="#/portal">← My vehicles</a></div>
-    <h1 style="font-size:clamp(26px,4vw,34px)" id="vf_h">${v ? "Edit vehicle" : "Add a vehicle"}</h1>
-    <p style="color:var(--muted);margin:6px 0 18px">${v && v.status === "Approved" ? "This car is live. Saving your changes sends it back to our team for approval, and it is hidden until approved." : "Our team reviews every vehicle before it goes live."}</p>
+  const html = page("", `<div class="wrap"><div class="crumbs"><a href="${back}">${admin ? "← Admin" : "← My vehicles"}</a></div>
+    <h1 style="font-size:clamp(26px,4vw,34px)" id="vf_h">${admin ? "Edit vehicle (admin)" : v ? "Edit vehicle" : "Add a vehicle"}</h1>
+    <p style="color:var(--muted);margin:6px 0 18px">${admin ? `You are editing ${esc(carTitle(v))} (${esc(v.ref)}) for the dealership. Your changes are saved straight away and the car keeps its current status${v.status === "Approved" ? ", so it stays live" : ""}.` : v && v.status === "Approved" ? "This car is live. Saving your changes sends it back to our team for approval, and it is hidden until approved." : "Our team reviews every vehicle before it goes live."}</p>
     <form id="vf" novalidate style="max-width:860px;padding-bottom:60px">
       <div class="panel" style="margin-bottom:18px"><h2>Photos</h2>
         <div class="pstd" id="pstd"><b>The Dealer Cars photo standard</b>
           <ul><li>Landscape photos only (turn your phone sideways), at least ${PHOTO_RULES.minW} × ${PHOTO_RULES.minH} pixels, JPG, PNG or WebP, up to ${PHOTO_RULES.maxMB} MB each.</li>
-            <li>At least ${MIN_PHOTOS} photos and up to ${MAX_PHOTOS}. These six are required: <b>front, rear, left side, right side, dashboard and odometer</b> (showing the mileage).</li>
-            <li>The first photo is the cover and must be the <b>front</b> of the car. We move it to the top for you.</li>
+            <li>At least ${MIN_PHOTOS} photos and up to ${MAX_PHOTOS}. Please take these six: <b>front, rear, left side, right side, dashboard and odometer</b> (showing the mileage), then any extras (seats, boot, engine, wheels).</li>
+            <li>Upload them in that order. The first photo is the cover, so make it the <b>front</b> of the car. You can move photos with the arrows.</li>
             <li>The whole car in the frame, in daylight, no people, no watermarks, and no phone numbers or text added to the photo.</li>
             <li>Please cover the number plate with the Dealer Cars plate (button under each photo). It protects your privacy and the privacy of the car\u2019s previous owner.</li>
-            <li>Say what each photo shows using the box under it. Our team can decline cars that do not follow this.</li></ul>
+            <li>Our team can decline cars that do not follow this.</li></ul>
           <div class="pcheck" id="ph_check" aria-live="polite"></div></div>
-        <div id="photoarea"><label class="drop" id="dz" for="vf_files">${ICON.upload}<b>Drag and drop your photos here</b><span>or tap to choose several at once. Name them 1, 2, 3 in the order of the checklist and we label them for you.</span><input type="file" id="vf_files" accept="image/*" multiple hidden></label>
+        <div id="photoarea"><label class="drop" id="dz" for="vf_files">${ICON.upload}<b>Drag and drop your photos here</b><span>or tap to choose several at once. Put them in the order of the checklist above and we keep that order.</span><input type="file" id="vf_files" accept="image/*" multiple hidden></label>
         <div id="ph_rejects"></div>
-        <div class="bgbar"><button type="button" class="btn btn-ghost btn-sm" id="bg_all">Remove the background from the front, rear and side photos</button><span class="hint">Optional. Gives the car a clean grey studio backdrop. The first time it needs to download the cleaner, which can take a minute. You can undo it on each photo.</span></div>
+        <div class="bgbar"><button type="button" class="btn btn-ghost btn-sm" id="bg_all">Remove the background from the first ${PHOTO_EXTERIOR_N} photos (outside of the car)</button><span class="hint">Optional. Gives the car a clean grey studio backdrop. The first time it needs to download the cleaner, which can take a minute. You can undo it on each photo.</span></div>
         <div class="pgrid" id="pgrid"></div></div><div id="ph_hint" class="hint" style="margin-top:10px;font-size:13px;color:var(--muted)"></div></div>
       <div class="panel" style="margin-bottom:18px"><h2>Vehicle details</h2>
         <div class="grid3"><div class="field"><label for="v_make">Make</label><input class="ctrl" id="v_make" list="makes" autocomplete="off" value="${val("make")}"><datalist id="makes">${MAKES.map(m => `<option value="${m}">`).join("")}</datalist></div>
@@ -1457,9 +1459,10 @@ async function viewVehicleForm(id) {
         <div class="grid3"><div class="field"><label for="v_trans">Gearbox</label>${sel("v_trans", TRANS, v && v.transmission, "Choose…")}</div><div class="field"><label for="v_fuel">Fuel</label>${sel("v_fuel", FUELS, v && v.fuel_type, "Choose…")}</div><div class="field"><label for="v_body">Body type</label>${sel("v_body", BODIES, v && v.body_type, "Choose…")}</div></div>
         <div class="grid3"><div class="field"><label for="v_colour">Colour</label><input class="ctrl" id="v_colour" value="${val("colour")}"></div><div class="field"><label for="v_prov">Province</label>${sel("v_prov", PROVINCES, v ? v.province : d.province, "Choose…")}</div><div class="field"><label for="v_city">Town / city</label><input class="ctrl" id="v_city" value="${val("city", d.city)}"></div></div>
         <div class="field"><label for="v_pay">How can this car be bought?</label><select class="ctrl" id="v_pay"><option value="">Choose…</option>${Object.entries(PAY).map(([k, t]) => `<option value="${k}"${v && v.payment_type === k ? " selected" : ""}>${t}</option>`).join("")}</select><span class="hint">Buyers see this on the car. Choose "Finance available" if the buyer can finance it, "Rent to own" if you offer that, or "Cash only".</span></div>
+        ${admin ? `<div class="field"><label for="v_rating">Dealer Cars rating</label><select class="ctrl" id="v_rating">${[["", "Not rated"], [5, "5 stars"], [4, "4 stars"], [3, "3 stars"], [2, "2 stars"], [1, "1 star"]].map(([n, t]) => `<option value="${n}"${String(v.rating || "") === String(n) ? " selected" : ""}>${t}</option>`).join("")}</select></div>` : ""}
         <div class="field"><label for="v_desc">Description</label><textarea class="ctrl" id="v_desc" rows="7" placeholder="Condition, service history, extras, reason for selling…">${esc(v ? v.description : "")}</textarea><span class="hint">Press Enter twice to start a new paragraph. Buyers will see your paragraphs as you type them.</span></div>
         <div class="field"><label for="v_feat">Features (optional)</label><textarea class="ctrl" id="v_feat" rows="2" placeholder="Aircon, electric windows, Bluetooth, leather seats…">${esc(v ? v.features || "" : "")}</textarea><span class="hint">Separate with commas or new lines.</span></div></div>
-      <div id="vf_msg"></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary" id="vf_save" type="submit">${v ? "Save and send for approval" : "Submit for approval"}</button><a class="btn btn-ghost" href="#/portal">Cancel</a></div>
+      <div id="vf_msg"></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary" id="vf_save" type="submit">${admin ? "Save changes" : v ? "Save and send for approval" : "Submit for approval"}</button><a class="btn btn-ghost" href="${back}">Cancel</a>${admin ? `<span style="flex:1"></span><button class="btn btn-danger" id="vf_del" type="button">Delete this car</button>` : ""}</div>
     </form></div>`);
   return { html, bind() {
     bindNav(); paintPhotos();
@@ -1476,21 +1479,19 @@ async function viewVehicleForm(id) {
       if (a === "left" && i > 0) [P[i - 1], P[i]] = [P[i], P[i - 1]]; else if (a === "right" && i < P.length - 1) [P[i + 1], P[i]] = [P[i], P[i + 1]]; else if (a === "del") P.splice(i, 1);
       else if (a === "bg") { cleanPhoto(P[i], VF); return; } else if (a === "plate") { plateEditor(P[i], VF); return; } else if (a === "undo") { const t = P[i], h = t.hist && t.hist.pop(); if (h) Object.assign(t, h); }
       paintPhotos(); });
-    $("#pgrid").addEventListener("change", (e) => { const sel = e.target.closest("select[data-lbl]"); if (!sel) return; VF.photos[Number(sel.dataset.i)].label = sel.value; paintPhotos(); });
-    $("#bg_all").addEventListener("click", async () => { const mine = VF, todo = mine.photos.filter(t => !t.clean && !t.up && !t.busy && PHOTO_EXTERIOR.includes(t.label)); if (!todo.length) { toast("Label your front, rear and side photos first, then try again."); return; } for (const t of todo) { if (VF !== mine) return; await cleanPhoto(t, mine, true); } });
+    $("#bg_all").addEventListener("click", async () => { const mine = VF, todo = mine.photos.slice(0, PHOTO_EXTERIOR_N).filter(t => !t.clean && !t.up && !t.busy); if (!todo.length) { toast("Nothing to clean: the first photos already have a clean background."); return; } for (const t of todo) { if (VF !== mine) return; await cleanPhoto(t, mine, true); } });
     $("#vf").addEventListener("submit", save);
+    const del = $("#vf_del"); if (del) del.addEventListener("click", async () => { const mine = VF; if (!(await confirmBox("Delete this car?", `${carTitle(v)} (${v.ref}) will be removed for good, together with its enquiries.`, "Delete car", true))) return;
+      const { error } = await client().rpc("admin_delete_vehicle", { p_id: v.id }); if (error) return toast(niceErr(error)); try { await client().storage.from(BUCKET).remove(mine.orig || []); } catch (_) {} S.cars = null; VF = null; toast("Car deleted"); location.hash = "#/admin"; });
   } };
 }
-function normalizeOrder() { const P = VF.photos, i = P.findIndex(t => t.label === "front"); if (i > 0) P.unshift(P.splice(i, 1)[0]); }
-function missingShots() { const have = new Set(VF.photos.map(t => t.label)); return PHOTO_REQ.filter(k => !have.has(k)); }
 function paintPhotos() {
   const g = $("#pgrid"); if (!g) return; const P = VF.photos;
   g.innerHTML = P.map((p, i) => `<div class="pcell"><div class="pt ${i === 0 ? "cover" : ""}" data-i="${i}"><img src="${esc(p.url)}" alt="Photo ${i + 1}">${i === 0 ? `<span class="lbl">Cover</span>` : ""}${p.clean ? `<span class="lbl2">Clean background</span>` : ""}${p.plate ? `<span class="lbl3">Plate covered</span>` : ""}${p.up ? `<div class="up">Uploading…</div>` : p.busy ? `<div class="up">${esc(p.busy)}</div>` : `<div class="bar">${i > 0 ? `<button type="button" data-pa="left" data-i="${i}" aria-label="Move earlier">←</button>` : ""}${i < P.length - 1 ? `<button type="button" data-pa="right" data-i="${i}" aria-label="Move later">→</button>` : ""}<button type="button" class="x" data-pa="del" data-i="${i}" aria-label="Remove photo">✕</button></div>`}</div>
-    <select class="ctrl plbl${p.label ? "" : " need"}" data-lbl data-i="${i}" aria-label="What photo ${i + 1} shows"><option value="">What does this show?</option>${PHOTO_LABELS.map(([k, n]) => `<option value="${k}"${p.label === k ? " selected" : ""}>${n}</option>`).join("")}</select>
     ${p.up || p.busy ? "" : `<div class="tools">${p.clean ? "" : `<button type="button" class="btn btn-ghost btn-sm" data-pa="bg" data-i="${i}">Remove background</button>`}<button type="button" class="btn btn-ghost btn-sm" data-pa="plate" data-i="${i}">${p.plate ? "Edit plate cover" : "Cover number plate"}</button>${p.hist && p.hist.length ? `<button type="button" class="btn btn-ghost btn-sm" data-pa="undo" data-i="${i}">Undo last change</button>` : ""}</div>`}</div>`).join("");
-  const miss = missingShots(), pc = $("#ph_check");
-  if (pc) pc.innerHTML = PHOTO_REQ.map(k => `<span class="${miss.includes(k) ? "no" : "yes"}">${miss.includes(k) ? "○" : "✓"} ${esc(labelName(k))}</span>`).join("");
-  const h = $("#ph_hint"); if (h) h.textContent = P.length + " of " + MAX_PHOTOS + " photos" + (P.length < MIN_PHOTOS ? " · add at least " + (MIN_PHOTOS - P.length) + " more" : "") + (miss.length ? " · still needed: " + miss.map(labelName).join(", ") : "");
+  const minP = VF.admin ? 1 : MIN_PHOTOS, pc = $("#ph_check");
+  if (pc) pc.innerHTML = PHOTO_ORDER.map((n, i) => `<span class="${P.length > i ? "yes" : "no"}">${P.length > i ? "✓" : "○"} ${i + 1}. ${esc(n)}</span>`).join("");
+  const h = $("#ph_hint"); if (h) h.textContent = P.length + " of " + MAX_PHOTOS + " photos" + (P.length < minP ? " · add at least " + (minP - P.length) + " more" : "");
   const ba = $("#bg_all"); if (ba) ba.disabled = P.some(t => t.busy);
 }
 async function addFiles(files) {
@@ -1502,13 +1503,10 @@ async function addFiles(files) {
   const room = MAX_PHOTOS - VF.photos.length; if (ok.length > room) rejects.push(`You can add up to ${MAX_PHOTOS} photos. ${ok.length - room} didn't fit.`);
   const box = $("#ph_rejects"); if (box) box.innerHTML = rejects.length ? `<div class="err" role="alert"><b>These photos were not added:</b><ul>${rejects.map(r => `<li>${esc(r)}</li>`).join("")}</ul></div>` : "";
   const take = ok.slice(0, Math.max(0, room)), mine = VF;
-  // label in order: the next required shot that is still missing, then "other"
-  const have = new Set(mine.photos.map(t => t.label));
-  const nextLabel = () => { const k = PHOTO_REQ.find(x => !have.has(x)) || "other"; have.add(k); return k; };
-  const tiles = take.map(f => { const t = { path: null, url: URL.createObjectURL(f), up: true, file: f, label: nextLabel() }; mine.photos.push(t); return [t, f]; });
+  const tiles = take.map(f => { const t = { path: null, url: URL.createObjectURL(f), up: true, file: f }; mine.photos.push(t); return [t, f]; });
   paintPhotos();
   for (const [t, f] of tiles) {
-    try { t.path = await uploadPhoto(f, mine.key); t.up = false; }
+    try { t.path = await uploadPhoto(f, mine.key, mine.owner); t.up = false; }
     catch (e) { console.warn(e); toast(niceErr(e)); const i = mine.photos.indexOf(t); if (i >= 0) mine.photos.splice(i, 1); }
     if (VF === mine) paintPhotos();
   }
@@ -1521,7 +1519,7 @@ async function cleanPhoto(t, mine, quiet) {
   try {
     const src = t.file || await (await fetch(t.url)).blob();
     let last = -1; const cut = await cutOut(src, (pct) => { if (pct !== last) { last = pct; say("Cleaning… " + pct + "%"); } });
-    say("Finishing…"); const out = await studioPhoto(cut), path = await uploadBlob(out, mine.key);
+    say("Finishing…"); const out = await studioPhoto(cut), path = await uploadBlob(out, mine.key, mine.owner);
     (t.hist = t.hist || []).push({ path: t.path, url: t.url, file: t.file, clean: !!t.clean, plate: !!t.plate }); t.path = path; t.url = URL.createObjectURL(out); t.file = out; t.clean = true;
   } catch (e) { console.warn(e); toast(quiet ? "One photo could not be cleaned. You can still use it as it is." : "Sorry, the background could not be removed from that photo. Check your internet connection and try again, or use the photo as it is."); }
   t.busy = null; if (VF === mine) paintPhotos();
@@ -1538,18 +1536,19 @@ async function save(e) {
   if (mileage !== "" && !(Number(mileage) >= 0)) return bad("Mileage must be a number.");
   if (!$("#v_prov").value) return bad("Please choose the province.");
   if (g("v_city").length < 2) return bad("Please enter the town or city.");
-  if (!$("#v_pay").value) return bad("Please say how this car can be bought: finance available, rent to own or cash only.");
+  if (!$("#v_pay").value && !(VF && VF.admin)) return bad("Please say how this car can be bought: finance available, rent to own or cash only.");
   if (g("v_desc").length < 10) return bad("Please write a short description (at least a sentence).");
   if (VF.photos.some(p => p.up)) return bad("Please wait, your photos are still uploading.");
   if (VF.photos.some(p => p.busy)) return bad("Please wait, a photo is still being cleaned.");
-  if (VF.photos.length < MIN_PHOTOS) return bad(`Please add at least ${MIN_PHOTOS} photos. The standard needs the front, rear, left side, right side, dashboard and odometer.`);
-  if (VF.photos.some(t => !t.label)) return bad("Please say what each photo shows. Use the box under each photo.");
-  { const miss = missingShots(); if (miss.length) return bad("Our photo standard also needs: " + miss.map(labelName).join(", ") + ". Please add or relabel your photos."); }
-  normalizeOrder();
-  const p = { id: VF.id || undefined, make: g("v_make"), model: g("v_model"), variant: g("v_variant"), year, price, mileage, transmission: $("#v_trans").value, fuel_type: $("#v_fuel").value, body_type: $("#v_body").value, colour: g("v_colour"), province: $("#v_prov").value, city: g("v_city"), description: $("#v_desc").value, features: $("#v_feat").value, photos: VF.photos.map(x => x.path), photo_labels: VF.photos.map(x => x.label), payment_type: $("#v_pay").value };
-  setBusy(btn, true, "Saving…"); const { data, error } = await client().rpc("dealer_save_vehicle", { p }); setBusy(btn, false);
+  const adm = !!VF.admin, minP = adm ? 1 : MIN_PHOTOS;
+  if (VF.photos.length < minP) return bad(adm ? "Please keep at least one photo." : `Please add at least ${MIN_PHOTOS} photos. The standard is the front, rear, left side, right side, dashboard and odometer.`);
+  const p = { id: VF.id || undefined, make: g("v_make"), model: g("v_model"), variant: g("v_variant"), year, price, mileage, transmission: $("#v_trans").value, fuel_type: $("#v_fuel").value, body_type: $("#v_body").value, colour: g("v_colour"), province: $("#v_prov").value, city: g("v_city"), description: $("#v_desc").value, features: $("#v_feat").value, photos: VF.photos.map(x => x.path), payment_type: $("#v_pay").value };
+  if (adm) p.rating = $("#v_rating").value;
+  const orig = VF.orig || [];
+  setBusy(btn, true, "Saving…"); const { data, error } = await client().rpc(adm ? "admin_save_vehicle" : "dealer_save_vehicle", { p }); setBusy(btn, false);
   if (error) return bad(niceErr(error));
-  S.cars = null; S.ptab = "vehicles"; toast("Saved. Our team will review it shortly."); VF = null; location.hash = "#/portal";
+  if (adm) { try { const gone = orig.filter(x => !p.photos.includes(x)); if (gone.length) await client().storage.from(BUCKET).remove(gone); } catch (_) {} }
+  S.cars = null; S.ptab = "vehicles"; if (adm) S.atab = S.atab === "pending" ? "pending" : "cars"; toast(adm ? "Changes saved." : "Saved. Our team will review it shortly."); VF = null; location.hash = adm ? "#/admin" : "#/portal";
 }
 
 // the Dealer Cars number plate cover: the dealer drags a Dealer Cars plate over the real plate, sizes and turns it, and applies it
@@ -1593,7 +1592,7 @@ async function plateEditor(t, mine) {
     try {
       paint(true);
       const out = await new Promise((res, rej) => cv.toBlob(b => b ? res(b) : rej(new Error("Could not prepare that photo.")), "image/jpeg", 0.9));
-      const path = await uploadBlob(out, mine.key);
+      const path = await uploadBlob(out, mine.key, mine.owner);
       (t.hist = t.hist || []).push({ path: t.path, url: t.url, file: t.file, clean: !!t.clean, plate: !!t.plate });
       t.path = path; t.url = URL.createObjectURL(out); t.file = out; t.plate = true;
       close(); if (VF === mine) paintPhotos(); toast("Plate covered. You can undo this on the photo.");
@@ -1635,12 +1634,12 @@ async function viewAdmin() {
   const pending = vehicles.filter(v => v.status === "Pending"), tab = S.atab || "pending";
   const vcard = (v, full) => { const d = dmap[v.dealer_id] || {};
     return `<div class="arow" data-vid="${esc(v.id)}"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h3 style="font-size:19px">${esc(carTitle(v))}</h3><div style="color:var(--muted);font-size:14px">${money(v.price)} · ${esc(v.city)}, ${esc(v.province)} · ${esc(v.ref)} · added ${dateStr(v.created_at)}${v.rating ? " · " + v.rating + " star" + (v.rating === 1 ? "" : "s") : ""}</div></div><div>${statusBadge(v.status)}</div></div>
-      <div class="ph">${(v.photos || []).map((p, i) => `<img src="${esc(photoUrl(p))}" alt="${esc(labelName((v.photo_labels || [])[i]))}" title="${esc(labelName((v.photo_labels || [])[i]))}" data-zoom="${esc(photoUrl(p))}" loading="lazy">`).join("") || `<span style="color:var(--muted)">No photos</span>`}</div>
-      ${full ? `<div class="kv"><div><span>Mileage:</span> ${esc(km(v.mileage) || "-")}</div><div><span>Gearbox / fuel:</span> ${esc([v.transmission, v.fuel_type].filter(Boolean).join(" / ") || "-")}</div><div><span>Body / colour:</span> ${esc([v.body_type, v.colour].filter(Boolean).join(" / ") || "-")}</div><div><span>Dealership:</span> <b>${esc(d.business_name || "?")}</b></div><div><span>Contact:</span> ${esc(d.contact_person || "")} ${esc(d.phone || "")}</div><div><span>E-mail:</span> ${esc(d.email || "")}</div><div><span>Photos shown:</span> ${esc((v.photo_labels || []).map(labelName).filter(Boolean).join(", ") || "not labelled")}</div></div><div class="desc" style="margin:12px 0;font-size:15px">${fmtText(v.description)}</div>${v.features ? `<p style="font-size:14px;color:var(--ink2)"><b>Features:</b> ${esc(v.features)}</p>` : ""}` : `<div style="font-size:14px;color:var(--muted)">${esc(d.business_name || "?")}</div>`}
+      <div class="ph">${(v.photos || []).map((p, i) => `<img src="${esc(photoUrl(p))}" alt="Photo ${i + 1}" data-zoom="${esc(photoUrl(p))}" loading="lazy">`).join("") || `<span style="color:var(--muted)">No photos</span>`}</div>
+      ${full ? `<div class="kv"><div><span>Mileage:</span> ${esc(km(v.mileage) || "-")}</div><div><span>Gearbox / fuel:</span> ${esc([v.transmission, v.fuel_type].filter(Boolean).join(" / ") || "-")}</div><div><span>Body / colour:</span> ${esc([v.body_type, v.colour].filter(Boolean).join(" / ") || "-")}</div><div><span>Dealership:</span> <b>${esc(d.business_name || "?")}</b></div><div><span>Contact:</span> ${esc(d.contact_person || "")} ${esc(d.phone || "")}</div><div><span>E-mail:</span> ${esc(d.email || "")}</div><div><span>Photos:</span> ${(v.photos || []).length}</div></div><div class="desc" style="margin:12px 0;font-size:15px">${fmtText(v.description)}</div>${v.features ? `<p style="font-size:14px;color:var(--ink2)"><b>Features:</b> ${esc(v.features)}</p>` : ""}` : `<div style="font-size:14px;color:var(--muted)">${esc(d.business_name || "?")}</div>`}
       ${v.status === "Declined" && v.decline_reason ? `<div class="reason">Reason sent: ${esc(v.decline_reason)}</div>` : ""}
       ${v.status !== "Sold" ? `<div class="raterow"><label for="rt_${esc(v.id)}"><b>Dealer Cars rating</b> <span class="hint">(buyers see this and can sort by it)</span></label><select class="ctrl" id="rt_${esc(v.id)}" data-rate>${[["", "Not rated"], [5, "5 stars"], [4, "4 stars"], [3, "3 stars"], [2, "2 stars"], [1, "1 star"]].map(([n, t]) => `<option value="${n}"${String(v.rating || "") === String(n) ? " selected" : ""}>${t}</option>`).join("")}</select>${v.status === "Approved" ? `<button class="btn btn-ghost btn-sm" data-a="rate">Save rating</button>` : ""}</div>` : ""}
       ${v.status !== "Sold" ? `<div class="raterow"><label for="py_${esc(v.id)}"><b>How it can be bought</b> <span class="hint">(shown on the car)</span></label><select class="ctrl" id="py_${esc(v.id)}" data-pay><option value="">Not set</option>${Object.entries(PAY).map(([k, t]) => `<option value="${k}"${v.payment_type === k ? " selected" : ""}>${t}</option>`).join("")}</select><button class="btn btn-ghost btn-sm" data-a="pay">Save</button></div>` : ""}
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${v.status === "Pending" || v.status === "Declined" ? `<button class="btn btn-primary btn-sm" data-a="approve">Approve</button>` : ""}${v.status === "Pending" ? `<button class="btn btn-danger btn-sm" data-a="decline">Decline…</button>` : ""}${v.status === "Approved" ? `<a class="btn btn-ghost btn-sm" href="#/car/${esc(v.ref)}">View live</a><button class="btn btn-danger btn-sm" data-a="decline">Take down…</button>` : ""}</div></div>`; };
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><a class="btn btn-dark btn-sm" href="#/admin/edit/${esc(v.id)}" data-a-edit>Edit car and photos</a>${v.status === "Pending" || v.status === "Declined" ? `<button class="btn btn-primary btn-sm" data-a="approve">Approve</button>` : ""}${v.status === "Pending" ? `<button class="btn btn-danger btn-sm" data-a="decline">Ask dealer to fix / decline…</button>` : ""}${v.status === "Approved" ? `<a class="btn btn-ghost btn-sm" href="#/car/${esc(v.ref)}">View live</a><button class="btn btn-danger btn-sm" data-a="decline">Take down / ask dealer to fix…</button>` : ""}<button class="btn btn-ghost btn-sm" data-a="vdel">Delete</button></div></div>`; };
   const tabs = {
     pending: () => pending.length ? pending.map(v => vcard(v, true)).join("") : `<div class="empty"><h3>Nothing waiting</h3><p>All vehicles have been reviewed. New ones appear here as soon as a dealership submits them.</p></div>`,
     cars: () => { const f = S.afilter || ""; const l = vehicles.filter(v => !f || v.status === f); return `<div class="field" style="max-width:240px"><label for="a_f">Show</label><select class="ctrl" id="a_f"><option value="">All vehicles (${vehicles.length})</option>${["Pending", "Approved", "Declined", "Sold"].map(s => `<option${s === f ? " selected" : ""}>${s}</option>`).join("")}</select></div>` + (l.length ? l.map(v => vcard(v, false)).join("") : `<div class="empty"><h3>No vehicles</h3></div>`); },
@@ -1680,7 +1679,8 @@ async function viewAdmin() {
         else if (a === "rate") { const rt = $("[data-rate]", row); const { error } = await client().rpc("admin_set_vehicle_rating", { p_id: row.dataset.vid, p_rating: rt.value ? Number(rt.value) : null }); if (error) throw error; S.cars = null; toast("Rating saved."); render(); }
         else if (a === "sstatus") { const note = $("[data-snote]", srow).value; const { error } = await client().rpc("admin_set_sell_status", { p_id: srow.dataset.sid, p_status: b.dataset.to, p_note: note || null }); if (error) throw error; toast("Saved."); render(); }
         else if (a === "sphotos") { const box = b.parentElement, paths = box.dataset.photos.split("|").filter(Boolean); b.disabled = true; b.textContent = "Loading…"; const r = await client().storage.from(SELL_BUCKET).createSignedUrls(paths, 3600); if (r.error) throw r.error; box.innerHTML = (r.data || []).filter(x => x.signedUrl).map(x => `<img src="${esc(x.signedUrl)}" alt="" data-zoom="${esc(x.signedUrl)}" loading="lazy">`).join("") || `<span style="color:var(--muted)">No photos</span>`; }
-        else if (a === "decline") { const v = vmap[row.dataset.vid]; const r = await reasonBox(v.status === "Approved" ? "Take this car down" : "Decline this car", "The dealership will see this reason and can fix the car and send it again."); if (r == null) return; const { error } = await client().rpc("admin_review_vehicle", { p_id: v.id, p_decision: "Declined", p_reason: r }); if (error) throw error; S.cars = null; toast("Sent back to the dealership."); render(); }
+        else if (a === "decline") { const v = vmap[row.dataset.vid]; const r = await reasonBox(v.status === "Approved" ? "Take this car down" : "Decline this car", "The dealership will see this reason in their portal, can fix the car and send it again."); if (r == null) return; const { error } = await client().rpc("admin_review_vehicle", { p_id: v.id, p_decision: "Declined", p_reason: r }); if (error) throw error; S.cars = null; toast("Sent back to the dealership."); render(); }
+        else if (a === "vdel") { const v = vmap[row.dataset.vid]; if (!(await confirmBox("Delete this car?", `${carTitle(v)} (${v.ref}) will be removed for good, together with its enquiries and photos.`, "Delete car", true))) return; const { error } = await client().rpc("admin_delete_vehicle", { p_id: v.id }); if (error) throw error; try { await client().storage.from(BUCKET).remove(v.photos || []); } catch (_) {} S.cars = null; toast("Car deleted."); render(); }
         else if (a === "dstatus") { const d = dmap[drow.dataset.did], to = b.dataset.to; if (!(await confirmBox(to === "Suspended" ? "Suspend this dealership?" : "Reactivate this dealership?", to === "Suspended" ? `${d.business_name} and all its cars will disappear from the site until you reactivate it.` : `${d.business_name} and its approved cars will show on the site again.`, to === "Suspended" ? "Suspend" : "Reactivate", to === "Suspended"))) return; const { error } = await client().rpc("admin_set_dealer_status", { p_id: d.id, p_status: to }); if (error) throw error; S.cars = null; S.dealers = null; toast("Done."); render(); }
       } catch (x) { toast(niceErr(x)); }
     });
@@ -1700,14 +1700,14 @@ async function resolveView() {
     case "car": return p[1] ? viewCar(decodeURIComponent(p[1])) : viewCars("");
     case "spotters": return viewSoon("spotters");
     case "insurance": return viewSoon("insurance");
-    case "rentals": return viewSoon("rentals");
+    case "rent-to-own": case "rentals": return viewSoon("rentals");
     case "finance": return viewFinance(query);
     case "sell": return viewSell();
     case "about": return viewAbout();
     case "for-dealers": return viewForDealers();
     case "login": return viewLogin(query);
     case "portal": return p[1] === "add" ? viewVehicleForm(null) : p[1] === "edit" && p[2] ? viewVehicleForm(decodeURIComponent(p[2])) : viewPortal();
-    case "admin": return viewAdmin();
+    case "admin": return p[1] === "edit" && p[2] ? viewVehicleForm(decodeURIComponent(p[2]), true) : viewAdmin();
     case "terms": return viewLegal("terms");
     case "privacy": return viewLegal("privacy");
     default: return viewHome();
