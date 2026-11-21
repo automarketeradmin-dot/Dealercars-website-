@@ -445,6 +445,7 @@ const CONFIG = {
   SUPABASE_URL: "https://pgbmfqozaueuervqhddn.supabase.co",
   SUPABASE_ANON_KEY: "sb_publishable_0jPoJqzSxFhILyATV1QljQ_X4zQ9bLa",
   SITE_URL: "",           // optional: your web address, e.g. "https://dealercars.co.za" (leave empty and it is worked out automatically)
+  CONTACTS: [{ name: "Leeroy", phone: "061 453 9078", wa: "27614539078" }, { name: "Amo", phone: "075 053 8048", wa: "27750538048" }],   // the people buyers can call or WhatsApp (wa = country code, no + or spaces)
   CONTACT_EMAIL: "",       // shown on the site when filled in, e.g. "hello@dealercars.co.za"
   CONTACT_PHONE: "",       // shown on the site when filled in, e.g. "012 345 6789"
   CONTACT_WHATSAPP: ""     // e.g. "27821234567" (country code, no + or spaces). Turns on the "WhatsApp us" buttons
@@ -647,8 +648,12 @@ async function studioPhoto(cutBlob) {
 }
 
 /* ---------- contact details (filled in once, in CONFIG at the top) ---------- */
-const hasContact = () => !!(CONFIG.CONTACT_WHATSAPP || CONFIG.CONTACT_EMAIL || CONFIG.CONTACT_PHONE);
-const waLink = (msg) => CONFIG.CONTACT_WHATSAPP ? "https://wa.me/" + CONFIG.CONTACT_WHATSAPP.replace(/\D/g, "") + (msg ? "?text=" + encodeURIComponent(msg) : "") : "";
+const contacts = () => (CONFIG.CONTACTS && CONFIG.CONTACTS.length) ? CONFIG.CONTACTS : (CONFIG.CONTACT_PHONE || CONFIG.CONTACT_WHATSAPP) ? [{ name: "", phone: CONFIG.CONTACT_PHONE, wa: CONFIG.CONTACT_WHATSAPP }] : [];
+const hasContact = () => !!(contacts().length || CONFIG.CONTACT_EMAIL);
+const hasWa = () => contacts().some(c => c.wa);
+const telHref = (ph) => "tel:" + String(ph || "").replace(/[^\d+]/g, "");
+const waLink = (msg, wa) => { const n = String(wa || (contacts().find(c => c.wa) || {}).wa || "").replace(/\D/g, ""); return n ? "https://wa.me/" + n + (msg ? "?text=" + encodeURIComponent(msg) : "") : ""; };
+const idn = (base, i) => i ? base + (i + 1) : base;   // ft_wa, ft_wa2, ...
 
 /* ---------- the Dealer Cars number plate cover (drawn on a photo) ---------- */
 /* estimated monthly instalment shown on every car (same maths as the finance calculator) */
@@ -728,8 +733,8 @@ function navHtml(cur) {
 }
 function footerHtml() {
   const c = [];
-  if (CONFIG.CONTACT_WHATSAPP) c.push(`<a href="${esc(waLink())}" target="_blank" rel="noopener" id="ft_wa">WhatsApp us</a>`);
-  if (CONFIG.CONTACT_PHONE) c.push(`<a href="tel:${esc(CONFIG.CONTACT_PHONE.replace(/[^\d+]/g, ""))}" id="ft_tel">${esc(CONFIG.CONTACT_PHONE)}</a>`);
+  contacts().forEach((k, i) => { if (k.wa) c.push(`<a href="${esc(waLink("", k.wa))}" target="_blank" rel="noopener" id="${idn("ft_wa", i)}">${k.name ? "WhatsApp " + esc(k.name) : "WhatsApp us"}</a>`); });
+  contacts().forEach((k, i) => { if (k.phone) c.push(`<a href="${esc(telHref(k.phone))}" id="${idn("ft_tel", i)}">${k.name ? esc(k.name) + ": " : ""}${esc(k.phone)}</a>`); });
   if (CONFIG.CONTACT_EMAIL) c.push(`<a href="mailto:${esc(CONFIG.CONTACT_EMAIL)}">${esc(CONFIG.CONTACT_EMAIL)}</a>`);
   return `<footer class="footer"><div class="wrap">
     <div class="fgrid">
@@ -943,7 +948,7 @@ async function viewCar(ref) {
       <div class="specs">${specs.map(s => `<div><span>${s[0]}</span><b>${esc(s[1])}</b></div>`).join("")}</div>
       <button type="button" class="btn btn-ghost btn-block" id="sh_btn" style="margin-top:16px">${ICON.share} Share this car</button></div>
     ${inst ? `<div class="panel fin-cta"><b>Planning to finance?</b><p>Work out what this car could cost you each month.</p><a class="btn btn-ghost btn-block" id="car_fin" href="#/finance?price=${esc(String(Math.round(v.price)))}">Calculate finance</a></div>` : ""}
-    <div class="panel" id="inq_panel"><h2>Ask about this car</h2><p style="color:var(--muted);font-size:14.5px;margin-bottom:14px">Send us your details and the seller will contact you about this car.${CONFIG.CONTACT_WHATSAPP ? ` Or <a id="car_wa" href="${esc(waLink("Hi Dealer Cars, I am interested in the " + title + " (" + v.ref + ") " + url))}" target="_blank" rel="noopener">WhatsApp us about this car</a>.` : ""}</p>
+    <div class="panel" id="inq_panel"><h2>Ask about this car</h2><p style="color:var(--muted);font-size:14.5px;margin-bottom:14px">Send us your details and the seller will contact you about this car.${hasWa() ? ` Or WhatsApp us about this car: ${contacts().filter(k => k.wa).map((k, i) => `<a id="${idn("car_wa", i)}" href="${esc(waLink("Hi Dealer Cars, I am interested in the " + title + " (" + v.ref + ") " + url, k.wa))}" target="_blank" rel="noopener">${k.name ? esc(k.name) : "WhatsApp us"}</a>`).join(" or ")}.` : ""}</p>
       <form id="inq_form" novalidate><div id="inq_msg"></div>
         <div class="field"><label for="i_name">Your name</label><input class="ctrl" id="i_name" autocomplete="name" required></div>
         <div class="grid2"><div class="field"><label for="i_phone">Phone</label><input class="ctrl" id="i_phone" type="tel" autocomplete="tel" inputmode="tel"></div><div class="field"><label for="i_email">E-mail</label><input class="ctrl" id="i_email" type="email" autocomplete="email"></div></div>
@@ -1228,8 +1233,8 @@ async function viewSoon(kind) {
 function viewAbout() {
   seo({ title: "About Dealer Cars | How we work", desc: "Dealer Cars is more than a listing site. We go with you to view the car, help with the documentation, and support you at delivery and afterwards.", path: "about" });
   const ct = [];
-  if (CONFIG.CONTACT_WHATSAPP) ct.push(`<a class="btn btn-primary" id="ab_wa" href="${esc(waLink("Hi Dealer Cars, I would like some help finding a car."))}" target="_blank" rel="noopener">WhatsApp us</a>`);
-  if (CONFIG.CONTACT_PHONE) ct.push(`<a class="btn btn-ghost" id="ab_tel" href="tel:${esc(CONFIG.CONTACT_PHONE.replace(/[^\d+]/g, ""))}">Call ${esc(CONFIG.CONTACT_PHONE)}</a>`);
+  contacts().forEach((k, i) => { if (k.wa) ct.push(`<a class="btn ${i ? "btn-ghost" : "btn-primary"}" id="${idn("ab_wa", i)}" href="${esc(waLink("Hi Dealer Cars, I would like some help finding a car.", k.wa))}" target="_blank" rel="noopener">${k.name ? "WhatsApp " + esc(k.name) : "WhatsApp us"}</a>`); });
+  contacts().forEach((k, i) => { if (k.phone) ct.push(`<a class="btn btn-ghost" id="${idn("ab_tel", i)}" href="${esc(telHref(k.phone))}">Call ${k.name ? esc(k.name) + " " : ""}${esc(k.phone)}</a>`); });
   if (CONFIG.CONTACT_EMAIL) ct.push(`<a class="btn btn-ghost" id="ab_mail" href="mailto:${esc(CONFIG.CONTACT_EMAIL)}">${esc(CONFIG.CONTACT_EMAIL)}</a>`);
   const detail = [
     ["Find your car", "Browse cars from hand-picked dealers. Search by city, province, price or monthly instalment, and sort the list the way you like. Each car shows its photos, where it is and what it could cost you each month. Found one you like? Tap Share to send it to family or friends on WhatsApp or any other app."],
@@ -1418,23 +1423,23 @@ function bindProfile(d) {
 /* ====================== add / edit a vehicle ====================== */
 let VF = null;
 async function viewVehicleForm(id, admin) {
-  seo({ title: (admin ? "Admin: edit vehicle" : id ? "Edit vehicle" : "Add a vehicle") + " | Dealer Cars", noindex: true });
+  seo({ title: (admin ? (id ? "Admin: edit vehicle" : "Admin: add a car") : id ? "Edit vehicle" : "Add a vehicle") + " | Dealer Cars", noindex: true });
   await refreshSession();
   const back = admin ? "#/admin" : "#/portal", away = () => { setTimeout(() => { location.hash = back; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; };
   if (!S.session) { setTimeout(() => { location.hash = admin ? "#/admin" : "#/login"; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; }
   await loadMe();
-  if (admin) { if (!S.isAdmin || !id) return away(); }
+  if (admin) { if (!S.isAdmin) return away(); }
   else if (!S.dealer) return away();
   let v = null;
   if (id) { const q = client().from("vehicles").select("*").eq("id", id); const r = await (admin ? q : q.eq("dealer_id", S.session.user.id)).maybeSingle(); v = r.data; if (!v) return away(); }
   const d = S.dealer || {};
   // admin edits upload into the dealer's own photo folder, so the dealer can still edit the car later
-  VF = { id: v ? v.id : null, key: rand(), admin: !!admin, owner: admin ? v.dealer_id : S.session.user.id, orig: v ? (v.photos || []).slice() : [], photos: (v ? v.photos : []).map((p) => ({ path: p, url: photoUrl(p), up: false })) };
+  VF = { id: v ? v.id : null, key: rand(), admin: !!admin, owner: admin && v ? v.dealer_id : S.session.user.id, orig: v ? (v.photos || []).slice() : [], photos: (v ? v.photos : []).map((p) => ({ path: p, url: photoUrl(p), up: false })) };
   const val = (k, def) => esc(v && v[k] != null ? v[k] : (def == null ? "" : def));
   const sel = (idn, arr, cur, ph) => `<select class="ctrl" id="${idn}"><option value="">${ph}</option>${arr.map(x => `<option${x === cur ? " selected" : ""}>${esc(x)}</option>`).join("")}</select>`;
   const html = page("", `<div class="wrap"><div class="crumbs"><a href="${back}">${admin ? "← Admin" : "← My vehicles"}</a></div>
-    <h1 style="font-size:clamp(26px,4vw,34px)" id="vf_h">${admin ? "Edit vehicle (admin)" : v ? "Edit vehicle" : "Add a vehicle"}</h1>
-    <p style="color:var(--muted);margin:6px 0 18px">${admin ? `You are editing ${esc(carTitle(v))} (${esc(v.ref)}) for the dealership. Your changes are saved straight away and the car keeps its current status${v.status === "Approved" ? ", so it stays live" : ""}.` : v && v.status === "Approved" ? "This car is live. Saving your changes sends it back to our team for approval, and it is hidden until approved." : "Our team reviews every vehicle before it goes live."}</p>
+    <h1 style="font-size:clamp(26px,4vw,34px)" id="vf_h">${admin ? (v ? "Edit vehicle (admin)" : "Add a car (Dealer Cars stock)") : v ? "Edit vehicle" : "Add a vehicle"}</h1>
+    <p style="color:var(--muted);margin:6px 0 18px">${admin && !v ? "Cars you add here are listed as Dealer Cars stock. They go live straight away, with no approval step. You can still edit or delete them later from All vehicles." : admin ? `You are editing ${esc(carTitle(v))} (${esc(v.ref)}) for the dealership. Your changes are saved straight away and the car keeps its current status${v.status === "Approved" ? ", so it stays live" : ""}.` : v && v.status === "Approved" ? "This car is live. Saving your changes sends it back to our team for approval, and it is hidden until approved." : "Our team reviews every vehicle before it goes live."}</p>
     <form id="vf" novalidate style="max-width:860px;padding-bottom:60px">
       <div class="panel" style="margin-bottom:18px"><h2>Photos</h2>
         <div class="pstd" id="pstd"><b>The Dealer Cars photo standard</b>
@@ -1459,10 +1464,10 @@ async function viewVehicleForm(id, admin) {
         <div class="grid3"><div class="field"><label for="v_trans">Gearbox</label>${sel("v_trans", TRANS, v && v.transmission, "Choose…")}</div><div class="field"><label for="v_fuel">Fuel</label>${sel("v_fuel", FUELS, v && v.fuel_type, "Choose…")}</div><div class="field"><label for="v_body">Body type</label>${sel("v_body", BODIES, v && v.body_type, "Choose…")}</div></div>
         <div class="grid3"><div class="field"><label for="v_colour">Colour</label><input class="ctrl" id="v_colour" value="${val("colour")}"></div><div class="field"><label for="v_prov">Province</label>${sel("v_prov", PROVINCES, v ? v.province : d.province, "Choose…")}</div><div class="field"><label for="v_city">Town / city</label><input class="ctrl" id="v_city" value="${val("city", d.city)}"></div></div>
         <div class="field"><label for="v_pay">How can this car be bought?</label><select class="ctrl" id="v_pay"><option value="">Choose…</option>${Object.entries(PAY).map(([k, t]) => `<option value="${k}"${v && v.payment_type === k ? " selected" : ""}>${t}</option>`).join("")}</select><span class="hint">Buyers see this on the car. Choose "Finance available" if the buyer can finance it, "Rent to own" if you offer that, or "Cash only".</span></div>
-        ${admin ? `<div class="field"><label for="v_rating">Dealer Cars rating</label><select class="ctrl" id="v_rating">${[["", "Not rated"], [5, "5 stars"], [4, "4 stars"], [3, "3 stars"], [2, "2 stars"], [1, "1 star"]].map(([n, t]) => `<option value="${n}"${String(v.rating || "") === String(n) ? " selected" : ""}>${t}</option>`).join("")}</select></div>` : ""}
+        ${admin ? `<div class="field"><label for="v_rating">Dealer Cars rating</label><select class="ctrl" id="v_rating">${[["", "Not rated"], [5, "5 stars"], [4, "4 stars"], [3, "3 stars"], [2, "2 stars"], [1, "1 star"]].map(([n, t]) => `<option value="${n}"${String((v && v.rating) || "") === String(n) ? " selected" : ""}>${t}</option>`).join("")}</select></div>` : ""}
         <div class="field"><label for="v_desc">Description</label><textarea class="ctrl" id="v_desc" rows="7" placeholder="Condition, service history, extras, reason for selling…">${esc(v ? v.description : "")}</textarea><span class="hint">Press Enter twice to start a new paragraph. Buyers will see your paragraphs as you type them.</span></div>
         <div class="field"><label for="v_feat">Features (optional)</label><textarea class="ctrl" id="v_feat" rows="2" placeholder="Aircon, electric windows, Bluetooth, leather seats…">${esc(v ? v.features || "" : "")}</textarea><span class="hint">Separate with commas or new lines.</span></div></div>
-      <div id="vf_msg"></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary" id="vf_save" type="submit">${admin ? "Save changes" : v ? "Save and send for approval" : "Submit for approval"}</button><a class="btn btn-ghost" href="${back}">Cancel</a>${admin ? `<span style="flex:1"></span><button class="btn btn-danger" id="vf_del" type="button">Delete this car</button>` : ""}</div>
+      <div id="vf_msg"></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary" id="vf_save" type="submit">${admin ? (v ? "Save changes" : "Add car and make it live") : v ? "Save and send for approval" : "Submit for approval"}</button><a class="btn btn-ghost" href="${back}">Cancel</a>${admin && v ? `<span style="flex:1"></span><button class="btn btn-danger" id="vf_del" type="button">Delete this car</button>` : ""}</div>
     </form></div>`);
   return { html, bind() {
     bindNav(); paintPhotos();
@@ -1548,7 +1553,7 @@ async function save(e) {
   setBusy(btn, true, "Saving…"); const { data, error } = await client().rpc(adm ? "admin_save_vehicle" : "dealer_save_vehicle", { p }); setBusy(btn, false);
   if (error) return bad(niceErr(error));
   if (adm) { try { const gone = orig.filter(x => !p.photos.includes(x)); if (gone.length) await client().storage.from(BUCKET).remove(gone); } catch (_) {} }
-  S.cars = null; S.ptab = "vehicles"; if (adm) S.atab = S.atab === "pending" ? "pending" : "cars"; toast(adm ? "Changes saved." : "Saved. Our team will review it shortly."); VF = null; location.hash = adm ? "#/admin" : "#/portal";
+  S.cars = null; S.ptab = "vehicles"; if (adm) S.atab = S.atab === "pending" ? "pending" : "cars"; toast(adm ? (VF.id ? "Changes saved." : "Car added. It is live now.") : "Saved. Our team will review it shortly."); VF = null; location.hash = adm ? "#/admin" : "#/portal";
 }
 
 // the Dealer Cars number plate cover: the dealer drags a Dealer Cars plate over the real plate, sizes and turns it, and applies it
@@ -1630,6 +1635,11 @@ async function viewAdmin() {
     const [a, b, c, e4] = await Promise.all([client().from("vehicles").select("*").order("created_at", { ascending: false }), client().from("dealers").select("*").order("created_at", { ascending: false }), client().from("inquiries").select("*").order("created_at", { ascending: false }), client().from("sell_requests").select("*").order("created_at", { ascending: false })]);
     if (a.error) throw a.error; if (b.error) throw b.error; if (c.error) throw c.error; if (e4.error) throw e4.error; vehicles = a.data || []; dealers = b.data || []; inquiries = c.data || []; sells = e4.data || [];
   } catch (e) { console.warn(e); err = niceErr(e); }
+  let alertTopic = "", alertErr = "";
+  try { const r = await client().rpc("admin_alert_info"); if (r.error) throw r.error; alertTopic = r.data || ""; } catch (e) { alertErr = niceErr(e); }
+  const alertCard = `<div class="note" id="alert_card" style="margin-bottom:14px"><b>Phone alerts for new leads</b> (every new enquiry and every "Sell your car" request)
+    ${alertErr ? `<p style="margin-top:6px">Alerts are not switched on yet. Run the latest SQL file in Supabase, then refresh this page.</p>` : `<ol style="margin:8px 0 8px 20px;line-height:1.6"><li>Leeroy and Amo: install the free <b>ntfy</b> app (Android: Google Play, iPhone: App Store).</li><li>In the app tap <b>+</b> and subscribe to this topic: <code id="alert_topic" style="background:#fff;padding:2px 6px;border-radius:6px;user-select:all">${esc(alertTopic)}</code> (keep the default server <b>ntfy.sh</b>). Or open <a href="https://ntfy.sh/${esc(alertTopic)}" target="_blank" rel="noopener">this link</a> on your phone.</li><li>Press <button class="btn btn-ghost btn-sm" data-a="altest" id="al_test" type="button">Send a test alert</button>. It should reach your phone in a few seconds.</li></ol>
+    <span class="hint" style="font-size:13px">An alert shows the car and the buyer's name only. Open the admin page to see the phone number and message. Keep the topic private: anyone who knows it can read the alerts.</span>`}</div>`;
   const dmap = Object.fromEntries(dealers.map(d => [d.id, d])), vmap = Object.fromEntries(vehicles.map(v => [v.id, v]));
   const pending = vehicles.filter(v => v.status === "Pending"), tab = S.atab || "pending";
   const vcard = (v, full) => { const d = dmap[v.dealer_id] || {};
@@ -1653,14 +1663,14 @@ async function viewAdmin() {
       <div class="ph" data-photos="${esc((r.photos || []).join("|"))}"><button class="btn btn-ghost btn-sm" data-a="sphotos">Show ${(r.photos || []).length} photos</button></div>
       <div class="field" style="margin-top:12px;max-width:520px"><label for="sn_${esc(r.id)}">Note (only you see this)</label><input class="ctrl" id="sn_${esc(r.id)}" data-snote value="${esc(r.admin_note || "")}" maxlength="500"></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">${["Contacted", "Approved", "Declined", "Closed", "New"].filter(x => x !== r.status).map(x => `<button class="btn ${x === "Approved" ? "btn-primary" : x === "Declined" ? "btn-danger" : "btn-ghost"} btn-sm" data-a="sstatus" data-to="${x}">${x === "New" ? "Mark as new" : "Mark as " + x.toLowerCase()}</button>`).join("")}</div></div>`; }).join("") : `<div class="empty"><h3>No sell requests yet</h3><p>When someone fills in the Sell your car form, it appears here with their photos.</p></div>`,
-    inquiries: () => inquiries.length ? `<div class="note" style="margin-bottom:14px"><b>You get every enquiry first.</b> A dealership only sees an enquiry after you press <b>Forward to dealership</b>. You can pass the details on yourself too (WhatsApp or e-mail the dealership), and you can pull an enquiry back at any time.</div>` + [...inquiries].sort((x, y) => (x.forwarded_at ? 1 : 0) - (y.forwarded_at ? 1 : 0)).map(i => { const v = vmap[i.vehicle_id], d = dmap[i.dealer_id] || {}, fw = !!i.forwarded_at;
+    inquiries: () => alertCard + (inquiries.length ? `<div class="note" style="margin-bottom:14px"><b>You get every enquiry first.</b> A dealership only sees an enquiry after you press <b>Forward to dealership</b>. You can pass the details on yourself too (WhatsApp or e-mail the dealership), and you can pull an enquiry back at any time.</div>` + [...inquiries].sort((x, y) => (x.forwarded_at ? 1 : 0) - (y.forwarded_at ? 1 : 0)).map(i => { const v = vmap[i.vehicle_id], d = dmap[i.dealer_id] || {}, fw = !!i.forwarded_at;
       const lead = `New enquiry from Dealer Cars\nCar: ${v ? carTitle(v) + " (" + v.ref + ") " + money(v.price) : "a removed car"}\nBuyer: ${i.name}${i.phone ? "\nPhone: " + i.phone : ""}${i.email ? "\nE-mail: " + i.email : ""}\nMessage: ${i.message}`;
       return `<div class="irow ${fw ? "" : "new"}" data-iid="${esc(i.id)}"><div class="top"><div><b>${esc(i.name)}</b> ${fw ? `<span class="badge ok">Forwarded ${dateStr(i.forwarded_at)}</span>` : `<span class="badge warn">Not forwarded</span>`} ${i.status === "Handled" ? `<span class="badge">Handled by dealer</span>` : ""}</div><span style="color:var(--muted);font-size:13.5px">${dateStr(i.created_at)}</span></div>
       <div style="font-size:14px;color:var(--muted)">${v ? esc(carTitle(v)) + " (" + esc(v.ref) + ")" : "removed vehicle"} → <b>${esc(d.business_name || "?")}</b>${d.phone ? " · " + esc(d.phone) : ""}</div><div class="msg">${esc(i.message)}</div>
       <div style="font-size:14px;margin-bottom:10px">Buyer: ${i.phone ? `<a href="tel:${esc(i.phone)}">${esc(i.phone)}</a> ` : ""}${i.email ? `<a href="mailto:${esc(i.email)}">${esc(i.email)}</a>` : ""}</div>
-      <div class="acts" style="display:flex;gap:8px;flex-wrap:wrap">${fw ? `<button class="btn btn-ghost btn-sm" data-a="iforward" data-to="0">Pull back</button>` : `<button class="btn btn-primary btn-sm" data-a="iforward" data-to="1">Forward to dealership</button>`}${d.phone ? `<a class="btn btn-ghost btn-sm" data-wa href="https://wa.me/${esc(waNumber(d.phone))}?text=${encodeURIComponent(lead)}" target="_blank" rel="noopener">WhatsApp the dealership</a>` : ""}${d.email ? `<a class="btn btn-ghost btn-sm" href="mailto:${esc(d.email)}?subject=${encodeURIComponent("New enquiry from Dealer Cars" + (v ? ": " + v.ref : ""))}&body=${encodeURIComponent(lead)}">E-mail the dealership</a>` : ""}</div></div>`; }).join("") : `<div class="empty"><h3>No enquiries yet</h3></div>`
+      <div class="acts" style="display:flex;gap:8px;flex-wrap:wrap">${fw ? `<button class="btn btn-ghost btn-sm" data-a="iforward" data-to="0">Pull back</button>` : `<button class="btn btn-primary btn-sm" data-a="iforward" data-to="1">Forward to dealership</button>`}${d.phone ? `<a class="btn btn-ghost btn-sm" data-wa href="https://wa.me/${esc(waNumber(d.phone))}?text=${encodeURIComponent(lead)}" target="_blank" rel="noopener">WhatsApp the dealership</a>` : ""}${d.email ? `<a class="btn btn-ghost btn-sm" href="mailto:${esc(d.email)}?subject=${encodeURIComponent("New enquiry from Dealer Cars" + (v ? ": " + v.ref : ""))}&body=${encodeURIComponent(lead)}">E-mail the dealership</a>` : ""}</div></div>`; }).join("") : `<div class="empty"><h3>No enquiries yet</h3></div>`)
   };
-  const html = page("", `<div class="wrap"><div class="ptop"><div><h1>Admin</h1><div style="color:var(--muted)">${esc(S.session.user.email || "")}</div></div><div style="display:flex;gap:10px"><button class="btn btn-ghost" id="ad_out">Log out</button></div></div>
+  const html = page("", `<div class="wrap"><div class="ptop"><div><h1>Admin</h1><div style="color:var(--muted)">${esc(S.session.user.email || "")}</div></div><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary" id="ad_add" href="#/admin/add">+ Add a car</a><button class="btn btn-ghost" id="ad_out">Log out</button></div></div>
     ${err ? `<div class="err">${esc(err)}</div>` : ""}
     <div class="ptabs" role="tablist"><button data-t="pending" class="${tab === "pending" ? "on" : ""}" id="at_pending">To approve${pending.length ? `<span class="n">${pending.length}</span>` : ""}</button><button data-t="cars" class="${tab === "cars" ? "on" : ""}" id="at_cars">All vehicles</button><button data-t="dealers" class="${tab === "dealers" ? "on" : ""}" id="at_dealers">Dealerships (${dealers.length})</button><button data-t="sells" class="${tab === "sells" ? "on" : ""}" id="at_sells">Sell requests${sells.filter(r => r.status === "New").length ? `<span class="n">${sells.filter(r => r.status === "New").length}</span>` : ""}</button><button data-t="inquiries" class="${tab === "inquiries" ? "on" : ""}" id="at_inquiries">Enquiries${inquiries.filter(i => !i.forwarded_at).length ? `<span class="n">${inquiries.filter(i => !i.forwarded_at).length}</span>` : ` (${inquiries.length})`}</button></div>
     <div id="atab" style="padding-bottom:56px">${tabs[tab]()}</div></div>`);
@@ -1680,6 +1690,7 @@ async function viewAdmin() {
         else if (a === "sstatus") { const note = $("[data-snote]", srow).value; const { error } = await client().rpc("admin_set_sell_status", { p_id: srow.dataset.sid, p_status: b.dataset.to, p_note: note || null }); if (error) throw error; toast("Saved."); render(); }
         else if (a === "sphotos") { const box = b.parentElement, paths = box.dataset.photos.split("|").filter(Boolean); b.disabled = true; b.textContent = "Loading…"; const r = await client().storage.from(SELL_BUCKET).createSignedUrls(paths, 3600); if (r.error) throw r.error; box.innerHTML = (r.data || []).filter(x => x.signedUrl).map(x => `<img src="${esc(x.signedUrl)}" alt="" data-zoom="${esc(x.signedUrl)}" loading="lazy">`).join("") || `<span style="color:var(--muted)">No photos</span>`; }
         else if (a === "decline") { const v = vmap[row.dataset.vid]; const r = await reasonBox(v.status === "Approved" ? "Take this car down" : "Decline this car", "The dealership will see this reason in their portal, can fix the car and send it again."); if (r == null) return; const { error } = await client().rpc("admin_review_vehicle", { p_id: v.id, p_decision: "Declined", p_reason: r }); if (error) throw error; S.cars = null; toast("Sent back to the dealership."); render(); }
+        else if (a === "altest") { const { data, error } = await client().rpc("admin_send_test_alert"); if (error) throw error; toast(data === "sent" ? "Test alert sent. Check your phone." : "Your database cannot send alerts yet. In Supabase open Database > Extensions, switch on pg_net, then run the SQL file again."); }
         else if (a === "vdel") { const v = vmap[row.dataset.vid]; if (!(await confirmBox("Delete this car?", `${carTitle(v)} (${v.ref}) will be removed for good, together with its enquiries and photos.`, "Delete car", true))) return; const { error } = await client().rpc("admin_delete_vehicle", { p_id: v.id }); if (error) throw error; try { await client().storage.from(BUCKET).remove(v.photos || []); } catch (_) {} S.cars = null; toast("Car deleted."); render(); }
         else if (a === "dstatus") { const d = dmap[drow.dataset.did], to = b.dataset.to; if (!(await confirmBox(to === "Suspended" ? "Suspend this dealership?" : "Reactivate this dealership?", to === "Suspended" ? `${d.business_name} and all its cars will disappear from the site until you reactivate it.` : `${d.business_name} and its approved cars will show on the site again.`, to === "Suspended" ? "Suspend" : "Reactivate", to === "Suspended"))) return; const { error } = await client().rpc("admin_set_dealer_status", { p_id: d.id, p_status: to }); if (error) throw error; S.cars = null; S.dealers = null; toast("Done."); render(); }
       } catch (x) { toast(niceErr(x)); }
@@ -1707,7 +1718,7 @@ async function resolveView() {
     case "for-dealers": return viewForDealers();
     case "login": return viewLogin(query);
     case "portal": return p[1] === "add" ? viewVehicleForm(null) : p[1] === "edit" && p[2] ? viewVehicleForm(decodeURIComponent(p[2])) : viewPortal();
-    case "admin": return p[1] === "edit" && p[2] ? viewVehicleForm(decodeURIComponent(p[2]), true) : viewAdmin();
+    case "admin": return p[1] === "edit" && p[2] ? viewVehicleForm(decodeURIComponent(p[2]), true) : p[1] === "add" ? viewVehicleForm(null, true) : viewAdmin();
     case "terms": return viewLegal("terms");
     case "privacy": return viewLegal("privacy");
     default: return viewHome();
