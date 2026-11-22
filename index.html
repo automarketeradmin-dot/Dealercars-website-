@@ -402,7 +402,7 @@ select.ctrl{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns
 .plm .plx{position:absolute;right:10px;top:10px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:17px;cursor:pointer;display:grid;place-items:center}
 .plm h3{padding-right:44px}
 .plfoot{position:sticky;bottom:0;background:#fff;padding:10px 0 14px;border-top:1px solid var(--line);margin-top:6px}
-.plrow{display:flex;align-items:center;gap:8px;margin-bottom:8px}.plrow span{width:38px;font-weight:700;font-size:14px}.plrow input{flex:1;min-width:60px;width:auto}.plrow .btn{width:auto;flex:none;white-space:nowrap}
+.plrow{display:flex;align-items:center;gap:8px;margin-bottom:8px}.plrow span{width:74px;white-space:nowrap;font-weight:700;font-size:14px}.plrow input{flex:1;min-width:60px;width:auto}.plrow .btn{width:auto;flex:none;white-space:nowrap}
 .plm .plctl{display:block;margin:0 0 4px}
 .plstage{background:#111;border-radius:12px;overflow:hidden;margin:10px 0}
 .plstage{display:flex;justify-content:center}.plstage canvas{display:block;width:auto;height:auto;max-width:100%;max-height:min(50vh,520px);touch-action:none;cursor:grab}
@@ -462,7 +462,7 @@ const MAX_PHOTOS = 20, MIN_PHOTOS = 6;
 /* No labels any more: dealers just upload the photos in the order of the checklist (front, rear, left, right, dashboard, odometer, then the rest) */
 const PHOTO_ORDER = ["Front", "Rear", "Left side", "Right side", "Dashboard", "Odometer (mileage)"];
 const PHOTO_EXTERIOR_N = 4;   // the first four photos are the outside of the car (used by "remove background from the outside photos")
-const PHOTO_RULES = { minW: 1200, minH: 800, maxMB: 15 };
+/* No size, shape or orientation rules: any photo is accepted (upright, square, small or big). Photos are shrunk to 1600 px before upload. */
 
 const $ = (s, r) => (r || document).querySelector(s);
 const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
@@ -595,13 +595,10 @@ async function imgSize(file) {
   try { const b = await createImageBitmap(file); const r = { w: b.width, h: b.height }; if (b.close) b.close(); return r; }
   catch (_) { return await new Promise((res, rej) => { const u = URL.createObjectURL(file), im = new Image(); im.onload = () => { URL.revokeObjectURL(u); res({ w: im.naturalWidth, h: im.naturalHeight }); }; im.onerror = () => rej(new Error("unreadable")); im.src = u; }); }
 }
-// returns "" when the photo follows the standard, otherwise one plain sentence saying what is wrong
+// returns "" when the file is a readable photo, otherwise one plain sentence saying what is wrong (no size or orientation rules)
 async function checkPhotoStandard(file) {
   const nm = file.name || "A photo";
-  if (file.size > PHOTO_RULES.maxMB * 1048576) return `${nm} is bigger than ${PHOTO_RULES.maxMB} MB.`;
-  let s; try { s = await imgSize(file); } catch (_) { return `${nm} could not be read. Please use a JPG, PNG or WebP photo.`; }
-  if (s.w < PHOTO_RULES.minW || s.h < PHOTO_RULES.minH) return `${nm} is too small (${s.w} × ${s.h}). The minimum is ${PHOTO_RULES.minW} × ${PHOTO_RULES.minH} pixels.`;
-  if (s.h > s.w) return `${nm} is upright. Please turn your phone sideways and take it in landscape.`;
+  try { await imgSize(file); } catch (_) { return `${nm} could not be read. Please use a JPG, PNG or WebP photo.`; }
   return "";
 }
 async function uploadBlob(blob, folder, owner) {
@@ -670,10 +667,10 @@ const MONTHLY_STEPS = [1500, 2000, 3000, 4000, 5000, 7500, 10000, 15000];
 const budgetCap = (price) => [60000, 80000, 100000, 150000, 200000, 250000, 300000, 400000, 500000, 600000, 800000, 1000000].find(x => x >= price) || 1500000;
 const monthlyCap = (m) => MONTHLY_STEPS.find(x => x >= m) || 20000;
 const PLATE_RATIO = 110 / 520;
-function drawPlate(x, cx, cy, w, rotDeg, selected) {
+function drawPlate(x, cx, cy, w, rotDeg, selected, noShadow) {
   const h = w * PLATE_RATIO, r = h * 0.14, pad = h * 0.13;
   x.save(); x.translate(cx, cy); x.rotate((rotDeg || 0) * Math.PI / 180);
-  x.shadowColor = "rgba(0,0,0,.35)"; x.shadowBlur = h * 0.12; x.shadowOffsetY = h * 0.04;
+  if (!noShadow) { x.shadowColor = "rgba(0,0,0,.35)"; x.shadowBlur = h * 0.12; x.shadowOffsetY = h * 0.04; }
   x.beginPath(); x.roundRect(-w / 2, -h / 2, w, h, r); x.fillStyle = "#FFFFFF"; x.fill(); x.shadowColor = "transparent";
   x.lineWidth = Math.max(1, h * 0.05); x.strokeStyle = "#16202E"; x.stroke();
   const m = h - pad * 2, mx = -w / 2 + pad, my = -m / 2, s = m / 32;
@@ -686,6 +683,53 @@ function drawPlate(x, cx, cy, w, rotDeg, selected) {
   const w1 = x.measureText("DEALER ").width; x.fillStyle = "#16202E"; x.fillText("DEALER", tx, h * 0.02); x.fillStyle = "#F26A1B"; x.fillText("CARS", tx + w1, h * 0.02);
   if (selected) { x.setLineDash([h * 0.1, h * 0.08]); x.lineWidth = Math.max(2, h * 0.04); x.strokeStyle = "#0B6BFF"; x.beginPath(); x.roundRect(-w / 2 - h * 0.08, -h / 2 - h * 0.08, w + h * 0.16, h + h * 0.16, r); x.stroke(); }
   x.restore();
+}
+
+/* ---- plates seen at an angle (3D): turn the plate left/right and up/down, and drag its four corners ---- */
+const plateFlat = (p) => !p.yaw && !p.pitch && !(p.co && p.co.some(c => c && (c[0] || c[1])));
+// the four corners (top-left, top-right, bottom-right, bottom-left) of the plate as it sits in the photo, without the hand-dragged corner offsets
+function plateBaseQuad(p, W, H) {
+  const w = p.w * W, cx = p.cx * W, cy = p.cy * H, ay = (p.yaw || 0) * Math.PI / 180, ax = (p.pitch || 0) * Math.PI / 180, r = (p.rot || 0) * Math.PI / 180, D = 2, hh = PLATE_RATIO / 2;
+  return [[-.5, -hh], [.5, -hh], [.5, hh], [-.5, hh]].map(([X, Y]) => {
+    const x1 = X * Math.cos(ay), z1 = X * Math.sin(ay);       // turn left / right: one side goes away from the camera
+    const y2 = Y * Math.cos(ax), z2 = z1 + Y * Math.sin(ax);  // tilt up / down
+    const f = D / (D + z2), px = x1 * f * w, py = y2 * f * w;
+    return [cx + px * Math.cos(r) - py * Math.sin(r), cy + px * Math.sin(r) + py * Math.cos(r)];
+  });
+}
+const plateQuad = (p, W, H) => { const w = p.w * W, c = p.co || []; return plateBaseQuad(p, W, H).map((q, i) => [q[0] + ((c[i] || [0])[0] || 0) * w, q[1] + ((c[i] || [0, 0])[1] || 0) * w]); };
+// maps a point (u, v) of the flat plate (0..1 each way) onto the quad, with perspective
+function quadMap(q) {
+  const [x0, y0] = q[0], [x1, y1] = q[1], [x2, y2] = q[2], [x3, y3] = q[3];
+  const dx1 = x1 - x2, dx2 = x3 - x2, dx3 = x0 - x1 + x2 - x3, dy1 = y1 - y2, dy2 = y3 - y2, dy3 = y0 - y1 + y2 - y3;
+  let g = 0, h = 0; const den = dx1 * dy2 - dx2 * dy1;
+  if ((dx3 || dy3) && den) { g = (dx3 * dy2 - dx2 * dy3) / den; h = (dx1 * dy3 - dx3 * dy1) / den; }
+  const a = x1 - x0 + g * x1, b = x3 - x0 + h * x3, d = y1 - y0 + g * y1, e = y3 - y0 + h * y3;
+  return (u, v) => { const k = g * u + h * v + 1; return [(a * u + b * v + x0) / k, (d * u + e * v + y0) / k]; };
+}
+function drawTri(x, img, s, d) {
+  const [sx0, sy0] = s[0], [sx1, sy1] = s[1], [sx2, sy2] = s[2], [dx0, dy0] = d[0], [dx1, dy1] = d[1], [dx2, dy2] = d[2];
+  const den = sx0 * (sy1 - sy2) + sx1 * (sy2 - sy0) + sx2 * (sy0 - sy1); if (!den) return;
+  const a = (dx0 * (sy1 - sy2) + dx1 * (sy2 - sy0) + dx2 * (sy0 - sy1)) / den, c = (dx0 * (sx2 - sx1) + dx1 * (sx0 - sx2) + dx2 * (sx1 - sx0)) / den, e = (dx0 * (sx1 * sy2 - sx2 * sy1) + dx1 * (sx2 * sy0 - sx0 * sy2) + dx2 * (sx0 * sy1 - sx1 * sy0)) / den;
+  const b = (dy0 * (sy1 - sy2) + dy1 * (sy2 - sy0) + dy2 * (sy0 - sy1)) / den, dd = (dy0 * (sx2 - sx1) + dy1 * (sx0 - sx2) + dy2 * (sx1 - sx0)) / den, f = (dy0 * (sx1 * sy2 - sx2 * sy1) + dy1 * (sx2 * sy0 - sx0 * sy2) + dy2 * (sx0 * sy1 - sx1 * sy0)) / den;
+  const mx = (dx0 + dx1 + dx2) / 3, my = (dy0 + dy1 + dy2) / 3, grow = (px, py) => { const vx = px - mx, vy = py - my, l = Math.hypot(vx, vy) || 1; return [px + vx / l * 0.8, py + vy / l * 0.8]; };   // a hair bigger, so no seams show between triangles
+  x.save(); x.beginPath(); [[dx0, dy0], [dx1, dy1], [dx2, dy2]].map(p => grow(p[0], p[1])).forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.closePath(); x.clip();
+  x.transform(a, b, c, dd, e, f); x.drawImage(img, 0, 0); x.restore();
+}
+// draws the Dealer Cars plate squeezed onto the four corners q, like a plate seen from the side
+function drawPlateWarp(x, q) {
+  const wpx = Math.max(Math.hypot(q[1][0] - q[0][0], q[1][1] - q[0][1]), Math.hypot(q[2][0] - q[3][0], q[2][1] - q[3][1]), 8);
+  const tw = Math.max(520, Math.min(1600, Math.round(wpx * 2))), th = Math.round(tw * PLATE_RATIO), tex = document.createElement("canvas"); tex.width = tw; tex.height = th;
+  drawPlate(tex.getContext("2d"), tw / 2, th / 2, tw * 0.985, 0, false, true);
+  x.save(); x.beginPath(); q.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.closePath();
+  x.shadowColor = "rgba(0,0,0,.35)"; x.shadowBlur = wpx * 0.03; x.shadowOffsetY = wpx * 0.01; x.fillStyle = "#fff"; x.fill(); x.restore();
+  const Hm = quadMap(q), N = 32, M = 8, P = [];
+  for (let j = 0; j <= M; j++) { P.push([]); for (let i = 0; i <= N; i++) P[j].push(Hm(i / N, j / M)); }
+  for (let j = 0; j < M; j++) for (let i = 0; i < N; i++) {
+    const s = (a, b) => [a / N * tw, b / M * th];
+    drawTri(x, tex, [s(i, j), s(i + 1, j), s(i + 1, j + 1)], [P[j][i], P[j][i + 1], P[j + 1][i + 1]]);
+    drawTri(x, tex, [s(i, j), s(i + 1, j + 1), s(i, j + 1)], [P[j][i], P[j + 1][i + 1], P[j + 1][i]]);
+  }
 }
 
 /* ====================== layout: nav + footer ====================== */
@@ -1443,7 +1487,7 @@ async function viewVehicleForm(id, admin) {
     <form id="vf" novalidate style="max-width:860px;padding-bottom:60px">
       <div class="panel" style="margin-bottom:18px"><h2>Photos</h2>
         <div class="pstd" id="pstd"><b>The Dealer Cars photo standard</b>
-          <ul><li>Landscape photos only (turn your phone sideways), at least ${PHOTO_RULES.minW} × ${PHOTO_RULES.minH} pixels, JPG, PNG or WebP, up to ${PHOTO_RULES.maxMB} MB each.</li>
+          <ul><li>Any photo from your phone or camera works (JPG, PNG or WebP). Sideways or upright, we take it as it is.</li>
             <li>At least ${MIN_PHOTOS} photos and up to ${MAX_PHOTOS}. Please take these six: <b>front, rear, left side, right side, dashboard and odometer</b> (showing the mileage), then any extras (seats, boot, engine, wheels).</li>
             <li>Upload them in that order. The first photo is the cover, so make it the <b>front</b> of the car. You can move photos with the arrows.</li>
             <li>The whole car in the frame, in daylight, no people, no watermarks, and no phone numbers or text added to the photo.</li>
@@ -1561,31 +1605,61 @@ async function plateEditor(t, mine) {
   if (!t || t.up || t.busy) return;
   let bmp; try { const blob = t.file || await (await fetch(t.url)).blob(); bmp = await createImageBitmap(blob); } catch (e) { console.warn(e); toast("Sorry, that photo could not be opened. Please try again."); return; }
   const k = Math.min(1, 1600 / bmp.width), W = Math.round(bmp.width * k), H = Math.round(bmp.height * k);
-  const plates = [{ cx: 0.5, cy: 0.7, w: 0.25, rot: 0 }]; let sel = 0;
+  const newPlate = (cy) => ({ cx: 0.5, cy, w: 0.25, rot: 0, yaw: 0, pitch: 0, co: [[0, 0], [0, 0], [0, 0], [0, 0]] }); const plates = [newPlate(0.7)]; let sel = 0;
   const bg = document.createElement("div"); bg.className = "modal-bg plbg"; bg.id = "pl_modal"; bg.setAttribute("role", "dialog"); bg.setAttribute("aria-modal", "true");
-  bg.innerHTML = `<div class="modal plm"><button type="button" class="plx" id="pl_x" aria-label="Close">✕</button><h3>Cover the number plate</h3><p style="margin-bottom:8px">Drag the Dealer Cars plate over the real number plate. Use <b>Bigger / Smaller</b> and <b>Turn</b> to fit it. Tap <b>Add another plate</b> if there is more than one plate in the photo.</p>
+  bg.innerHTML = `<div class="modal plm"><button type="button" class="plx" id="pl_x" aria-label="Close">✕</button><h3>Cover the number plate</h3><p style="margin-bottom:8px">Drag the Dealer Cars plate over the real number plate. Use <b>Bigger / Smaller</b> and <b>Turn</b> to fit it. If the car was photographed at an angle, use <b>Angle</b> to tilt the plate in 3D, or drag the four orange dots to the corners of the real plate. Tap <b>Add another plate</b> if there is more than one plate in the photo.</p>
     <div class="plstage"><canvas id="pl_cv" width="${W}" height="${H}" aria-label="Photo with the Dealer Cars plate. Drag the plate to move it."></canvas></div>
     <div class="plfoot"><div class="plctl">
       <div class="plrow"><span>Size</span><button type="button" class="btn btn-ghost btn-sm" id="pl_sm" aria-label="Smaller">− Smaller</button><input type="range" id="pl_size" min="6" max="45" step="1" aria-label="Plate size"><button type="button" class="btn btn-ghost btn-sm" id="pl_bg" aria-label="Bigger">+ Bigger</button></div>
-      <div class="plrow"><span>Turn</span><button type="button" class="btn btn-ghost btn-sm" id="pl_tl" aria-label="Turn left">↺ Left</button><input type="range" id="pl_rot" min="-35" max="35" step="1" aria-label="Turn the plate"><button type="button" class="btn btn-ghost btn-sm" id="pl_tr" aria-label="Turn right">↻ Right</button></div></div>
+      <div class="plrow"><span>Turn</span><button type="button" class="btn btn-ghost btn-sm" id="pl_tl" aria-label="Turn left">↺ Left</button><input type="range" id="pl_rot" min="-35" max="35" step="1" aria-label="Turn the plate"><button type="button" class="btn btn-ghost btn-sm" id="pl_tr" aria-label="Turn right">↻ Right</button></div>
+      <div class="plrow"><span>Angle ↔</span><button type="button" class="btn btn-ghost btn-sm" id="pl_yl" aria-label="Angle left">◀ Left</button><input type="range" id="pl_yaw" min="-65" max="65" step="1" aria-label="Angle the plate left or right, like a car seen from the side"><button type="button" class="btn btn-ghost btn-sm" id="pl_yr" aria-label="Angle right">Right ▶</button></div>
+      <div class="plrow"><span>Angle ↕</span><button type="button" class="btn btn-ghost btn-sm" id="pl_pu" aria-label="Tilt up">▲ Up</button><input type="range" id="pl_pitch" min="-50" max="50" step="1" aria-label="Tilt the plate up or down"><button type="button" class="btn btn-ghost btn-sm" id="pl_pd" aria-label="Tilt down">Down ▼</button></div>
+      <div class="plrow"><span></span><button type="button" class="btn btn-ghost btn-sm" id="pl_flat">Make flat again</button></div></div>
     <div class="row"><button type="button" class="btn btn-ghost btn-sm" id="pl_add">Add another plate</button><button type="button" class="btn btn-ghost btn-sm" id="pl_del">Remove this plate</button><span style="flex:1"></span><button type="button" class="btn btn-ghost" id="pl_cancel">Cancel</button><button type="button" class="btn btn-primary" id="pl_apply">Apply to photo</button></div></div></div>`;
   document.body.appendChild(bg);
-  const cv = bg.querySelector("#pl_cv"), cx = cv.getContext("2d"), size = bg.querySelector("#pl_size"), rot = bg.querySelector("#pl_rot");
-  const paint = (final) => { cx.clearRect(0, 0, W, H); cx.drawImage(bmp, 0, 0, W, H); plates.forEach((p, i) => drawPlate(cx, p.cx * W, p.cy * H, p.w * W, p.rot, !final && i === sel)); };
-  const sync = () => { const p = plates[sel]; size.value = Math.round(p.w * 100); rot.value = p.rot; bg.querySelector("#pl_del").disabled = plates.length < 2; bg.querySelector("#pl_add").disabled = plates.length >= 3; paint(); };
+  const cv = bg.querySelector("#pl_cv"), cx = cv.getContext("2d"), size = bg.querySelector("#pl_size"), rot = bg.querySelector("#pl_rot"), yaw = bg.querySelector("#pl_yaw"), pitch = bg.querySelector("#pl_pitch");
+  const paint = (final) => {
+    cx.clearRect(0, 0, W, H); cx.drawImage(bmp, 0, 0, W, H);
+    plates.forEach((p, i) => {
+      const on = !final && i === sel;
+      if (plateFlat(p)) { drawPlate(cx, p.cx * W, p.cy * H, p.w * W, p.rot, on); if (!on) return; }
+      else drawPlateWarp(cx, plateQuad(p, W, H));
+      if (!on) return;
+      const q = plateQuad(p, W, H), rr = Math.max(7, W * 0.009);
+      cx.save(); cx.lineWidth = Math.max(2, W * 0.002); cx.strokeStyle = "#2f7df6"; cx.setLineDash([8, 6]); cx.beginPath(); q.forEach((a, j) => j ? cx.lineTo(a[0], a[1]) : cx.moveTo(a[0], a[1])); cx.closePath(); cx.stroke(); cx.setLineDash([]);
+      q.forEach(a => { cx.beginPath(); cx.arc(a[0], a[1], rr, 0, 6.2832); cx.fillStyle = "#F26A1B"; cx.fill(); cx.lineWidth = Math.max(2, W * 0.002); cx.strokeStyle = "#fff"; cx.stroke(); });
+      cx.restore();
+    });
+  };
+  const sync = () => { const p = plates[sel]; size.value = Math.round(p.w * 100); rot.value = p.rot; yaw.value = p.yaw || 0; pitch.value = p.pitch || 0; bg.querySelector("#pl_del").disabled = plates.length < 2; bg.querySelector("#pl_add").disabled = plates.length >= 3; paint(); };
   const pos = (e) => { const r = cv.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width * W, y: (e.clientY - r.top) / r.height * H }; };
-  const hit = (x, y) => { for (let i = plates.length - 1; i >= 0; i--) { const p = plates[i], w = p.w * W, h = w * PLATE_RATIO, a = -p.rot * Math.PI / 180, dx = x - p.cx * W, dy = y - p.cy * H, lx = dx * Math.cos(a) - dy * Math.sin(a), ly = dx * Math.sin(a) + dy * Math.cos(a); if (Math.abs(lx) <= w / 2 + 12 && Math.abs(ly) <= h / 2 + 12) return i; } return -1; };
+  const inPoly = (q, x, y) => { let c = false; for (let a = 0, b = 3; a < 4; b = a++) if ((q[a][1] > y) !== (q[b][1] > y) && x < (q[b][0] - q[a][0]) * (y - q[a][1]) / (q[b][1] - q[a][1]) + q[a][0]) c = true; return c; };
+  const hit = (x, y) => { for (let i = plates.length - 1; i >= 0; i--) { const q = plateQuad(plates[i], W, H), mx = (q[0][0] + q[1][0] + q[2][0] + q[3][0]) / 4, my = (q[0][1] + q[1][1] + q[2][1] + q[3][1]) / 4; const g = q.map(a => { const vx = a[0] - mx, vy = a[1] - my, l = Math.hypot(vx, vy) || 1; return [a[0] + vx / l * 14, a[1] + vy / l * 14]; }); if (inPoly(g, x, y)) return i; } return -1; };
+  const cornerAt = (x, y) => { const q = plateQuad(plates[sel], W, H), tol = Math.max(18, W * 0.022); let best = -1, bd = tol; q.forEach((a, j) => { const d = Math.hypot(a[0] - x, a[1] - y); if (d <= bd) { bd = d; best = j; } }); return best; };
   let drag = null;
-  cv.addEventListener("pointerdown", (e) => { const q = pos(e), i = hit(q.x, q.y); if (i < 0) return; sel = i; drag = { dx: plates[i].cx * W - q.x, dy: plates[i].cy * H - q.y }; try { cv.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); sync(); });
-  cv.addEventListener("pointermove", (e) => { if (!drag) return; const q = pos(e), p = plates[sel]; p.cx = Math.min(1, Math.max(0, (q.x + drag.dx) / W)); p.cy = Math.min(1, Math.max(0, (q.y + drag.dy) / H)); paint(); });
+  cv.addEventListener("pointerdown", (e) => {
+    const q = pos(e), c = cornerAt(q.x, q.y);
+    if (c >= 0) { drag = { corner: c }; try { cv.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); return; }
+    const i = hit(q.x, q.y); if (i < 0) return; sel = i; drag = { dx: plates[i].cx * W - q.x, dy: plates[i].cy * H - q.y }; try { cv.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); sync();
+  });
+  cv.addEventListener("pointermove", (e) => {
+    if (!drag) return; const q = pos(e), p = plates[sel];
+    if (drag.corner !== undefined) { const b = plateBaseQuad(p, W, H)[drag.corner], w = p.w * W; p.co = p.co || [[0, 0], [0, 0], [0, 0], [0, 0]]; p.co[drag.corner] = [(Math.min(W, Math.max(0, q.x)) - b[0]) / w, (Math.min(H, Math.max(0, q.y)) - b[1]) / w]; paint(); return; }
+    p.cx = Math.min(1, Math.max(0, (q.x + drag.dx) / W)); p.cy = Math.min(1, Math.max(0, (q.y + drag.dy) / H)); paint();
+  });
   const stop = () => { drag = null; }; cv.addEventListener("pointerup", stop); cv.addEventListener("pointercancel", stop);
   size.addEventListener("input", () => { plates[sel].w = Number(size.value) / 100; paint(); });
   rot.addEventListener("input", () => { plates[sel].rot = Number(rot.value); paint(); });
+  yaw.addEventListener("input", () => { plates[sel].yaw = Number(yaw.value); paint(); });
+  pitch.addEventListener("input", () => { plates[sel].pitch = Number(pitch.value); paint(); });
   const nudge = (id, fn) => bg.querySelector(id).addEventListener("click", () => { fn(plates[sel]); sync(); });
   nudge("#pl_sm", p => { p.w = Math.max(0.06, p.w - 0.02); }); nudge("#pl_bg", p => { p.w = Math.min(0.45, p.w + 0.02); });
+  nudge("#pl_yl", p => { p.yaw = Math.max(-65, (p.yaw || 0) - 4); }); nudge("#pl_yr", p => { p.yaw = Math.min(65, (p.yaw || 0) + 4); });
+  nudge("#pl_pu", p => { p.pitch = Math.max(-50, (p.pitch || 0) - 4); }); nudge("#pl_pd", p => { p.pitch = Math.min(50, (p.pitch || 0) + 4); });
+  nudge("#pl_flat", p => { p.yaw = 0; p.pitch = 0; p.co = [[0, 0], [0, 0], [0, 0], [0, 0]]; });
   nudge("#pl_tl", p => { p.rot = Math.max(-35, p.rot - 3); }); nudge("#pl_tr", p => { p.rot = Math.min(35, p.rot + 3); });
   cv.addEventListener("wheel", (e) => { e.preventDefault(); const p = plates[sel]; p.w = Math.min(0.45, Math.max(0.06, p.w + (e.deltaY < 0 ? 0.01 : -0.01))); sync(); }, { passive: false });
-  bg.querySelector("#pl_add").addEventListener("click", () => { if (plates.length >= 3) return; plates.push({ cx: 0.5, cy: 0.5 + plates.length * 0.08, w: 0.25, rot: 0 }); sel = plates.length - 1; sync(); });
+  bg.querySelector("#pl_add").addEventListener("click", () => { if (plates.length >= 3) return; plates.push(newPlate(0.5 + plates.length * 0.08)); sel = plates.length - 1; sync(); });
   bg.querySelector("#pl_del").addEventListener("click", () => { if (plates.length < 2) return; plates.splice(sel, 1); sel = Math.max(0, sel - 1); sync(); });
   const onKey = (e) => { if (e.key === "Escape") close(); };
   const close = () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = prevOv; if (bmp.close) bmp.close(); bg.remove(); };
