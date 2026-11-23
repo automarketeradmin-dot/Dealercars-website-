@@ -101,6 +101,16 @@ select.ctrl{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns
 .eyebrow{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#FFB27F;margin-bottom:12px}
 .hero h1{font-size:clamp(34px,6vw,58px);max-width:760px}
 .hero h1 em{font-style:normal;color:var(--accent-l)}
+.hero h1 em{white-space:nowrap}.hero h1 .tw-size{visibility:hidden;display:block}.hero h1 .tw-live{position:absolute;left:0;top:0;display:block}
+.tw-caret{display:inline-block;width:.07em;height:.9em;margin-left:.05em;vertical-align:-.08em;background:var(--accent-l);animation:twb 1s steps(1) infinite}@keyframes twb{50%{opacity:0}}
+.intents{display:grid;gap:8px}.intent{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;background:#fff}.intent input{margin-top:4px;accent-color:var(--accent)}.intent small{display:block;color:var(--muted);font-size:12.5px;font-weight:500}.intent:has(input:checked){border-color:var(--accent);background:#FFF4EC}
+.bkno{margin:12px 0;padding:12px 14px;border:2px dashed var(--accent);border-radius:12px;text-align:center;background:#FFF9F4}.bkno span{display:block;font-size:12.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}.bkno b{font-size:28px;letter-spacing:.06em;color:var(--ink)}
+.receipt{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px}.rc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.rc-t{font-size:22px;font-weight:800}.rc-s{color:var(--muted);font-weight:600}.rc-foot{margin-top:12px;color:var(--ink2);font-size:14.5px}
+.vw-int{display:inline-block;border-radius:99px;padding:3px 10px;font-size:12px;font-weight:800}.vw-int.urgent{background:#FDE3E1;color:#B3261E}.vw-int.soon{background:#FFE9D6;color:#B4540F}.vw-int.options{background:#E6EEFB;color:#2457B3}.vw-int.viewing{background:#EEF0F3;color:#4A5568}
+.vw-conf{background:#F6F8FB;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
+@media print{.nav,.footer,.mnav,#bk_form,.ptabs,#toast,.bkprint-hide{display:none!important}body{background:#fff}.receipt{border:2px solid #000}}
+.hero h1{position:relative}.ft-team{opacity:.6;font-size:13px}
+@media (prefers-reduced-motion:reduce){.tw-caret{animation:none}}
 .hero p.lead{margin-top:16px;font-size:clamp(16px,2.2vw,19px);color:rgba(255,255,255,.82);max-width:600px}
 .search{margin-top:30px;background:#fff;color:var(--ink);border-radius:18px;padding:14px;box-shadow:0 24px 60px rgba(0,0,0,.35);display:grid;gap:10px;grid-template-columns:1fr}
 .search .ctrl{min-height:50px}
@@ -403,7 +413,8 @@ select.ctrl{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns
 .plm h3{padding-right:44px}
 .plfoot{position:sticky;bottom:0;background:#fff;padding:10px 0 14px;border-top:1px solid var(--line);margin-top:6px}
 .plrow{display:flex;align-items:center;gap:8px;margin-bottom:8px}.plrow span{width:74px;white-space:nowrap;font-weight:700;font-size:14px}.plrow input{flex:1;min-width:60px;width:auto}.plrow .btn{width:auto;flex:none;white-space:nowrap}
-.plm .plctl{display:block;margin:0 0 4px}
+.plm .plctl{display:block;margin:0 0 4px;max-height:34vh;overflow-y:auto;padding-right:2px}
+@media (max-height:720px){.plm>p{display:none}.plstage canvas{max-height:38vh!important}}
 .plstage{background:#111;border-radius:12px;overflow:hidden;margin:10px 0}
 .plstage{display:flex;justify-content:center}.plstage canvas{display:block;width:auto;height:auto;max-width:100%;max-height:min(50vh,520px);touch-action:none;cursor:grab}
 .plctl{display:flex;flex-wrap:wrap;gap:10px 22px;margin:8px 0 12px}.plctl label{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}.plctl input{width:150px}
@@ -482,6 +493,14 @@ const rand = () => Math.random().toString(36).slice(2, 10);
 const baseUrl = () => (CONFIG.SITE_URL || (location.origin + location.pathname.replace(/index\.html$/, ""))).replace(/\/$/, "");
 const isConfigured = () => /^https:\/\/.+/.test(CONFIG.SUPABASE_URL) && !/PASTE/.test(CONFIG.SUPABASE_URL) && !/PASTE/.test(CONFIG.SUPABASE_ANON_KEY);
 const photoUrl = (p) => p ? CONFIG.SUPABASE_URL.replace(/\/$/, "") + "/storage/v1/object/public/" + BUCKET + "/" + String(p).split("/").map(encodeURIComponent).join("/") : "";
+/* ---- viewing bookings ---- */
+const INTENTS = { viewing: "Just viewing", options: "Looking at my options", soon: "Serious, I want to buy soon", urgent: "I need a car urgently" };
+const INTENT_HINT = { viewing: "Just want to see it", options: "Comparing a few cars", soon: "Ready to buy if it is right", urgent: "I need one as soon as possible" };
+const fmtTime = (t) => String(t || "").slice(0, 5);
+const fmtDay = (d) => { try { return new Date(String(d).slice(0, 10) + "T12:00:00").toLocaleDateString("en-ZA", { weekday: "long", day: "numeric", month: "long", year: "numeric" }); } catch (_) { return String(d || ""); } };
+const todayStr = (plus) => { const d = new Date(Date.now() + (plus || 0) * 864e5); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
+const timeOpts = (sel) => { let o = ""; for (let m = 7 * 60; m <= 19 * 60; m += 30) { const t = String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); o += `<option value="${t}"${t === sel ? " selected" : ""}>${t}</option>`; } return o; };
+const receiptText = (b) => `Dealer Cars viewing receipt\nBooking number: ${b.ref}\nCar: ${b.car_title}${b.car_ref ? " (" + b.car_ref + ")" : ""}\nName: ${b.name}\nDay: ${fmtDay(b.conf_date)}\nTime: ${fmtTime(b.conf_from)} to ${fmtTime(b.conf_to)}${b.conf_place ? "\nWhere: " + b.conf_place : ""}${b.admin_note ? "\nNote: " + b.admin_note : ""}\n\nPlease come to our office at this time and tell us your booking number. See your booking any time: ${baseUrl()}/#/booking?ref=${b.ref}`;
 const waNumber = (ph) => { let d = String(ph || "").replace(/\D/g, ""); if (d.startsWith("0")) d = "27" + d.slice(1); return d; };
 
 const ICON = {
@@ -541,7 +560,7 @@ function seo(o) {
 /* ---------- data layer (everything that talks to Supabase) ---------- */
 let sb = null;
 function client() { if (!sb) sb = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY); return sb; }
-const S = { session: null, dealer: undefined, isAdmin: undefined, cars: null, carsAt: 0, ptab: "vehicles", atab: "pending", resetMode: false };
+const S = { session: null, dealer: undefined, isAdmin: undefined, cars: null, carsAt: 0, ptab: "vehicles", atab: "", resetMode: false };
 
 async function loadCars(force) {
   if (!force && S.cars && Date.now() - S.carsAt < 60000) return S.cars;
@@ -560,7 +579,7 @@ async function loadMe() {
   if (S.dealer === undefined) { const r = await client().from("dealers").select("*").eq("id", S.session.user.id).maybeSingle(); S.dealer = r.data || null; }
   if (S.isAdmin === undefined) { const r = await client().rpc("is_admin"); S.isAdmin = r.data === true; }
 }
-async function signOut() { await client().auth.signOut(); S.session = null; S.dealer = undefined; S.isAdmin = undefined; S.ptab = "vehicles"; S.atab = "pending"; S.afilter = ""; }
+async function signOut() { await client().auth.signOut(); S.session = null; S.dealer = undefined; S.isAdmin = undefined; S.ptab = "vehicles"; S.atab = ""; S.afilter = ""; }
 
 /* ---------- photos: shrink before upload ---------- */
 async function shrink(file, maxSide, quality) {
@@ -741,6 +760,17 @@ const HOW_STEPS = [
   ["We help with the documentation", "We explain what paperwork is needed, help you with it and make sure nothing is missed."],
   ["Delivery and support", "We are there when the car is delivered, and we help afterwards if you need anything."]
 ];
+/* the headline types itself out: "We help you buy a car." ("We", "buy" and "car" in orange) */
+function typeHero() {
+  const el = document.getElementById("hero_tw"); if (!el) return;
+  const parts = [["We", 1], [" help you ", 0], ["buy", 1], [" a ", 0], ["car", 1], [".", 0]], full = parts.map(p => p[0]).join("");
+  const draw = (n) => { let left = n, h = ""; parts.forEach(([t, em]) => { if (left <= 0) return; const s = t.slice(0, left); left -= t.length; h += em ? `<em>${esc(s)}</em>` : esc(s); }); el.innerHTML = h + '<span class="tw-caret"></span>'; };
+  let reduce = false; try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (_) {}
+  if (reduce) { draw(full.length); return; }
+  let n = 0; draw(0);
+  const tick = () => { if (!document.body.contains(el)) return; n++; draw(n); if (n < full.length) setTimeout(tick, 85 + Math.random() * 60); };
+  setTimeout(tick, 450);
+}
 function navHtml(cur) {
   const on = (k) => cur === k ? ' class="on"' : "";
   const acct = S.session ? `<a href="#/portal" class="btn btn-dark btn-sm" id="nav_acct">My dealership</a>` : "";
@@ -758,7 +788,7 @@ function navHtml(cur) {
           <a href="#/insurance" role="menuitem" id="nav_insurance">Insurance <span class="soon">Coming soon</span><small>Cover for your car</small></a>
           <a href="#/spotters" role="menuitem" id="nav_spotters">Spotters <span class="soon">Coming soon</span><small>Spotters network</small></a>
         </div></div>
-      <a href="#/for-dealers"${on("fordealers")}>For dealers</a>${acct}
+      ${acct}
     </nav>
     <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">${ICON.menu}</button>
   </div>
@@ -771,8 +801,7 @@ function navHtml(cur) {
     <a href="#/rent-to-own">Rent to own <span class="soon">Coming soon</span></a>
     <a href="#/insurance">Insurance <span class="soon">Coming soon</span></a>
     <a href="#/spotters">Spotters <span class="soon">Coming soon</span></a>
-    <div class="grp">For dealerships</div>
-    <a href="#/for-dealers">List your vehicles<small>Register or log in as a dealership</small></a>${S.session ? `<a href="#/portal" class="btn btn-dark btn-block">My dealership</a>` : ""}
+    ${S.session ? `<a href="#/portal" class="btn btn-dark btn-block">My dealership</a>` : ""}
   </div></header>`;
 }
 function footerHtml() {
@@ -783,12 +812,11 @@ function footerHtml() {
   return `<footer class="footer"><div class="wrap">
     <div class="fgrid">
       <div><a class="logo" href="#/">${LOGO}<span>Dealer<b>Cars</b></span></a><p style="margin-top:12px;max-width:340px;font-size:14.5px">Used cars for sale across South Africa, from hand-picked dealers.</p></div>
-      <div><h4>Buyers &amp; sellers</h4><a href="#/cars">Cars for sale</a><a href="#/sell">Sell your car</a><a href="#/finance">Finance calculator</a></div>
+      <div><h4>Buyers &amp; sellers</h4><a href="#/cars">Cars for sale</a><a href="#/booking" id="ft_booking">My viewing booking</a><a href="#/sell">Sell your car</a><a href="#/finance">Finance calculator</a></div>
       <div><h4>Coming soon</h4><a href="#/rent-to-own">Rent to own</a><a href="#/insurance">Insurance</a><a href="#/spotters">Spotters</a></div>
-      <div><h4>Dealers</h4><a href="#/for-dealers">List your vehicles</a><a href="#/login">Dealer login</a></div>
-      <div><h4>Company</h4><a href="#/about">About us</a><a href="#/terms">Terms of use</a><a href="#/privacy">Privacy policy</a>${c.join("")}</div>
+      <div><h4>Company</h4><a href="#/about">About us</a><a href="#/terms">Terms of use</a><a href="#/privacy">Privacy policy</a>${c.join("")}<a href="#/login" id="ft_team" class="ft-team">Team login</a></div>
     </div>
-    <div class="copy">© ${new Date().getFullYear()} Dealer Cars. Vehicles are sold by the dealerships that list them.</div>
+    <div class="copy">© ${new Date().getFullYear()} Dealer Cars. All rights reserved.</div>
   </div></footer>`;
 }
 function page(cur, inner) { return navHtml(cur) + `<main id="main">${inner}</main>` + footerHtml(); }
@@ -836,7 +864,7 @@ async function viewHome() {
   <section class="hero"><svg class="road" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M-40 460 C 260 420, 520 300, 760 250 S 1120 120, 1260 40" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2.4" stroke-dasharray="3 16" stroke-linecap="round"/><path d="M-40 520 C 300 480, 560 360, 800 310 S 1140 190, 1260 110" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1.6" stroke-dasharray="3 14" stroke-linecap="round"/></svg>
     <div class="wrap hero-in">
       <span class="eyebrow">Used cars for sale</span>
-      <h1>Find your next car from <em>hand-picked dealers</em>.</h1>
+      <h1 id="hero_h1" aria-label="We help you buy a car."><span class="tw-size" aria-hidden="true"><em>We</em> help you <em>buy</em> a <em>car</em>.</span><span class="tw-live" id="hero_tw" aria-hidden="true"></span></h1>
       <p class="lead">Browse used cars across South Africa, and we go with you from the first viewing to delivery.</p>
       <form class="search" id="home_search" role="search">
         <label class="sr" for="hs_make">Make</label><select class="ctrl" id="hs_make"><option value="">Any make</option>${opt(makes)}</select>
@@ -848,7 +876,7 @@ async function viewHome() {
       <div class="chips" aria-label="Browse by body type">${["SUV", "Hatchback", "Sedan", "Bakkie"].map(b => `<a class="chip" href="#/cars?body=${encodeURIComponent(b)}">${b}</a>`).join("")}</div>
     </div></section>
   <section class="section"><div class="wrap">
-    <div class="sec-head"><div><h2>Latest cars</h2><p>Freshly listed by our dealers.</p></div><a class="link" href="#/cars">See all cars →</a></div>
+    <div class="sec-head"><div><h2>Latest cars</h2><p>Freshly listed cars.</p></div><a class="link" href="#/cars">See all cars →</a></div>
     ${err ? failBlock("the cars") : cars.length ? `<div class="cards four" id="home_cars">${cars.slice(0, 8).map(carCard).join("")}</div>` : noCarsBlock()}
   </div></section>
   <section class="section soft" id="home_services"><div class="wrap">
@@ -861,12 +889,9 @@ async function viewHome() {
   <section class="section soft" id="home_how"><div class="wrap">
     <div class="sec-head"><div><h2>We go with you, start to finish</h2><p>Dealer Cars is more than a listing site.</p></div><a class="btn btn-ghost" href="#/about" id="home_about">See how we work</a></div>
     <ol class="how">${HOW_STEPS.map((x, i) => `<li><span class="n">${i + 1}</span><b>${esc(x[0])}</b><p>${esc(x[1])}</p></li>`).join("")}</ol></div></section>
-  <section class="section"><div class="wrap"><div class="band">
-    <div><h2>Are you a dealership?</h2><p>Register your dealership, add your stock with photos, and we review each vehicle before it goes live. We handle the buyer enquiries and pass the right ones on to you.</p></div>
-    <div><a class="btn btn-primary" href="#/for-dealers" id="home_dealer_cta">List your vehicles</a></div>
-  </div></div></section>`);
+`);
   return { html, bind() {
-    bindNav();
+    bindNav(); typeHero();
     $("#home_search").addEventListener("submit", (e) => { e.preventDefault(); const q = new URLSearchParams(); const m = $("#hs_make").value, x = $("#hs_max").value, mp = $("#hs_mp").value, pl = $("#hs_place").value.trim();
       if (m) q.set("make", m); if (x) q.set("max", x); if (mp) q.set("mp", mp);
       if (pl) { const pr = PROVINCES.find(p => p.toLowerCase() === pl.toLowerCase()); if (pr) q.set("province", pr); else { const c = cars.find(v => v.city && v.city.toLowerCase() === pl.toLowerCase()); if (c) q.set("city", c.city); else q.set("q", pl); } }
@@ -992,14 +1017,16 @@ async function viewCar(ref) {
       <div class="specs">${specs.map(s => `<div><span>${s[0]}</span><b>${esc(s[1])}</b></div>`).join("")}</div>
       <button type="button" class="btn btn-ghost btn-block" id="sh_btn" style="margin-top:16px">${ICON.share} Share this car</button></div>
     ${inst ? `<div class="panel fin-cta"><b>Planning to finance?</b><p>Work out what this car could cost you each month.</p><a class="btn btn-ghost btn-block" id="car_fin" href="#/finance?price=${esc(String(Math.round(v.price)))}">Calculate finance</a></div>` : ""}
-    <div class="panel" id="inq_panel"><h2>Ask about this car</h2><p style="color:var(--muted);font-size:14.5px;margin-bottom:14px">Send us your details and the seller will contact you about this car.${hasWa() ? ` Or WhatsApp us about this car: ${contacts().filter(k => k.wa).map((k, i) => `<a id="${idn("car_wa", i)}" href="${esc(waLink("Hi Dealer Cars, I am interested in the " + title + " (" + v.ref + ") " + url, k.wa))}" target="_blank" rel="noopener">${k.name ? esc(k.name) : "WhatsApp us"}</a>`).join(" or ")}.` : ""}</p>
+    <div class="panel" id="inq_panel"><h2>Book a viewing</h2><p style="color:var(--muted);font-size:14.5px;margin-bottom:14px">Tell us when you can come and see this car. We confirm your booking and send you a receipt with a booking number.${hasWa() ? ` Questions first? WhatsApp us about this car: ${contacts().filter(k => k.wa).map((k, i) => `<a id="${idn("car_wa", i)}" href="${esc(waLink("Hi Dealer Cars, I am interested in the " + title + " (" + v.ref + ") " + url, k.wa))}" target="_blank" rel="noopener">${k.name ? esc(k.name) : "WhatsApp us"}</a>`).join(" or ")}.` : ""}</p>
       <form id="inq_form" novalidate><div id="inq_msg"></div>
         <div class="field"><label for="i_name">Your name</label><input class="ctrl" id="i_name" autocomplete="name" required></div>
-        <div class="grid2"><div class="field"><label for="i_phone">Phone</label><input class="ctrl" id="i_phone" type="tel" autocomplete="tel" inputmode="tel"></div><div class="field"><label for="i_email">E-mail</label><input class="ctrl" id="i_email" type="email" autocomplete="email"></div></div>
-        <div class="hint" style="font-size:12.5px;color:var(--muted);margin:-6px 0 12px">Give a phone number or an e-mail address, so we can reply.</div>
-        <div class="field"><label for="i_msg">Message</label><textarea class="ctrl" id="i_msg" rows="4" maxlength="900">Hi, I'm interested in the ${esc(title)} (${esc(v.ref)}). Is it still available?</textarea></div>
-        <button class="btn btn-primary btn-block" type="submit" id="inq_send">Send enquiry</button>
-        <p style="font-size:12.5px;color:var(--muted);margin-top:10px">By sending, you agree that Dealer Cars may use your details to answer your enquiry, and may pass them to the seller. See our <a href="#/privacy">privacy policy</a>.</p></form></div>
+        <div class="grid2"><div class="field"><label for="i_phone">Phone / WhatsApp</label><input class="ctrl" id="i_phone" type="tel" autocomplete="tel" inputmode="tel" required></div><div class="field"><label for="i_email">E-mail <span class="hint">(optional)</span></label><input class="ctrl" id="i_email" type="email" autocomplete="email"></div></div>
+        <div class="field"><label for="i_date">Which day can you come?</label><input class="ctrl" id="i_date" type="date" min="${todayStr(0)}" max="${todayStr(90)}" required></div>
+        <div class="grid2"><div class="field"><label for="i_from">Available from</label><select class="ctrl" id="i_from">${timeOpts("10:00")}</select></div><div class="field"><label for="i_to">Until</label><select class="ctrl" id="i_to">${timeOpts("12:00")}</select></div></div>
+        <div class="field"><span class="lab">How serious are you about this car?</span><div class="intents" role="radiogroup" id="i_intent">${Object.keys(INTENTS).map(k => `<label class="intent"><input type="radio" name="i_intent" value="${k}"><span><b>${esc(INTENTS[k])}</b><small>${esc(INTENT_HINT[k])}</small></span></label>`).join("")}</div></div>
+        <div class="field"><label for="i_msg">Anything we should know? <span class="hint">(optional)</span></label><textarea class="ctrl" id="i_msg" rows="3" maxlength="500" placeholder="For example: I will bring my partner, or I want to test drive."></textarea></div>
+        <button class="btn btn-primary btn-block" type="submit" id="inq_send">Book my viewing</button>
+        <p style="font-size:12.5px;color:var(--muted);margin-top:10px">By booking, you agree that Dealer Cars may use your details to arrange your viewing. See our <a href="#/privacy">privacy policy</a>.</p></form></div>
   </aside></div>
   <section class="seoblock" id="car_seo"><h2>${esc(v.make)} ${esc(v.model)} for sale in ${esc(v.city)}</h2>
     <p>Looking for a used ${esc(title)} in ${esc(v.city)}, ${esc(v.province)}? This one is priced at ${esc(money(v.price))}, ${inst ? `which works out at about ${esc(money(pm))} a month on our example finance terms` : v.payment_type === "rent_to_own" ? "and it is available on rent to own" : "and it is a cash purchase"}. It is one of the cars for sale under ${esc(money(cap0))} on Dealer Cars, from hand-picked dealers, and we can go with you to view it, help with the documentation and support you at delivery.</p>
@@ -1025,22 +1052,67 @@ async function viewCar(ref) {
     $("#sh_btn").addEventListener("click", async () => { if (navigator.share) { try { await navigator.share({ title, text: `${title} - ${money(v.price)} - ${place}`, url }); } catch (e) { if (e && e.name !== "AbortError") copy(); } } else copy(); });
     $("#inq_form").addEventListener("submit", async (e) => {
       e.preventDefault(); const btn = $("#inq_send"), box = $("#inq_msg"); box.innerHTML = "";
-      const name = $("#i_name").value.trim(), phone = $("#i_phone").value.trim(), email = $("#i_email").value.trim(), msg = $("#i_msg").value.trim();
-      const bad = (t) => { box.innerHTML = `<div class="err" role="alert">${esc(t)}</div>`; };
+      const name = $("#i_name").value.trim(), phone = $("#i_phone").value.trim(), email = $("#i_email").value.trim(), note = $("#i_msg").value.trim(), day = $("#i_date").value, from = $("#i_from").value, to = $("#i_to").value;
+      const pk = document.querySelector('input[name="i_intent"]:checked'), intent = pk ? pk.value : "";
+      const bad = (t) => { box.innerHTML = `<div class="err" role="alert">${esc(t)}</div>`; box.scrollIntoView && box.scrollIntoView({ block: "nearest" }); };
       if (name.length < 2) return bad("Please enter your name.");
-      if (!phone && !email) return bad("Please give a phone number or an e-mail address.");
+      if (phone.replace(/\D/g, "").length < 9) return bad("Please give a phone number we can call or WhatsApp.");
       if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return bad("That e-mail address does not look right.");
-      if (msg.length < 2) return bad("Please write a short message.");
-      setBusy(btn, true, "Sending…");
-      const { error } = await client().rpc("submit_inquiry", { p_vehicle: v.id, p_name: name, p_phone: phone, p_email: email, p_message: msg });
+      if (!day) return bad("Please choose the day you can come.");
+      if (day < todayStr(0)) return bad("Please choose a day from today onwards.");
+      if (to <= from) return bad("The end time must be after the start time.");
+      if (!intent) return bad("Please tell us how serious you are about this car.");
+      setBusy(btn, true, "Booking…");
+      const { data, error } = await client().rpc("submit_booking", { p_vehicle: v.id, p_name: name, p_phone: phone, p_email: email, p_date: day, p_from: from, p_to: to, p_intent: intent, p_note: note });
       setBusy(btn, false);
       if (error) return bad(niceErr(error));
-      $("#inq_panel").innerHTML = `<h2>Enquiry sent</h2><div class="ok" role="status">Thank you, ${esc(name.split(" ")[0])}. We have your message. The Dealer Cars team will be in touch with you shortly.</div><a class="btn btn-ghost btn-block" href="#/cars">See more cars</a>`;
+      $("#inq_panel").innerHTML = `<h2>Viewing requested</h2><div class="ok" role="status">Thank you, ${esc(name.split(" ")[0])}. We have your request and will contact you to confirm it.</div>
+        <div class="bkno" id="bk_ref"><span>Your booking number</span><b>${esc(data)}</b></div>
+        <div class="kv"><div><span>Car:</span> ${esc(title)}</div><div><span>Day:</span> ${esc(fmtDay(day))}</div><div><span>Time you can come:</span> ${esc(from)} to ${esc(to)}</div></div>
+        <p style="font-size:14px;color:var(--muted);margin:10px 0 14px">Keep this number. Once we confirm, you get a receipt. Take it (or just tell us the booking number) when you come to our office. If we need to change the time, we will let you know.</p>
+        <a class="btn btn-ghost btn-block" id="bk_view" href="#/booking?ref=${encodeURIComponent(data)}">See my booking</a><a class="btn btn-ghost btn-block" style="margin-top:8px" href="#/cars">See more cars</a>`;
     });
   } };
 }
 
 /* ====================== static pages ====================== */
+/* ---- "My booking": the buyer looks up their viewing and prints the receipt ---- */
+async function viewBooking(query) {
+  seo({ title: "My viewing booking | Dealer Cars", desc: "Look up your Dealer Cars viewing booking and receipt with your booking number.", path: "booking", noindex: true });
+  const q = new URLSearchParams(query || ""); const ref0 = (q.get("ref") || "").toUpperCase();
+  const html = page("booking", `<div class="wrap"><div class="authwrap" style="max-width:640px"><h1 style="font-size:clamp(26px,4vw,34px);margin-bottom:6px">My viewing booking</h1><p style="color:var(--muted);margin-bottom:18px">Enter your booking number and the phone number you booked with.</p>
+    <form id="bk_form" class="panel" novalidate><div id="bk_msg"></div>
+      <div class="field"><label for="bk_ref_in">Booking number</label><input class="ctrl" id="bk_ref_in" placeholder="VW-XXXXXX" autocapitalize="characters" value="${esc(ref0)}"></div>
+      <div class="field"><label for="bk_phone">Phone number</label><input class="ctrl" id="bk_phone" type="tel" inputmode="tel" autocomplete="tel"></div>
+      <button class="btn btn-primary btn-block" type="submit" id="bk_go">Find my booking</button></form>
+    <div id="bk_out" style="margin-top:18px"></div></div></div>`);
+  return { html, bind() {
+    bindNav(); let cur = null, phone = "";
+    const out = $("#bk_out"), msg = $("#bk_msg");
+    const draw = (b) => {
+      const conf = b.status === "Confirmed" || b.status === "Completed", can = b.status === "New" || b.status === "Confirmed";
+      const st = { New: ["warn", "Waiting for confirmation"], Confirmed: ["ok", "Confirmed"], Completed: ["", "Completed"], Cancelled: ["bad", "Cancelled"] }[b.status] || ["", b.status];
+      out.innerHTML = `<div class="receipt" id="bk_receipt"><div class="rc-top"><div><div class="rc-t">Dealer Cars</div><div class="rc-s">Viewing ${conf ? "receipt" : "booking"}</div></div><span class="badge ${st[0]}" id="bk_status">${esc(st[1])}</span></div>
+        <div class="bkno"><span>Booking number</span><b id="bk_refno">${esc(b.ref)}</b></div>
+        <div class="kv"><div><span>Car:</span> <b>${esc(b.car_title)}</b>${b.car_ref ? " (" + esc(b.car_ref) + ")" : ""}</div><div><span>Name:</span> ${esc(b.name)}</div>
+        ${conf ? `<div><span>Day:</span> <b>${esc(fmtDay(b.conf_date))}</b></div><div><span>Time:</span> <b>${esc(fmtTime(b.conf_from))} to ${esc(fmtTime(b.conf_to))}</b></div>${b.conf_place ? `<div><span>Where:</span> ${esc(b.conf_place)}</div>` : ""}` : `<div><span>You asked for:</span> ${esc(fmtDay(b.want_date))}, ${esc(fmtTime(b.want_from))} to ${esc(fmtTime(b.want_to))}</div>`}
+        ${b.admin_note ? `<div><span>Note from us:</span> ${esc(b.admin_note)}</div>` : ""}</div>
+        <p class="rc-foot">${b.status === "Confirmed" ? "Please come to our office at the time above and tell us your booking number. We will have your car ready." : b.status === "New" ? "We will contact you soon to confirm the day and time. If we need to change the time, we will let you know." : b.status === "Cancelled" ? "This booking was cancelled. You can book again from the car page." : "Thank you for visiting Dealer Cars."}</p></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${conf ? `<button class="btn btn-ghost" id="bk_print" type="button">Print / save receipt</button>` : ""}${can ? `<button class="btn btn-ghost" id="bk_cancel" type="button">Cancel this booking</button>` : ""}</div>`;
+      const pr = $("#bk_print"); if (pr) pr.addEventListener("click", () => window.print());
+      const cn = $("#bk_cancel"); if (cn) cn.addEventListener("click", async () => { if (!(await confirmBox("Cancel this booking?", "We will be told that you can no longer come.", "Cancel booking", true))) return; const { error } = await client().rpc("cancel_booking", { p_ref: cur.ref, p_phone: phone }); if (error) { toast(niceErr(error)); return; } toast("Your booking was cancelled."); lookup(cur.ref, phone); });
+    };
+    const lookup = async (ref, ph) => {
+      msg.innerHTML = ""; out.innerHTML = ""; phone = ph;
+      if (!ref || ph.replace(/\D/g, "").length < 9) { msg.innerHTML = `<div class="err" role="alert">Please enter your booking number and the phone number you booked with.</div>`; return; }
+      const btn = $("#bk_go"); setBusy(btn, true, "Looking…"); const { data, error } = await client().rpc("get_booking", { p_ref: ref, p_phone: ph }); setBusy(btn, false);
+      if (error) { msg.innerHTML = `<div class="err" role="alert">${esc(niceErr(error))}</div>`; return; }
+      if (!data) { msg.innerHTML = `<div class="err" role="alert">We could not find a booking with those details. Check the booking number and the phone number you used.</div>`; return; }
+      cur = data; draw(data);
+    };
+    $("#bk_form").addEventListener("submit", (e) => { e.preventDefault(); lookup($("#bk_ref_in").value.trim().toUpperCase(), $("#bk_phone").value.trim()); });
+  } };
+}
 async function viewForDealers() {
   seo({ title: "List your vehicles | For dealerships | Dealer Cars", desc: "Dealerships: register on Dealer Cars, add your vehicles with photos, and and get enquiries from buyers.", path: "for-dealers" });
   const html = page("fordealers", `<section class="hero" style="padding-bottom:56px"><div class="wrap hero-in"><span class="eyebrow">For dealerships</span><h1>Put your stock in front of <em>buyers</em>.</h1>
@@ -1355,10 +1427,10 @@ async function afterLogin() {
 async function viewLogin(query) {
   seo({ title: "Dealer login | Dealer Cars", noindex: true });
   if (S.session && !S.resetMode) { setTimeout(() => { location.hash = "#/portal"; }, 0); return { html: page("", loadingBlock()), bind: bindNav }; }
-  const q = new URLSearchParams(query || ""); let tab = q.get("tab") === "register" ? "register" : "login";
+  const q = new URLSearchParams(query || ""); let tab = q.get("tab") === "register" ? "register" : "login"; // sign-up is hidden for now: no button or link points here
   if (S.resetMode) tab = "newpass";
-  const html = page("", `<div class="wrap"><div class="authwrap"><h1 style="font-size:clamp(26px,4vw,34px);margin-bottom:6px" id="auth_h">Dealer account</h1><p style="color:var(--muted);margin-bottom:18px">For dealerships. Buyers don't need an account.</p>
-    <div class="tabs" role="tablist"><button type="button" role="tab" data-tab="login" class="${tab === "login" ? "on" : ""}" id="tab_login">Log in</button><button type="button" role="tab" data-tab="register" class="${tab === "register" ? "on" : ""}" id="tab_register">Register</button></div>
+  const html = page("", `<div class="wrap"><div class="authwrap"><h1 style="font-size:clamp(26px,4vw,34px);margin-bottom:6px" id="auth_h">Team login</h1><p style="color:var(--muted);margin-bottom:18px">For the Dealer Cars team. Buyers don't need an account.</p>
+    <div class="tabs" role="tablist"><button type="button" role="tab" data-tab="login" class="${tab === "login" ? "on" : ""}" id="tab_login">Log in</button></div>
     <div id="auth_box"></div></div></div>`);
   return { html, bind() {
     bindNav(); const box = $("#auth_box");
@@ -1633,7 +1705,7 @@ async function plateEditor(t, mine) {
   };
   const sync = () => { const p = plates[sel]; size.value = Math.round(p.w * 100); rot.value = p.rot; yaw.value = p.yaw || 0; pitch.value = p.pitch || 0; bg.querySelector("#pl_del").disabled = plates.length < 2; bg.querySelector("#pl_add").disabled = plates.length >= 3; paint(); };
   const pos = (e) => { const r = cv.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width * W, y: (e.clientY - r.top) / r.height * H }; };
-  const inPoly = (q, x, y) => { let c = false; for (let a = 0, b = 3; a < 4; b = a++) if ((q[a][1] > y) !== (q[b][1] > y) && x < (q[b][0] - q[a][0]) * (y - q[a][1]) / (q[b][1] - q[a][1]) + q[a][0]) c = true; return c; };
+  const inPoly = (q, x, y) => { let c = false; for (let a = 0, b = 3; a < 4; b = a++) if ((q[a][1] > y) !== (q[b][1] > y) && x < (q[b][0] - q[a][0]) * (y - q[a][1]) / (q[b][1] - q[a][1]) + q[a][0]) c = !c; return c; };
   const hit = (x, y) => { for (let i = plates.length - 1; i >= 0; i--) { const q = plateQuad(plates[i], W, H), mx = (q[0][0] + q[1][0] + q[2][0] + q[3][0]) / 4, my = (q[0][1] + q[1][1] + q[2][1] + q[3][1]) / 4; const g = q.map(a => { const vx = a[0] - mx, vy = a[1] - my, l = Math.hypot(vx, vy) || 1; return [a[0] + vx / l * 14, a[1] + vy / l * 14]; }); if (inPoly(g, x, y)) return i; } return -1; };
   const cornerAt = (x, y) => { const q = plateQuad(plates[sel], W, H), tol = Math.max(18, W * 0.022); let best = -1, bd = tol; q.forEach((a, j) => { const d = Math.hypot(a[0] - x, a[1] - y); if (d <= bd) { bd = d; best = j; } }); return best; };
   let drag = null;
@@ -1704,18 +1776,35 @@ async function viewAdmin() {
   if (!S.isAdmin) {
     return { html: page("", `<div class="wrap"><div class="authwrap"><div class="empty"><h3>This account is not an admin</h3><p>You are logged in as ${esc(S.session.user.email || "")}. Ask the site owner to make this e-mail an admin, or log in with a different account.</p><button class="btn btn-dark" id="ad_out">Log out</button></div></div></div>`), bind() { bindNav(); $("#ad_out").addEventListener("click", async () => { await signOut(); render(); }); } };
   }
-  let vehicles = [], dealers = [], inquiries = [], sells = [], err = "";
+  let vehicles = [], dealers = [], inquiries = [], sells = [], bookings = [], err = "";
   try {
-    const [a, b, c, e4] = await Promise.all([client().from("vehicles").select("*").order("created_at", { ascending: false }), client().from("dealers").select("*").order("created_at", { ascending: false }), client().from("inquiries").select("*").order("created_at", { ascending: false }), client().from("sell_requests").select("*").order("created_at", { ascending: false })]);
-    if (a.error) throw a.error; if (b.error) throw b.error; if (c.error) throw c.error; if (e4.error) throw e4.error; vehicles = a.data || []; dealers = b.data || []; inquiries = c.data || []; sells = e4.data || [];
+    const [a, b, c, e4, e5] = await Promise.all([client().from("vehicles").select("*").order("created_at", { ascending: false }), client().from("dealers").select("*").order("created_at", { ascending: false }), client().from("inquiries").select("*").order("created_at", { ascending: false }), client().from("sell_requests").select("*").order("created_at", { ascending: false }), client().from("bookings").select("*").order("created_at", { ascending: false })]);
+    if (a.error) throw a.error; if (b.error) throw b.error; if (c.error) throw c.error; if (e4.error) throw e4.error; if (e5.error) { console.warn(e5.error); err = "Viewing bookings are not switched on yet. Run the latest SQL file in Supabase, then refresh this page."; } bookings = (e5 && e5.data) || []; vehicles = a.data || []; dealers = b.data || []; inquiries = c.data || []; sells = e4.data || [];
   } catch (e) { console.warn(e); err = niceErr(e); }
   let alertTopic = "", alertErr = "";
   try { const r = await client().rpc("admin_alert_info"); if (r.error) throw r.error; alertTopic = r.data || ""; } catch (e) { alertErr = niceErr(e); }
-  const alertCard = `<div class="note" id="alert_card" style="margin-bottom:14px"><b>Phone alerts for new leads</b> (every new enquiry and every "Sell your car" request)
+  const alertCard = `<div class="note" id="alert_card" style="margin-bottom:14px"><b>Phone alerts for new leads</b> (every new viewing booking, enquiry and "Sell your car" request)
     ${alertErr ? `<p style="margin-top:6px">Alerts are not switched on yet. Run the latest SQL file in Supabase, then refresh this page.</p>` : `<ol style="margin:8px 0 8px 20px;line-height:1.6"><li>Leeroy and Amo: install the free <b>ntfy</b> app (Android: Google Play, iPhone: App Store).</li><li>In the app tap <b>+</b> and subscribe to this topic: <code id="alert_topic" style="background:#fff;padding:2px 6px;border-radius:6px;user-select:all">${esc(alertTopic)}</code> (keep the default server <b>ntfy.sh</b>). Or open <a href="https://ntfy.sh/${esc(alertTopic)}" target="_blank" rel="noopener">this link</a> on your phone.</li><li>Press <button class="btn btn-ghost btn-sm" data-a="altest" id="al_test" type="button">Send a test alert</button>. It should reach your phone in a few seconds.</li></ol>
     <span class="hint" style="font-size:13px">An alert shows the car and the buyer's name only. Open the admin page to see the phone number and message. Keep the topic private: anyone who knows it can read the alerts.</span>`}</div>`;
   const dmap = Object.fromEntries(dealers.map(d => [d.id, d])), vmap = Object.fromEntries(vehicles.map(v => [v.id, v]));
-  const pending = vehicles.filter(v => v.status === "Pending"), tab = S.atab || "pending";
+  const pending = vehicles.filter(v => v.status === "Pending"), newBk = bookings.filter(b => b.status === "New"), tab = S.atab || (newBk.length ? "viewings" : "pending");
+  const lastPlace = (() => { try { return localStorage.getItem("dc_place") || ""; } catch (_) { return ""; } })();
+  const bkcard = (b) => { const open = b.status === "New" || b.status === "Confirmed" || b.status === "Cancelled", conf = b.status === "Confirmed" || b.status === "Completed";
+    const df = b.conf_date || b.want_date, ff = fmtTime(b.conf_from || b.want_from), tt = fmtTime(b.conf_to || b.want_to), wa = waNumber(b.phone);
+    const st = { New: "warn", Confirmed: "ok", Completed: "", Cancelled: "bad" }[b.status] || "";
+    return `<div class="irow vwrow ${b.status === "New" ? "new" : ""}" data-bid="${esc(b.id)}" data-status="${esc(b.status)}" data-search="${esc((b.ref + " " + b.name + " " + b.phone + " " + b.car_title + " " + (b.car_ref || "")).toLowerCase())}">
+      <div class="top"><div><b style="font-size:17px">${esc(b.ref)}</b> <span class="badge ${st}">${esc(b.status)}</span> <span class="vw-int ${esc(b.intent)}">${esc(INTENTS[b.intent] || b.intent)}</span></div><span style="color:var(--muted);font-size:13.5px">Booked ${dateStr(b.created_at)}</span></div>
+      <div style="margin:6px 0"><b>${esc(b.car_title)}</b>${b.car_ref ? ` <a href="#/car/${esc(b.car_ref)}" style="font-size:13.5px">(${esc(b.car_ref)})</a>` : ""}</div>
+      <div class="kv"><div><span>Client:</span> <b>${esc(b.name)}</b> · <a href="tel:${esc(b.phone)}">${esc(b.phone)}</a>${wa ? ` · <a href="https://wa.me/${esc(wa)}" target="_blank" rel="noopener" data-wa-client>WhatsApp</a>` : ""}${b.email ? ` · <a href="mailto:${esc(b.email)}">${esc(b.email)}</a>` : ""}</div>
+      <div><span>Client is free:</span> <b>${esc(fmtDay(b.want_date))}</b>, ${esc(fmtTime(b.want_from))} to ${esc(fmtTime(b.want_to))}</div>
+      ${b.note ? `<div><span>Client's note:</span> ${esc(b.note)}</div>` : ""}</div>
+      ${conf ? `<div class="vw-conf"><b>Agreed:</b> ${esc(fmtDay(b.conf_date))}, ${esc(fmtTime(b.conf_from))} to ${esc(fmtTime(b.conf_to))}${b.conf_place ? " · " + esc(b.conf_place) : ""}${b.admin_note ? `<br><span style="color:var(--muted)">Note: ${esc(b.admin_note)}</span>` : ""}</div>` : ""}
+      ${open ? `<div class="vw-conf"><b>${b.status === "Confirmed" ? "Change the time" : "Confirm this viewing"}</b> <span class="hint">(change the day or time if it does not suit us)</span>
+        <div class="grid2" style="margin-top:8px"><div class="field"><label for="bd_${esc(b.id)}">Day</label><input class="ctrl" type="date" id="bd_${esc(b.id)}" data-bd value="${esc(String(df).slice(0, 10))}"></div><div class="field"><label>Time</label><div style="display:flex;gap:6px"><select class="ctrl" data-bf aria-label="From">${timeOpts(ff)}</select><select class="ctrl" data-bt aria-label="Until">${timeOpts(tt)}</select></div></div></div>
+        <div class="field"><label for="bp_${esc(b.id)}">Where to meet</label><input class="ctrl" id="bp_${esc(b.id)}" data-bp value="${esc(b.conf_place || lastPlace)}" maxlength="280" placeholder="Our office address"></div>
+        <div class="field"><label for="bn_${esc(b.id)}">Note for the client <span class="hint">(optional, they see it on the receipt)</span></label><input class="ctrl" id="bn_${esc(b.id)}" data-bn value="${esc(b.admin_note || "")}" maxlength="280"></div>
+        <button class="btn btn-primary btn-sm" data-a="bconfirm">${b.status === "Confirmed" ? "Save the new time" : "Confirm booking"}</button></div>` : ""}
+      <div class="acts" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">${b.status === "Confirmed" ? `<a class="btn btn-dark btn-sm" data-wa-receipt href="https://wa.me/${esc(wa)}?text=${encodeURIComponent(receiptText(b))}" target="_blank" rel="noopener">Send receipt on WhatsApp</a>${b.email ? `<a class="btn btn-ghost btn-sm" data-mail-receipt href="mailto:${esc(b.email)}?subject=${encodeURIComponent("Your Dealer Cars viewing " + b.ref)}&body=${encodeURIComponent(receiptText(b))}">E-mail receipt</a>` : ""}<button class="btn btn-ghost btn-sm" data-a="bstatus" data-to="Completed">Mark as completed</button>` : ""}${b.status === "New" || b.status === "Confirmed" ? `<button class="btn btn-danger btn-sm" data-a="bstatus" data-to="Cancelled">Cancel booking</button>` : ""}${b.status === "Completed" || b.status === "Cancelled" ? `<button class="btn btn-ghost btn-sm" data-a="bstatus" data-to="New">Move back to New</button>` : ""}</div></div>`; };
   const vcard = (v, full) => { const d = dmap[v.dealer_id] || {};
     return `<div class="arow" data-vid="${esc(v.id)}"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h3 style="font-size:19px">${esc(carTitle(v))}</h3><div style="color:var(--muted);font-size:14px">${money(v.price)} · ${esc(v.city)}, ${esc(v.province)} · ${esc(v.ref)} · added ${dateStr(v.created_at)}${v.rating ? " · " + v.rating + " star" + (v.rating === 1 ? "" : "s") : ""}</div></div><div>${statusBadge(v.status)}</div></div>
       <div class="ph">${(v.photos || []).map((p, i) => `<img src="${esc(photoUrl(p))}" alt="Photo ${i + 1}" data-zoom="${esc(photoUrl(p))}" loading="lazy">`).join("") || `<span style="color:var(--muted)">No photos</span>`}</div>
@@ -1725,6 +1814,7 @@ async function viewAdmin() {
       ${v.status !== "Sold" ? `<div class="raterow"><label for="py_${esc(v.id)}"><b>How it can be bought</b> <span class="hint">(shown on the car)</span></label><select class="ctrl" id="py_${esc(v.id)}" data-pay><option value="">Not set</option>${Object.entries(PAY).map(([k, t]) => `<option value="${k}"${v.payment_type === k ? " selected" : ""}>${t}</option>`).join("")}</select><button class="btn btn-ghost btn-sm" data-a="pay">Save</button></div>` : ""}
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><a class="btn btn-dark btn-sm" href="#/admin/edit/${esc(v.id)}" data-a-edit>Edit car and photos</a>${v.status === "Pending" || v.status === "Declined" ? `<button class="btn btn-primary btn-sm" data-a="approve">Approve</button>` : ""}${v.status === "Pending" ? `<button class="btn btn-danger btn-sm" data-a="decline">Ask dealer to fix / decline…</button>` : ""}${v.status === "Approved" ? `<a class="btn btn-ghost btn-sm" href="#/car/${esc(v.ref)}">View live</a><button class="btn btn-danger btn-sm" data-a="decline">Take down / ask dealer to fix…</button>` : ""}<button class="btn btn-ghost btn-sm" data-a="vdel">Delete</button></div></div>`; };
   const tabs = {
+    viewings: () => `<div class="grid2" style="margin-bottom:12px"><div class="field"><label for="vw_q">Find a booking</label><input class="ctrl" id="vw_q" placeholder="Booking number, name, phone or car" autocomplete="off"></div><div class="field"><label for="vw_f">Show</label><select class="ctrl" id="vw_f"><option value="">All bookings (${bookings.length})</option>${["New", "Confirmed", "Completed", "Cancelled"].map(x => `<option value="${x}">${x} (${bookings.filter(b => b.status === x).length})</option>`).join("")}</select></div></div><div class="note" style="margin-bottom:14px"><b>How it works:</b> a client books a viewing and gets a booking number. You confirm the day and time below (or change it), then send them the receipt on WhatsApp or e-mail. When they come to the office they tell you the booking number, and you find it here with the search box.</div><div id="vw_list">${bookings.length ? bookings.map(bkcard).join("") : `<div class="empty"><h3>No bookings yet</h3><p>When someone books a viewing of a car, it appears here and you get a phone alert.</p></div>`}</div><div id="vw_none" class="empty" hidden><h3>No booking matches</h3></div>`,
     pending: () => pending.length ? pending.map(v => vcard(v, true)).join("") : `<div class="empty"><h3>Nothing waiting</h3><p>All vehicles have been reviewed. New ones appear here as soon as a dealership submits them.</p></div>`,
     cars: () => { const f = S.afilter || ""; const l = vehicles.filter(v => !f || v.status === f); return `<div class="field" style="max-width:240px"><label for="a_f">Show</label><select class="ctrl" id="a_f"><option value="">All vehicles (${vehicles.length})</option>${["Pending", "Approved", "Declined", "Sold"].map(s => `<option${s === f ? " selected" : ""}>${s}</option>`).join("")}</select></div>` + (l.length ? l.map(v => vcard(v, false)).join("") : `<div class="empty"><h3>No vehicles</h3></div>`); },
     dealers: () => dealers.length ? dealers.map(d => { const n = vehicles.filter(v => v.dealer_id === d.id).length; return `<div class="arow" data-did="${esc(d.id)}"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h3 style="font-size:19px">${esc(d.business_name)}</h3><div style="color:var(--muted);font-size:14px">${esc(d.city)}, ${esc(d.province)} · registered ${dateStr(d.created_at)} · ${n} vehicle${n === 1 ? "" : "s"}</div></div><div>${d.status === "Active" ? `<span class="badge ok">Active</span>` : `<span class="badge bad">Suspended</span>`}</div></div>
@@ -1746,18 +1836,21 @@ async function viewAdmin() {
   };
   const html = page("", `<div class="wrap"><div class="ptop"><div><h1>Admin</h1><div style="color:var(--muted)">${esc(S.session.user.email || "")}</div></div><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary" id="ad_add" href="#/admin/add">+ Add a car</a><button class="btn btn-ghost" id="ad_out">Log out</button></div></div>
     ${err ? `<div class="err">${esc(err)}</div>` : ""}
-    <div class="ptabs" role="tablist"><button data-t="pending" class="${tab === "pending" ? "on" : ""}" id="at_pending">To approve${pending.length ? `<span class="n">${pending.length}</span>` : ""}</button><button data-t="cars" class="${tab === "cars" ? "on" : ""}" id="at_cars">All vehicles</button><button data-t="dealers" class="${tab === "dealers" ? "on" : ""}" id="at_dealers">Dealerships (${dealers.length})</button><button data-t="sells" class="${tab === "sells" ? "on" : ""}" id="at_sells">Sell requests${sells.filter(r => r.status === "New").length ? `<span class="n">${sells.filter(r => r.status === "New").length}</span>` : ""}</button><button data-t="inquiries" class="${tab === "inquiries" ? "on" : ""}" id="at_inquiries">Enquiries${inquiries.filter(i => !i.forwarded_at).length ? `<span class="n">${inquiries.filter(i => !i.forwarded_at).length}</span>` : ` (${inquiries.length})`}</button></div>
+    <div class="ptabs" role="tablist"><button data-t="viewings" class="${tab === "viewings" ? "on" : ""}" id="at_viewings">Viewings${newBk.length ? `<span class="n">${newBk.length}</span>` : ` (${bookings.length})`}</button><button data-t="pending" class="${tab === "pending" ? "on" : ""}" id="at_pending">To approve${pending.length ? `<span class="n">${pending.length}</span>` : ""}</button><button data-t="cars" class="${tab === "cars" ? "on" : ""}" id="at_cars">All vehicles</button><button data-t="dealers" class="${tab === "dealers" ? "on" : ""}" id="at_dealers">Dealerships (${dealers.length})</button><button data-t="sells" class="${tab === "sells" ? "on" : ""}" id="at_sells">Sell requests${sells.filter(r => r.status === "New").length ? `<span class="n">${sells.filter(r => r.status === "New").length}</span>` : ""}</button><button data-t="inquiries" class="${tab === "inquiries" ? "on" : ""}" id="at_inquiries">Enquiries${inquiries.filter(i => !i.forwarded_at).length ? `<span class="n">${inquiries.filter(i => !i.forwarded_at).length}</span>` : ` (${inquiries.length})`}</button></div>
     <div id="atab" style="padding-bottom:56px">${tabs[tab]()}</div></div>`);
   return { html, bind() {
     bindNav();
     $("#ad_out").addEventListener("click", async () => { await signOut(); render(); });
     $(".ptabs").addEventListener("click", (e) => { const b = e.target.closest("[data-t]"); if (b) { S.atab = b.dataset.t; render(); } });
+    const vq = $("#vw_q"), vf = $("#vw_f"); if (vq && vf) { const filt = () => { const q = vq.value.trim().toLowerCase(), s = vf.value; let n = 0; $$(".vwrow").forEach(r => { const show = (!q || r.dataset.search.includes(q)) && (!s || r.dataset.status === s); r.hidden = !show; if (show) n++; }); const no = $("#vw_none"); if (no) no.hidden = n > 0 || !$$(".vwrow").length; }; vq.addEventListener("input", filt); vf.addEventListener("change", filt); }
     const f = $("#a_f"); if (f) f.addEventListener("change", () => { S.afilter = f.value; render(); });
     $("#atab").addEventListener("click", async (e) => {
       const z = e.target.closest("[data-zoom]"); if (z) { const lb = document.createElement("div"); lb.className = "lb"; lb.innerHTML = `<img src="${esc(z.dataset.zoom)}" alt="">`; lb.addEventListener("click", () => lb.remove()); document.body.appendChild(lb); return; }
       const b = e.target.closest("button[data-a]"); if (!b) return; const a = b.dataset.a, row = b.closest("[data-vid]"), drow = b.closest("[data-did]"), srow = b.closest("[data-sid]");
       try {
         if (a === "approve") { const rt = $("[data-rate]", row), { error } = await client().rpc("admin_review_vehicle", { p_id: row.dataset.vid, p_decision: "Approved", p_reason: null, p_rating: rt && rt.value ? Number(rt.value) : null }); if (error) throw error; S.cars = null; toast("Approved. It is live now."); render(); }
+        else if (a === "bconfirm") { const br = b.closest("[data-bid]"), d = $("[data-bd]", br).value, fr = $("[data-bf]", br).value, to = $("[data-bt]", br).value, pl = $("[data-bp]", br).value.trim(), nt = $("[data-bn]", br).value.trim(); if (!d) { toast("Please choose the day."); return; } if (to <= fr) { toast("The end time must be after the start time."); return; } const { error } = await client().rpc("admin_update_booking", { p_id: br.dataset.bid, p_status: "Confirmed", p_date: d, p_from: fr, p_to: to, p_place: pl || null, p_note: nt || null }); if (error) throw error; try { if (pl) localStorage.setItem("dc_place", pl); } catch (_) {} S.atab = "viewings"; toast("Confirmed. Now send the client their receipt."); render(); }
+        else if (a === "bstatus") { const br = b.closest("[data-bid]"); if (b.dataset.to === "Cancelled" && !(await confirmBox("Cancel this booking?", "The booking will be marked as cancelled. Tell the client yourself if they are not expecting it.", "Cancel booking", true))) return; const { error } = await client().rpc("admin_update_booking", { p_id: br.dataset.bid, p_status: b.dataset.to }); if (error) throw error; S.atab = "viewings"; toast("Saved."); render(); }
         else if (a === "iforward") { const irow = b.closest("[data-iid]"), fw = b.dataset.to === "1"; const { error } = await client().rpc("admin_forward_inquiry", { p_id: irow.dataset.iid, p_forward: fw }); if (error) throw error; toast(fw ? "Forwarded. The dealership can now see this enquiry." : "Pulled back. The dealership no longer sees it."); render(); }
         else if (a === "pay") { const sp = $("[data-pay]", row); const { error } = await client().rpc("admin_set_vehicle_payment", { p_id: row.dataset.vid, p_payment: sp.value || null }); if (error) throw error; S.cars = null; toast("Saved."); render(); }
         else if (a === "rate") { const rt = $("[data-rate]", row); const { error } = await client().rpc("admin_set_vehicle_rating", { p_id: row.dataset.vid, p_rating: rt.value ? Number(rt.value) : null }); if (error) throw error; S.cars = null; toast("Rating saved."); render(); }
@@ -1789,7 +1882,8 @@ async function resolveView() {
     case "finance": return viewFinance(query);
     case "sell": return viewSell();
     case "about": return viewAbout();
-    case "for-dealers": return viewForDealers();
+    case "for-dealers": location.replace("#/"); return viewHome();
+    case "booking": case "receipt": return viewBooking(query);
     case "login": return viewLogin(query);
     case "portal": return p[1] === "add" ? viewVehicleForm(null) : p[1] === "edit" && p[2] ? viewVehicleForm(decodeURIComponent(p[2])) : viewPortal();
     case "admin": return p[1] === "edit" && p[2] ? viewVehicleForm(decodeURIComponent(p[2]), true) : p[1] === "add" ? viewVehicleForm(null, true) : viewAdmin();
