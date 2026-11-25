@@ -6,7 +6,7 @@
 <title>Dealer Cars | Used cars for sale in South Africa</title>
 <meta name="description" content="Browse used cars for sale across South Africa on Dealer Cars. Book a viewing or a free consultation, with help from viewing to delivery. Sell your car, work out your finance and more.">
 <meta name="theme-color" content="#0F1A2C">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://esm.sh https://staticimgly.com https://*.staticimgly.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net https://esm.sh https://staticimgly.com https://*.staticimgly.com data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://esm.sh https://*.esm.sh https://staticimgly.com https://*.staticimgly.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net https://esm.sh https://*.esm.sh https://staticimgly.com https://*.staticimgly.com https://unpkg.com data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="canonical" href="">
 <meta property="og:type" content="website">
@@ -662,9 +662,11 @@ async function loadBgEngine() {
 async function cutOut(blob, onProgress) {
   const fn = await loadBgEngine();
   const cfg = { model: "isnet_fp16", output: { format: "image/png" }, progress: (key, cur, tot) => { if (onProgress && tot) onProgress(Math.min(100, Math.round(cur / tot * 100)), String(key || "")); } };
-  try { if (navigator.gpu) cfg.device = "gpu"; } catch (_) {}
-  const out = await fn(blob, cfg);
-  if (!out || !out.size) throw new Error("empty result");
+  let out, err;
+  for (const dev of ["cpu", "gpu"]) {   // the plain processor first: it works in every browser (some, like Brave, block the graphics route)
+    try { out = await fn(blob, Object.assign({}, cfg, { device: dev })); if (out && out.size) break; out = null; } catch (e) { err = e; console.warn("cut-out on " + dev + " failed", e); }
+  }
+  if (!out) throw err || new Error("empty result");
   return out;
 }
 // "Focus on car": the photo stays as it was, the background is softly blurred and the car (cut out above) is laid back on top, sharp.
@@ -1748,7 +1750,7 @@ async function cleanPhoto(t, mine, quiet) {
     const cut = cached || await cutOut(src, (pct) => { if (pct !== last) { last = pct; say("Finding the car… " + pct + "%"); } }); t._cut = { src, cut };
     say("Blurring the background…"); const out = await focusPhoto(src, cut, BLUR_AMT), path = await uploadBlob(out, mine.key, mine.owner);
     (t.hist = t.hist || []).push({ path: t.path, url: t.url, file: t.file, clean: !!t.clean, plate: !!t.plate }); t.path = path; t.url = URL.createObjectURL(out); t.file = out; t.clean = true;
-  } catch (e) { console.warn(e); toast(quiet ? "One photo could not be put in focus. You can still use it as it is." : "Sorry, the car could not be found in that photo. Check your internet connection and try again, or use the photo as it is."); }
+  } catch (e) { console.warn(e); const why = String(e && e.message || e || "").slice(0, 90); toast(quiet ? "One photo could not be put in focus. You can still use it as it is." : "Sorry, the car could not be found in that photo. Check your internet connection and try again, or use the photo as it is." + (why ? " (" + why + ")" : "")); }
   t.busy = null; if (VF === mine) paintPhotos();
 }
 async function save(e) {
