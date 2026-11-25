@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dealer Cars | Used cars for sale in South Africa</title>
-<meta name="description" content="Browse used cars for sale across South Africa on Dealer Cars. Cars from hand-picked dealers, with help from viewing to delivery. Sell your car, work out your finance and more.">
+<meta name="description" content="Browse used cars for sale across South Africa on Dealer Cars. Book a viewing or a free consultation, with help from viewing to delivery. Sell your car, work out your finance and more.">
 <meta name="theme-color" content="#0F1A2C">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://esm.sh https://staticimgly.com https://*.staticimgly.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net https://esm.sh https://staticimgly.com https://*.staticimgly.com data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="canonical" href="">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Dealer Cars">
@@ -101,7 +103,16 @@ select.ctrl{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns
 .eyebrow{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#FFB27F;margin-bottom:12px}
 .hero h1{font-size:clamp(34px,6vw,58px);max-width:760px}
 .hero h1 em{font-style:normal;color:var(--accent-l)}
-.hero h1 em{white-space:nowrap}.hero h1 .tw-size{visibility:hidden;display:block}.hero h1 .tw-live{position:absolute;left:0;top:0;display:block}
+.hero h1 em{white-space:nowrap}.hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.heart{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#8A94A6;display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);z-index:2}.heart svg{width:20px;height:20px}.heart:hover{color:var(--accent)}.heart.on{color:#E5484D}.heart:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+#sv_btn.on{border-color:#E5484D;color:#B3261E}
+.clist{margin:12px 0 0;padding-left:18px;color:var(--ink2)}.clist li{margin:6px 0}
+.nav-links .n{display:inline-block;min-width:18px;padding:0 5px;border-radius:99px;background:var(--accent);color:#fff;font-size:12px;line-height:18px;text-align:center}
+.wafab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.28);z-index:40}.wafab svg{width:30px;height:30px}.wafab:hover{filter:brightness(.95)}.wafab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media print{.wafab,.heart{display:none!important}}
+.hero h1 em.pop{display:inline-block;animation:twpop .55s cubic-bezier(.2,1.6,.4,1) both}@keyframes twpop{0%{transform:scale(.4) translateY(10px);opacity:.2}60%{transform:scale(1.22)}100%{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.hero h1 em.pop{animation:none}}
+.hero h1 .tw-size{visibility:hidden;display:block}.hero h1 .tw-live{position:absolute;left:0;top:0;display:block}
 .tw-caret{display:inline-block;width:.07em;height:.9em;margin-left:.05em;vertical-align:-.08em;background:var(--accent-l);animation:twb 1s steps(1) infinite}@keyframes twb{50%{opacity:0}}
 .intents{display:grid;gap:8px}.intent{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;background:#fff}.intent input{margin-top:4px;accent-color:var(--accent)}.intent small{display:block;color:var(--muted);font-size:12.5px;font-weight:500}.intent:has(input:checked){border-color:var(--accent);background:#FFF4EC}
 .bkno{margin:12px 0;padding:12px 14px;border:2px dashed var(--accent);border-radius:12px;text-align:center;background:#FFF9F4}.bkno span{display:block;font-size:12.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}.bkno b{font-size:28px;letter-spacing:.06em;color:var(--ink)}
@@ -384,6 +395,9 @@ select.ctrl{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns
 .pcell .plbl.need{border-color:var(--warn);background:var(--warn-t)}
 .pcell .btn-sm{width:100%}
 .pt .lbl2{position:absolute;right:6px;top:6px;background:#fff;color:var(--ink);font-size:11px;font-weight:800;border-radius:99px;padding:2px 8px;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.blurset{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:var(--ink2)}.blurset input{width:120px;accent-color:var(--accent)}.blurset output{min-width:22px;text-align:right;color:var(--muted)}
+.plzoom{position:absolute;top:8px;left:8px;z-index:3;display:flex;gap:6px;align-items:center;background:rgba(15,26,44,.78);border-radius:10px;padding:5px}.plzoom button{border:0;background:#fff;color:var(--ink);font-weight:800;border-radius:8px;min-width:36px;height:34px;padding:0 10px;cursor:pointer;font-size:15px}.plzoom button:focus-visible{outline:3px solid var(--accent)}.plzoom output{color:#fff;font-size:13px;font-weight:700;min-width:34px;text-align:center}
+.plstage{position:relative}.plstage canvas{touch-action:none}
 .bgbar .btn{white-space:normal;text-align:center;height:auto;min-height:42px;max-width:100%;line-height:1.3}
 .pcell .btn-sm{white-space:normal;height:auto;min-height:36px;line-height:1.25}
 
@@ -444,7 +458,7 @@ select.ctrl{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns
 <noscript><div style="max-width:720px;margin:40px auto;padding:0 20px;font-family:Arial,sans-serif;line-height:1.6"><h1>Dealer Cars</h1><p>Dealer Cars is an online marketplace for used cars from hand-picked dealers in South Africa. Buyers browse vehicles and send an enquiry, and you can ask us to sell your car. This website needs JavaScript to work. Please turn it on in your browser settings and reload the page.</p></div></noscript>
 <div id="app"></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.97.0/dist/umd/supabase.js"></script>
 <script>
 /* =====================================================================
    DEALER CARS  -  one-file website
@@ -493,6 +507,12 @@ const rand = () => Math.random().toString(36).slice(2, 10);
 const baseUrl = () => (CONFIG.SITE_URL || (location.origin + location.pathname.replace(/index\.html$/, ""))).replace(/\/$/, "");
 const isConfigured = () => /^https:\/\/.+/.test(CONFIG.SUPABASE_URL) && !/PASTE/.test(CONFIG.SUPABASE_URL) && !/PASTE/.test(CONFIG.SUPABASE_ANON_KEY);
 const photoUrl = (p) => p ? CONFIG.SUPABASE_URL.replace(/\/$/, "") + "/storage/v1/object/public/" + BUCKET + "/" + String(p).split("/").map(encodeURIComponent).join("/") : "";
+/* ---- saved cars (kept in this phone or computer only) ---- */
+const savedList = () => { try { const a = JSON.parse(localStorage.getItem("dc_saved") || "[]"); return Array.isArray(a) ? a.filter(x => typeof x === "string").slice(0, 100) : []; } catch (_) { return []; } };
+const savedCount = () => savedList().length;
+const isSaved = (ref) => savedList().includes(ref);
+function toggleSaved(ref) { const a = savedList(), i = a.indexOf(ref); if (i >= 0) a.splice(i, 1); else a.unshift(ref); try { localStorage.setItem("dc_saved", JSON.stringify(a.slice(0, 100))); } catch (_) { return null; } return i < 0; }
+const HEART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.3C.9 8.3 3 5 6.2 5c1.9 0 3.5 1 4.3 2.4h3C14.3 6 15.900 5 17.800 5 21 5 23.100 8.300 21.600 11.700 19.500 16.400 12 21 12 21z" fill="currentColor"/></svg>';
 /* ---- viewing bookings ---- */
 const INTENTS = { viewing: "Just viewing", options: "Looking at my options", soon: "Serious, I want to buy soon", urgent: "I need a car urgently" };
 const INTENT_HINT = { viewing: "Just want to see it", options: "Comparing a few cars", soon: "Ready to buy if it is right", urgent: "I need one as soon as possible" };
@@ -647,20 +667,26 @@ async function cutOut(blob, onProgress) {
   if (!out || !out.size) throw new Error("empty result");
   return out;
 }
-// puts the cut-out car on one clean grey studio backdrop with a soft shadow, and returns a JPEG
-async function studioPhoto(cutBlob) {
-  const bmp = await createImageBitmap(cutBlob), w = bmp.width, h = bmp.height, k = Math.min(1, 1600 / Math.max(w, h));
-  const W = Math.max(1, Math.round(w * k)), H = Math.max(1, Math.round(h * k));
+// "Focus on car": the photo stays as it was, the background is softly blurred and the car (cut out above) is laid back on top, sharp.
+// strength is 0 to 100 (about 45 is a gentle, natural look). Returns a JPEG.
+function blurInto(dst, src, W, H, strength) {
+  const r = Math.max(1, strength / 100 * Math.max(W, H) * 0.02);   // blur radius in pixels, about 0 to 2 percent of the photo's long side
+  const x = dst.getContext("2d"); let done = false;
+  try { if ("filter" in x) { x.filter = `blur(${r}px)`; const pad = r * 2; x.drawImage(src, -pad, -pad, W + pad * 2, H + pad * 2); x.filter = "none"; done = true; } } catch (_) {}
+  if (!done) {   // browsers without canvas blur: shrink and enlarge a few times, which also blurs
+    let cur = src, cw = W, ch = H; const f = Math.max(2, Math.round(r / 2));
+    for (let i = 0; i < 2; i++) { const nw = Math.max(8, Math.round(cw / f)), nh = Math.max(8, Math.round(ch / f)); const t = document.createElement("canvas"); t.width = nw; t.height = nh; const tx = t.getContext("2d"); tx.imageSmoothingQuality = "high"; tx.drawImage(cur, 0, 0, nw, nh); cur = t; cw = nw; ch = nh; }
+    x.imageSmoothingQuality = "high"; x.drawImage(cur, -4, -4, W + 8, H + 8);
+  }
+}
+async function focusPhoto(srcBlob, cutBlob, strength) {
+  const [orig, cut] = await Promise.all([createImageBitmap(srcBlob), createImageBitmap(cutBlob)]);
+  const k = Math.min(1, 1600 / Math.max(orig.width, orig.height)), W = Math.max(1, Math.round(orig.width * k)), H = Math.max(1, Math.round(orig.height * k));
   const c = document.createElement("canvas"); c.width = W; c.height = H; const x = c.getContext("2d");
-  const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#F6F7F9"); g.addColorStop(0.7, "#E9ECEF"); g.addColorStop(1, "#DADFE4"); x.fillStyle = g; x.fillRect(0, 0, W, H);
-  // where is the car? look at the transparent pixels on a small copy
-  const sw = Math.min(240, W), sh = Math.max(1, Math.round(H * sw / W)), s = document.createElement("canvas"); s.width = sw; s.height = sh; const sx = s.getContext("2d"); sx.drawImage(bmp, 0, 0, sw, sh);
-  const px = sx.getImageData(0, 0, sw, sh).data; let minX = sw, maxX = -1, maxY = -1;
-  for (let yy = 0; yy < sh; yy++) for (let xx = 0; xx < sw; xx++) if (px[(yy * sw + xx) * 4 + 3] > 40) { if (xx < minX) minX = xx; if (xx > maxX) maxX = xx; if (yy > maxY) maxY = yy; }
-  if (maxX > minX) { const cx = (minX + maxX) / 2 * W / sw, rx = (maxX - minX) / 2 * W / sw * 0.96, by = (maxY + 0.5) * H / sh;
-    x.save(); x.translate(cx, by - rx * 0.015); x.scale(1, 0.1); const rg = x.createRadialGradient(0, 0, 0, 0, 0, rx); rg.addColorStop(0, "rgba(0,0,0,.5)"); rg.addColorStop(1, "rgba(0,0,0,0)"); x.fillStyle = rg; x.beginPath(); x.arc(0, 0, rx, 0, Math.PI * 2); x.fill(); x.restore(); }
-  x.drawImage(bmp, 0, 0, W, H); if (bmp.close) bmp.close();
-  return await new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error("Could not prepare that photo.")), "image/jpeg", 0.88));
+  blurInto(c, orig, W, H, strength == null ? 45 : strength);
+  x.drawImage(cut, 0, 0, W, H);   // the cut-out has the same shape as the photo, so it lines up exactly
+  if (orig.close) orig.close(); if (cut.close) cut.close();
+  return await new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error("Could not prepare that photo.")), "image/jpeg", 0.9));
 }
 
 /* ---------- contact details (filled in once, in CONFIG at the top) ---------- */
@@ -760,15 +786,22 @@ const HOW_STEPS = [
   ["We help with the documentation", "We explain what paperwork is needed, help you with it and make sure nothing is missed."],
   ["Delivery and support", "We are there when the car is delivered, and we help afterwards if you need anything."]
 ];
-/* the headline types itself out: "We help you buy a car." ("We", "buy" and "car" in orange) */
+/* the headline types itself out: "We help you buy a car." and "We", "buy" and "car" pop up in orange as they are finished */
 function typeHero() {
   const el = document.getElementById("hero_tw"); if (!el) return;
-  const parts = [["We", 1], [" help you ", 0], ["buy", 1], [" a ", 0], ["car", 1], [".", 0]], full = parts.map(p => p[0]).join("");
-  const draw = (n) => { let left = n, h = ""; parts.forEach(([t, em]) => { if (left <= 0) return; const s = t.slice(0, left); left -= t.length; h += em ? `<em>${esc(s)}</em>` : esc(s); }); el.innerHTML = h + '<span class="tw-caret"></span>'; };
+  const parts = [["We", 1], [" help you ", 0], ["buy", 1], [" a ", 0], ["car", 1], [".", 0]];
   let reduce = false; try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (_) {}
-  if (reduce) { draw(full.length); return; }
-  let n = 0; draw(0);
-  const tick = () => { if (!document.body.contains(el)) return; n++; draw(n); if (n < full.length) setTimeout(tick, 85 + Math.random() * 60); };
+  el.textContent = ""; const nodes = parts.map(([t, em]) => { const n = document.createElement(em ? "em" : "span"); el.appendChild(n); return n; });
+  const caret = document.createElement("span"); caret.className = "tw-caret"; el.appendChild(caret);
+  if (reduce) { parts.forEach((p, i) => { nodes[i].textContent = p[0]; }); return; }
+  let pi = 0, ci = 0;
+  const tick = () => {
+    if (!document.body.contains(el)) return;
+    const [t, em] = parts[pi]; ci++; nodes[pi].textContent = t.slice(0, ci); el.insertBefore(caret, nodes[pi].nextSibling);
+    let wait = 85 + Math.random() * 60;
+    if (ci >= t.length) { if (em) { nodes[pi].classList.add("pop"); wait += 160; } pi++; ci = 0; }
+    if (pi < parts.length) setTimeout(tick, wait);
+  };
   setTimeout(tick, 450);
 }
 function navHtml(cur) {
@@ -780,6 +813,8 @@ function navHtml(cur) {
     <nav class="nav-links" aria-label="Main">
       <a href="#/cars"${on("cars")}>Cars for sale</a>
       <a href="#/about"${on("about")} id="nav_about">How we work</a>
+      <a href="#/consultation"${on("consultation")} id="nav_consult">Free consultation</a>
+      <a href="#/saved"${on("saved")} id="nav_saved">Saved${savedCount() ? ` <span class="n" id="saved_n">${savedCount()}</span>` : ""}</a>
       <div class="dd${svcOn ? " on" : ""}" id="dd_services"><button type="button" id="dd_btn" aria-expanded="false" aria-haspopup="true">Services ${CHEV}</button>
         <div class="menu" id="dd_menu" role="menu">
           <a href="#/sell" role="menuitem" id="nav_sell">Sell your car<small>We help you sell it</small></a>
@@ -795,6 +830,8 @@ function navHtml(cur) {
   <div class="mnav" id="mnav">
     <a href="#/cars">Cars for sale<small>Browse all cars</small></a>
     <a href="#/about">How we work<small>We go with you, start to finish</small></a>
+    <a href="#/consultation">Free consultation<small>Not sure which car? Come and talk to us</small></a>
+    <a href="#/saved">Saved cars${savedCount() ? " (" + savedCount() + ")" : ""}<small>The cars you liked</small></a>
     <div class="grp">Services</div>
     <a href="#/sell">Sell your car<small>We help you sell it</small></a>
     <a href="#/finance">Finance calculator<small>Work out your monthly instalment</small></a>
@@ -812,14 +849,25 @@ function footerHtml() {
   return `<footer class="footer"><div class="wrap">
     <div class="fgrid">
       <div><a class="logo" href="#/">${LOGO}<span>Dealer<b>Cars</b></span></a><p style="margin-top:12px;max-width:340px;font-size:14.5px">Used cars for sale across South Africa, from hand-picked dealers.</p></div>
-      <div><h4>Buyers &amp; sellers</h4><a href="#/cars">Cars for sale</a><a href="#/booking" id="ft_booking">My viewing booking</a><a href="#/sell">Sell your car</a><a href="#/finance">Finance calculator</a></div>
+      <div><h4>Buyers &amp; sellers</h4><a href="#/cars">Cars for sale</a><a href="#/consultation" id="ft_consult">Free consultation</a><a href="#/booking" id="ft_booking">My viewing booking</a><a href="#/sell">Sell your car</a><a href="#/finance">Finance calculator</a></div>
       <div><h4>Coming soon</h4><a href="#/rent-to-own">Rent to own</a><a href="#/insurance">Insurance</a><a href="#/spotters">Spotters</a></div>
       <div><h4>Company</h4><a href="#/about">About us</a><a href="#/terms">Terms of use</a><a href="#/privacy">Privacy policy</a>${c.join("")}<a href="#/login" id="ft_team" class="ft-team">Team login</a></div>
     </div>
     <div class="copy">© ${new Date().getFullYear()} Dealer Cars. All rights reserved.</div>
   </div></footer>`;
 }
-function page(cur, inner) { return navHtml(cur) + `<main id="main">${inner}</main>` + footerHtml(); }
+function waFab() { const k = contacts().find(c => c.wa); return k ? `<a class="wafab" id="wa_fab" href="${esc(waLink("Hi Dealer Cars, I would like some help with a car.", k.wa))}" target="_blank" rel="noopener" aria-label="Chat to us on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.600 15L2 22l5.200-1.400A10 10 0 1 0 12 2zm0 18.200c-1.500 0-2.900-.4-4.200-1.200l-.3-.2-3 .8.8-2.900-.2-.3A8.200 8.200 0 1 1 12 20.200zm4.500-6.100c-.2-.1-1.500-.7-1.700-.8-.2-.1-.4-.1-.6.100l-.8 1c-.1.200-.3.200-.5.100-1.500-.7-2.500-1.300-3.400-2.900-.3-.5.300-.5.800-1.500.1-.2 0-.3 0-.5l-.8-1.900c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.100-.7.300-.7.800-1 1.600-1 2.500s.6 2.200 1.500 3.200c1.700 2 3.700 3 5.600 3.500.9.200 1.700.2 2.300.1.700-.1 1.500-.6 1.700-1.200.2-.6.200-1.100.2-1.200-.1-.1-.3-.2-.5-.3z"/></svg></a>` : ""; }
+function page(cur, inner) { return navHtml(cur) + `<main id="main">${inner}</main>` + footerHtml() + waFab(); }
+
+/* ---- saved cars page ---- */
+async function viewSaved() {
+  seo({ title: "Saved cars | Dealer Cars", desc: "The cars you saved on Dealer Cars.", path: "saved", noindex: true });
+  let cars = [], err = false; try { cars = await loadCars(); } catch (e) { console.warn(e); err = true; }
+  const refs = savedList(), mine = refs.map(r => cars.find(c => c.ref === r)).filter(Boolean), gone = refs.length - mine.length;
+  const html = page("saved", `<div class="wrap"><div class="page-head"><h1>Saved cars</h1><p>The cars you tapped the heart on. They are kept on this phone or computer only.</p></div>
+    ${err ? failBlock("your saved cars") : mine.length ? `<div class="cards four" id="saved_cars">${mine.map(carCard).join("")}</div>${gone ? `<p style="color:var(--muted);margin-top:14px">${gone} saved car${gone > 1 ? "s are" : " is"} no longer for sale.</p>` : ""}` : `<div class="empty" id="saved_empty"><h3>No saved cars yet</h3><p>Tap the heart on a car to save it here.</p><a class="btn btn-primary" href="#/cars">See cars for sale</a></div>`}</div>`);
+  return { html, bind: bindNav };
+}
 function bindNav() {
   bindDropdown();
   const b = $("#burger"), m = $("#mnav"); if (!b || !m) return;
@@ -840,7 +888,7 @@ function carCard(v) {
   const img = v.photos && v.photos[0] ? `<img src="${esc(photoUrl(v.photos[0]))}" alt="${esc(carTitle(v))}" loading="lazy">` : `<div class="noimg">${ICON.car}</div>`;
   const meta = [km(v.mileage), v.transmission, v.fuel_type].filter(Boolean).join(" · ");
   const cnt = v.photos && v.photos.length > 1 ? `<span class="cnt">${v.photos.length} photos</span>` : "";
-  return `<a class="card" href="#/car/${esc(v.ref)}" data-car="${esc(v.ref)}"><div class="ph">${img}${payTag(v.payment_type)}${cnt}</div><div class="bd">
+  return `<a class="card" href="#/car/${esc(v.ref)}" data-car="${esc(v.ref)}"><div class="ph">${img}${payTag(v.payment_type)}${cnt}<button type="button" class="heart${isSaved(v.ref) ? " on" : ""}" data-save="${esc(v.ref)}" aria-pressed="${isSaved(v.ref)}" aria-label="${isSaved(v.ref) ? "Remove from saved cars" : "Save this car"}">${HEART}</button></div><div class="bd">
     <div class="price">${money(v.price)}</div>${showsInstalment(v) ? `<div class="pm">${esc(pmText(v.price))} <i>est.</i></div>` : ""}<div class="ttl">${esc(carTitle(v))}</div>
     <div class="meta">${esc(meta) || "&nbsp;"}</div>
     <div class="loc">${ICON.pin}<span>${esc([v.city, v.province].filter(Boolean).join(", "))}</span></div>
@@ -879,6 +927,7 @@ async function viewHome() {
     <div class="sec-head"><div><h2>Latest cars</h2><p>Freshly listed cars.</p></div><a class="link" href="#/cars">See all cars →</a></div>
     ${err ? failBlock("the cars") : cars.length ? `<div class="cards four" id="home_cars">${cars.slice(0, 8).map(carCard).join("")}</div>` : noCarsBlock()}
   </div></section>
+  <section class="section"><div class="wrap"><div class="band" id="home_consult"><div><h2>Not sure which car you want?</h2><p>Book a free consultation and come to our office. We look at your day-to-day needs and your finances, and help you find the right car.</p></div><div><a class="btn btn-primary" href="#/consultation" id="home_consult_cta">Book a free consultation</a></div></div></div></section>
   <section class="section soft" id="home_services"><div class="wrap">
     <div class="sec-head"><div><h2>Our services</h2><p>More than a car listing.</p></div></div>
     <div class="svcs two">
@@ -1015,10 +1064,10 @@ async function viewCar(ref) {
   <aside class="stack sticky">
     <div class="panel"><div class="cprice">${money(v.price)}</div>${v.payment_type ? `<div class="paywrap" id="car_pay">${payTag(v.payment_type)}</div>` : ""}${inst ? `<div class="cpm" id="car_pm">Est. <b>${esc(money(pm))}</b> per month <span>(${EST.dep * 100}% deposit, ${EST.rate}% over ${EST.months} months)</span></div>` : v.payment_type === "rent_to_own" ? `<div class="cpm" id="car_pm">Ask us for the monthly amount and how rent to own works.</div>` : `<div class="cpm" id="car_pm">Cash purchase only.</div>`}<h1 class="ctitle">${esc(title)}</h1><div class="cloc" id="car_loc">${ICON.pin.replace("<svg", '<svg width="16" height="16"')}<span>${esc([v.city, v.province].filter(Boolean).join(", "))}</span></div><div class="cmeta">${v.rating ? stars(v.rating) + '<span class="rl">Dealer Cars rating</span>' : ""}<span class="ago">${esc(listedAgo(v.approved_at))}</span></div>
       <div class="specs">${specs.map(s => `<div><span>${s[0]}</span><b>${esc(s[1])}</b></div>`).join("")}</div>
-      <button type="button" class="btn btn-ghost btn-block" id="sh_btn" style="margin-top:16px">${ICON.share} Share this car</button></div>
+      <button type="button" class="btn btn-ghost btn-block${isSaved(v.ref) ? " on" : ""}" id="sv_btn" data-save="${esc(v.ref)}" style="margin-top:16px">${isSaved(v.ref) ? "Saved. Tap to remove" : "Save this car"}</button><button type="button" class="btn btn-ghost btn-block" id="sh_btn" style="margin-top:10px">${ICON.share} Share this car</button></div>
     ${inst ? `<div class="panel fin-cta"><b>Planning to finance?</b><p>Work out what this car could cost you each month.</p><a class="btn btn-ghost btn-block" id="car_fin" href="#/finance?price=${esc(String(Math.round(v.price)))}">Calculate finance</a></div>` : ""}
     <div class="panel" id="inq_panel"><h2>Book a viewing</h2><p style="color:var(--muted);font-size:14.5px;margin-bottom:14px">Tell us when you can come and see this car. We confirm your booking and send you a receipt with a booking number.${hasWa() ? ` Questions first? WhatsApp us about this car: ${contacts().filter(k => k.wa).map((k, i) => `<a id="${idn("car_wa", i)}" href="${esc(waLink("Hi Dealer Cars, I am interested in the " + title + " (" + v.ref + ") " + url, k.wa))}" target="_blank" rel="noopener">${k.name ? esc(k.name) : "WhatsApp us"}</a>`).join(" or ")}.` : ""}</p>
-      <form id="inq_form" novalidate><div id="inq_msg"></div>
+      <form id="inq_form" novalidate><div id="inq_msg"></div><div class="hp" aria-hidden="true"><label>Leave this empty<input id="i_site" name="website" tabindex="-1" autocomplete="off"></label></div>
         <div class="field"><label for="i_name">Your name</label><input class="ctrl" id="i_name" autocomplete="name" required></div>
         <div class="grid2"><div class="field"><label for="i_phone">Phone / WhatsApp</label><input class="ctrl" id="i_phone" type="tel" autocomplete="tel" inputmode="tel" required></div><div class="field"><label for="i_email">E-mail <span class="hint">(optional)</span></label><input class="ctrl" id="i_email" type="email" autocomplete="email"></div></div>
         <div class="field"><label for="i_date">Which day can you come?</label><input class="ctrl" id="i_date" type="date" min="${todayStr(0)}" max="${todayStr(90)}" required></div>
@@ -1063,7 +1112,7 @@ async function viewCar(ref) {
       if (to <= from) return bad("The end time must be after the start time.");
       if (!intent) return bad("Please tell us how serious you are about this car.");
       setBusy(btn, true, "Booking…");
-      const { data, error } = await client().rpc("submit_booking", { p_vehicle: v.id, p_name: name, p_phone: phone, p_email: email, p_date: day, p_from: from, p_to: to, p_intent: intent, p_note: note });
+      const { data, error } = $("#i_site").value ? { data: "VW-" + Math.random().toString(36).slice(2, 8).toUpperCase(), error: null } : await client().rpc("submit_booking", { p_vehicle: v.id, p_name: name, p_phone: phone, p_email: email, p_date: day, p_from: from, p_to: to, p_intent: intent, p_note: note });
       setBusy(btn, false);
       if (error) return bad(niceErr(error));
       $("#inq_panel").innerHTML = `<h2>Viewing requested</h2><div class="ok" role="status">Thank you, ${esc(name.split(" ")[0])}. We have your request and will contact you to confirm it.</div>
@@ -1092,9 +1141,9 @@ async function viewBooking(query) {
     const draw = (b) => {
       const conf = b.status === "Confirmed" || b.status === "Completed", can = b.status === "New" || b.status === "Confirmed";
       const st = { New: ["warn", "Waiting for confirmation"], Confirmed: ["ok", "Confirmed"], Completed: ["", "Completed"], Cancelled: ["bad", "Cancelled"] }[b.status] || ["", b.status];
-      out.innerHTML = `<div class="receipt" id="bk_receipt"><div class="rc-top"><div><div class="rc-t">Dealer Cars</div><div class="rc-s">Viewing ${conf ? "receipt" : "booking"}</div></div><span class="badge ${st[0]}" id="bk_status">${esc(st[1])}</span></div>
+      out.innerHTML = `<div class="receipt" id="bk_receipt"><div class="rc-top"><div><div class="rc-t">Dealer Cars</div><div class="rc-s">${b.kind === "consultation" ? "Free consultation" : "Viewing"} ${conf ? "receipt" : "booking"}</div></div><span class="badge ${st[0]}" id="bk_status">${esc(st[1])}</span></div>
         <div class="bkno"><span>Booking number</span><b id="bk_refno">${esc(b.ref)}</b></div>
-        <div class="kv"><div><span>Car:</span> <b>${esc(b.car_title)}</b>${b.car_ref ? " (" + esc(b.car_ref) + ")" : ""}</div><div><span>Name:</span> ${esc(b.name)}</div>
+        <div class="kv">${b.kind === "consultation" ? "" : `<div><span>Car:</span> <b>${esc(b.car_title)}</b>${b.car_ref ? " (" + esc(b.car_ref) + ")" : ""}</div>`}<div><span>Name:</span> ${esc(b.name)}</div>
         ${conf ? `<div><span>Day:</span> <b>${esc(fmtDay(b.conf_date))}</b></div><div><span>Time:</span> <b>${esc(fmtTime(b.conf_from))} to ${esc(fmtTime(b.conf_to))}</b></div>${b.conf_place ? `<div><span>Where:</span> ${esc(b.conf_place)}</div>` : ""}` : `<div><span>You asked for:</span> ${esc(fmtDay(b.want_date))}, ${esc(fmtTime(b.want_from))} to ${esc(fmtTime(b.want_to))}</div>`}
         ${b.admin_note ? `<div><span>Note from us:</span> ${esc(b.admin_note)}</div>` : ""}</div>
         <p class="rc-foot">${b.status === "Confirmed" ? "Please come to our office at the time above and tell us your booking number. We will have your car ready." : b.status === "New" ? "We will contact you soon to confirm the day and time. If we need to change the time, we will let you know." : b.status === "Cancelled" ? "This booking was cancelled. You can book again from the car page." : "Thank you for visiting Dealer Cars."}</p></div>
@@ -1160,7 +1209,7 @@ async function viewSell() {
   const html = page("sell", `<section class="hero" style="padding-bottom:46px"><div class="wrap hero-in"><span class="eyebrow">Sell your car</span><h1>Sell your car. <em>Get approved.</em></h1>
     <p class="lead">Tell us about your car and add a few photos. Our team reviews your details and comes back to you with the next steps.</p></div></section>
   <div class="narrow" style="padding:30px 20px 60px" id="sell_wrap">
-    <form class="sellform" id="sell_form" novalidate><div id="sell_err"></div>
+    <form class="sellform" id="sell_form" novalidate><div id="sell_err"></div><div class="hp" aria-hidden="true"><label>Leave this empty<input id="sl_site" name="website" tabindex="-1" autocomplete="off"></label></div>
       <fieldset><legend>About you</legend><p class="sub">So we know who to speak to.</p>
         <div class="grid3"><div class="field"><label for="s_title">Title</label><select class="ctrl" id="s_title">${opt(["Mr", "Miss", "Mrs", "Ms"])}</select></div>
           <div class="field"><label for="s_first">First name</label><input class="ctrl" id="s_first" autocomplete="given-name"></div>
@@ -1229,7 +1278,7 @@ async function viewSell() {
     $("#s_rc").addEventListener("change", (e) => { rc = (e.target.files && e.target.files[0] && isImg(e.target.files[0])) ? { file: e.target.files[0], path: null } : null; });
 
     $("#sell_form").addEventListener("submit", async (e) => {
-      e.preventDefault(); if (sending) return;
+      e.preventDefault(); if (sending || ($("#sl_site") && $("#sl_site").value)) return;
       const box = $("#sell_err"); box.innerHTML = "";
       const bad = (t, id) => { box.innerHTML = `<div class="err" role="alert">${esc(t)}</div>`; const el = id && $("#" + id); if (el && el.focus) el.focus(); else box.scrollIntoView({ block: "center" }); };
       const d = { title: val("s_title"), first_name: val("s_first"), surname: val("s_sur"), whatsapp: val("s_wa"), email: val("s_email"), province: val("s_prov"), city: val("s_city"),
@@ -1345,30 +1394,84 @@ async function viewSoon(kind) {
   return { html, bind: bindNav };
 }
 
+/* ====================== free consultation (a booking with no car) ====================== */
+const CONSULT_TOPICS = ["Finding a car for my day-to-day needs", "Finance and what I can afford", "Changing to a different car in future", "Trading in my current car", "I am not sure yet, I just want advice"];
+function viewConsultation() {
+  seo({ title: "Book a free consultation | Dealer Cars", desc: "Not sure which car you want? Book a free consultation at the Dealer Cars office. We help you find a car that fits your needs and your budget.", path: "consultation" });
+  const html = page("consultation", `<div class="wrap"><div class="authwrap" style="max-width:680px"><h1 style="font-size:clamp(26px,4vw,36px);margin-bottom:6px">Book a free consultation</h1>
+    <p style="color:var(--muted);margin-bottom:16px">You do not need to know which car you want. Come to our office and we will help you, free of charge. We look at your day-to-day needs, your finances and your plans for the future.</p>
+    <div class="panel" id="co_panel"><form id="co_form" novalidate><div id="co_msg"></div>
+      <div class="hp" aria-hidden="true"><label>Leave this empty<input id="co_site" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <div class="field"><label for="co_name">Your name</label><input class="ctrl" id="co_name" autocomplete="name" required></div>
+      <div class="grid2"><div class="field"><label for="co_phone">Phone / WhatsApp</label><input class="ctrl" id="co_phone" type="tel" inputmode="tel" autocomplete="tel" required></div><div class="field"><label for="co_email">E-mail <span class="hint">(optional)</span></label><input class="ctrl" id="co_email" type="email" autocomplete="email"></div></div>
+      <div class="field"><label for="co_date">Which day can you come?</label><input class="ctrl" id="co_date" type="date" min="${todayStr(0)}" max="${todayStr(90)}" required></div>
+      <div class="grid2"><div class="field"><label for="co_from">Available from</label><select class="ctrl" id="co_from">${timeOpts("10:00")}</select></div><div class="field"><label for="co_to">Until</label><select class="ctrl" id="co_to">${timeOpts("12:00")}</select></div></div>
+      <div class="field"><span class="lab">What would you like help with? <span class="hint">(pick any)</span></span><div class="intents" id="co_topics">${CONSULT_TOPICS.map((t, i) => `<label class="intent"><input type="checkbox" name="co_topic" value="${esc(t)}"><span><b>${esc(t)}</b></span></label>`).join("")}</div></div>
+      <div class="field"><label for="co_note">Anything else we should know? <span class="hint">(optional)</span></label><textarea class="ctrl" id="co_note" rows="3" maxlength="500" placeholder="For example: I have two kids and drive 60 km a day."></textarea></div>
+      <button class="btn btn-primary btn-block" type="submit" id="co_send">Book my free consultation</button>
+      <p style="font-size:12.5px;color:var(--muted);margin-top:10px">By booking, you agree that Dealer Cars may use your details to arrange your consultation. See our <a href="#/privacy">privacy policy</a>.</p></form></div></div></div>`);
+  return { html, bind() {
+    bindNav();
+    $("#co_form").addEventListener("submit", async (e) => {
+      e.preventDefault(); const btn = $("#co_send"), box = $("#co_msg"); box.innerHTML = "";
+      const bad = (t) => { box.innerHTML = `<div class="err" role="alert">${esc(t)}</div>`; box.scrollIntoView && box.scrollIntoView({ block: "nearest" }); };
+      const name = $("#co_name").value.trim(), phone = $("#co_phone").value.trim(), email = $("#co_email").value.trim(), day = $("#co_date").value, from = $("#co_from").value, to = $("#co_to").value, note = $("#co_note").value.trim();
+      const topics = $$('input[name="co_topic"]:checked').map(x => x.value).join(", ");
+      if (name.length < 2) return bad("Please enter your name.");
+      if (phone.replace(/\D/g, "").length < 9) return bad("Please give a phone number we can call or WhatsApp.");
+      if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return bad("That e-mail address does not look right.");
+      if (!day) return bad("Please choose the day you can come.");
+      if (day < todayStr(0)) return bad("Please choose a day from today onwards.");
+      if (to <= from) return bad("The end time must be after the start time.");
+      let ref;
+      if ($("#co_site").value) { ref = "VW-" + Math.random().toString(36).slice(2, 8).toUpperCase(); }   // a robot filled the hidden box: look successful, send nothing
+      else {
+        setBusy(btn, true, "Booking…");
+        const { data, error } = await client().rpc("submit_consultation", { p_name: name, p_phone: phone, p_email: email, p_date: day, p_from: from, p_to: to, p_topics: topics, p_note: note });
+        setBusy(btn, false); if (error) return bad(niceErr(error)); ref = data;
+      }
+      $("#co_panel").innerHTML = `<h2>Consultation requested</h2><div class="ok" role="status">Thank you, ${esc(name.split(" ")[0])}. We have your request and will contact you to confirm it.</div>
+        <div class="bkno" id="bk_ref"><span>Your booking number</span><b>${esc(ref)}</b></div>
+        <div class="kv"><div><span>Day:</span> ${esc(fmtDay(day))}</div><div><span>Time you can come:</span> ${esc(from)} to ${esc(to)}</div>${topics ? `<div><span>Help with:</span> ${esc(topics)}</div>` : ""}</div>
+        <p style="font-size:14px;color:var(--muted);margin:10px 0 14px">Keep this number. Once we confirm, you get a receipt. When you come to our office, tell us your booking number. The consultation is free.</p>
+        <a class="btn btn-ghost btn-block" id="bk_view" href="#/booking?ref=${encodeURIComponent(ref)}">See my booking</a>`;
+    });
+  } };
+}
+
 /* ====================== about us / how we work ====================== */
 function viewAbout() {
-  seo({ title: "About Dealer Cars | How we work", desc: "Dealer Cars is more than a listing site. We go with you to view the car, help with the documentation, and support you at delivery and afterwards.", path: "about" });
+  seo({ title: "About Dealer Cars | How we work", desc: "Book a viewing or a free consultation. We go with you to view the car, help with the documentation, and support you at delivery and afterwards.", path: "about" });
   const ct = [];
   contacts().forEach((k, i) => { if (k.wa) ct.push(`<a class="btn ${i ? "btn-ghost" : "btn-primary"}" id="${idn("ab_wa", i)}" href="${esc(waLink("Hi Dealer Cars, I would like some help finding a car.", k.wa))}" target="_blank" rel="noopener">${k.name ? "WhatsApp " + esc(k.name) : "WhatsApp us"}</a>`); });
   contacts().forEach((k, i) => { if (k.phone) ct.push(`<a class="btn btn-ghost" id="${idn("ab_tel", i)}" href="${esc(telHref(k.phone))}">Call ${k.name ? esc(k.name) + " " : ""}${esc(k.phone)}</a>`); });
   if (CONFIG.CONTACT_EMAIL) ct.push(`<a class="btn btn-ghost" id="ab_mail" href="mailto:${esc(CONFIG.CONTACT_EMAIL)}">${esc(CONFIG.CONTACT_EMAIL)}</a>`);
   const detail = [
-    ["Find your car", "Browse cars from hand-picked dealers. Search by city, province, price or monthly instalment, and sort the list the way you like. Each car shows its photos, where it is and what it could cost you each month. Found one you like? Tap Share to send it to family or friends on WhatsApp or any other app."],
-    ["Tell us what you like", "Send an enquiry on the car, or message us. We speak to the seller on your behalf, check that the car is still available and answer your questions, so you are not chasing around."],
-    ["We go with you to view the car", "Buying a car can be stressful, and it is easy to miss things when you are on your own. We arrange the viewing and come with you, so you have someone on your side when you look at the car."],
+    ["Find your car", "Browse cars from hand-picked dealers. Search by city, province, price or monthly instalment, and sort the list the way you like. Each car shows its photos, where it is and what it could cost you each month. Tap the heart to save the cars you like, and Share to send one to family or friends."],
+    ["Book a viewing", "Found a car you like? Open it and choose Book a viewing. Tell us which day you can come, the time that suits you, and how serious you are: just viewing, looking at your options, ready to buy soon, or in need of a car urgently. You get a booking number straight away."],
+    ["Not sure which car? Book a free consultation", "You do not need to know the car you want. Book a free consultation, come to our office and we will sit down with you. We look at your day-to-day needs, your budget and your finances, and we help you find a car that really fits your life."],
+    ["We confirm and send your receipt", "We contact you to confirm the day and time. If the time you asked for does not work, we tell you and agree on a new one with you. Once it is confirmed, we send you a receipt with your booking number."],
+    ["Come to our office", "Come at the time we agreed and tell us your booking number. We find your booking on our system, so we already know which car you came to see, or what you need help with."],
+    ["We go with you to view the car", "Buying a car can be stressful, and it is easy to miss things when you are on your own. Our deal facilitator is with you when you look at the car, so you have someone on your side."],
     ["We help with the documentation", "There is a lot of paperwork in buying a car. We explain what is needed, help you with it and make sure nothing is missed, so there are no surprises later."],
-    ["Delivery, and support afterwards", "We are there when the car is delivered to you. If you need any help afterwards, you do not have to work it out alone. You can come back to us."]
+    ["Delivery, and support afterwards", "We are there when the car is delivered to you. If you need any help afterwards, or later want to change to a different car, you do not have to work it out alone. You can come back to us."]
   ];
-  const html = page("about", `<div class="wrap"><div class="page-head"><h1>We do not just list cars. We help you buy one.</h1><p style="max-width:720px">Dealer Cars is a car marketplace with people behind it. Our cars come from hand-picked dealers. When you find one you like, we stay with you from your first message to the day the car is delivered, and after.</p></div>
-    <section class="section" style="padding-top:8px"><h2 style="margin-bottom:6px">How we work</h2><p style="color:var(--muted);margin-bottom:18px">From finding a car to driving it home, in five steps.</p>
+  const consult = [["Your day-to-day needs", "How far you drive, who rides with you and what you carry, so the car suits your real life."], ["Your finances", "What you can afford each month, what a deposit does, and how finance works, in plain language."], ["The future", "If your life changes and you want a different car, or want to trade in your current one, we help you plan for it."]];
+  const html = page("about", `<div class="wrap"><div class="page-head"><h1>We do not just list cars. We help you buy one.</h1><p style="max-width:720px">Dealer Cars is a car marketplace with people behind it. Book a viewing of a car you like, or book a free consultation if you are not sure yet. We stay with you from your first booking to the day the car is delivered, and after.</p></div>
+    <section class="section" style="padding-top:8px"><h2 style="margin-bottom:6px">How we work</h2><p style="color:var(--muted);margin-bottom:18px">From your first look to driving it home, in eight steps.</p>
       <ol class="how big" id="ab_steps">${detail.map((x, i) => `<li><span class="n">${i + 1}</span><b>${esc(x[0])}</b><p>${esc(x[1])}</p></li>`).join("")}</ol></section>
+    <section class="section" id="ab_consult"><div class="band"><div><h2>Free consultation</h2><p>Do not know what car you want? Book a free consultation and come to our office. We help you work it out.</p>
+      <ul class="clist">${consult.map(x => `<li><b>${esc(x[0])}.</b> ${esc(x[1])}</li>`).join("")}</ul></div><div><a class="btn btn-primary" href="#/consultation" id="ab_book_consult">Book a free consultation</a></div></div></section>
     <section class="section"><h2 style="margin-bottom:14px">Why buyers choose Dealer Cars</h2>
       <div class="props"><div class="prop"><div class="ic">${ICON.shield}</div><h3>Hand-picked dealers</h3><p>Cars come from dealers we choose to work with, and every car follows our photo standard.</p></div>
         <div class="prop"><div class="ic">${ICON.pin}</div><h3>You can see where it is</h3><p>Every car shows its city and province, so you know where it is before you enquire.</p></div>
         <div class="prop"><div class="ic">${ICON.chat}</div><h3>Someone on your side</h3><p>We go with you to view, help with the documentation and support you at delivery.</p></div></div></section>
     <section class="section"><h2 style="margin-bottom:14px">Common questions</h2><div class="faq">
       <details><summary>Who sells the cars?</summary><p>The cars are listed by dealerships that work with Dealer Cars, and we help you through the whole buying process.</p></details>
-      <details><summary>Can I see the car before I buy?</summary><p>Yes. We arrange the viewing and come with you.</p></details>
+      <details><summary>Can I see the car before I buy?</summary><p>Yes. Open the car and choose Book a viewing. Pick the day and time that suit you, and we confirm it and send you a receipt with your booking number.</p></details>
+      <details><summary>What is a free consultation?</summary><p>If you do not know which car you want, book a free consultation and come to our office. We talk about your day-to-day needs, your finances and your plans for the future, and we help you find the right car.</p></details>
+      <details><summary>What do I do when I get to the office?</summary><p>Tell us your booking number. We find your booking on our system and know right away what you came for.</p></details>
+      <details><summary>What if I cannot come at the time we agreed?</summary><p>Tell us as soon as you can, or cancel your booking from the My viewing booking page, and we will find another time.</p></details>
       <details><summary>What if I need help after I get the car?</summary><p>We support you at delivery, and you can come back to us if you need help afterwards.</p></details>
       <details><summary>I want to sell my car. Can you help?</summary><p>Yes. Use the <a href="#/sell">Sell your car</a> page, send us the details and photos, and our team will be in touch.</p></details></div></section>
     <section class="section" style="padding-bottom:56px"><div class="band"><div><h2>Ready to find your car?</h2><p>Browse cars from hand-picked dealers, or get in touch and we will help you.</p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary" href="#/cars" id="ab_cars">See cars for sale</a>${ct.join("")}</div></div></section>
@@ -1568,7 +1671,7 @@ async function viewVehicleForm(id, admin) {
           <div class="pcheck" id="ph_check" aria-live="polite"></div></div>
         <div id="photoarea"><label class="drop" id="dz" for="vf_files">${ICON.upload}<b>Drag and drop your photos here</b><span>or tap to choose several at once. Put them in the order of the checklist above and we keep that order.</span><input type="file" id="vf_files" accept="image/*" multiple hidden></label>
         <div id="ph_rejects"></div>
-        <div class="bgbar"><button type="button" class="btn btn-ghost btn-sm" id="bg_all">Remove the background from the first ${PHOTO_EXTERIOR_N} photos (outside of the car)</button><span class="hint">Optional. Gives the car a clean grey studio backdrop. The first time it needs to download the cleaner, which can take a minute. You can undo it on each photo.</span></div>
+        <div class="bgbar"><button type="button" class="btn btn-ghost btn-sm" id="bg_all">Focus on the car in the first ${PHOTO_EXTERIOR_N} photos (outside of the car)</button><label class="blurset" for="bg_amt">Blur <input type="range" id="bg_amt" min="15" max="90" step="5" value="${BLUR_AMT}" aria-label="How much to blur the background"> <output id="bg_amt_o">${BLUR_AMT}</output></label><span class="hint">Optional. The car stays sharp and the background is softly blurred, like Canva's focus. Gentle is about 45. The first time it needs to download the cutter, which can take a minute. You can undo it on each photo.</span></div>
         <div class="pgrid" id="pgrid"></div></div><div id="ph_hint" class="hint" style="margin-top:10px;font-size:13px;color:var(--muted)"></div></div>
       <div class="panel" style="margin-bottom:18px"><h2>Vehicle details</h2>
         <div class="grid3"><div class="field"><label for="v_make">Make</label><input class="ctrl" id="v_make" list="makes" autocomplete="off" value="${val("make")}"><datalist id="makes">${MAKES.map(m => `<option value="${m}">`).join("")}</datalist></div>
@@ -1600,7 +1703,8 @@ async function viewVehicleForm(id, admin) {
       if (a === "left" && i > 0) [P[i - 1], P[i]] = [P[i], P[i - 1]]; else if (a === "right" && i < P.length - 1) [P[i + 1], P[i]] = [P[i], P[i + 1]]; else if (a === "del") P.splice(i, 1);
       else if (a === "bg") { cleanPhoto(P[i], VF); return; } else if (a === "plate") { plateEditor(P[i], VF); return; } else if (a === "undo") { const t = P[i], h = t.hist && t.hist.pop(); if (h) Object.assign(t, h); }
       paintPhotos(); });
-    $("#bg_all").addEventListener("click", async () => { const mine = VF, todo = mine.photos.slice(0, PHOTO_EXTERIOR_N).filter(t => !t.clean && !t.up && !t.busy); if (!todo.length) { toast("Nothing to clean: the first photos already have a clean background."); return; } for (const t of todo) { if (VF !== mine) return; await cleanPhoto(t, mine, true); } });
+    $("#bg_amt").addEventListener("input", () => { BLUR_AMT = Number($("#bg_amt").value); $("#bg_amt_o").textContent = BLUR_AMT; });
+    $("#bg_all").addEventListener("click", async () => { const mine = VF, todo = mine.photos.slice(0, PHOTO_EXTERIOR_N).filter(t => !t.clean && !t.up && !t.busy); if (!todo.length) { toast("Nothing to do: the first photos are already in focus."); return; } for (const t of todo) { if (VF !== mine) return; await cleanPhoto(t, mine, true); } });
     $("#vf").addEventListener("submit", save);
     const del = $("#vf_del"); if (del) del.addEventListener("click", async () => { const mine = VF; if (!(await confirmBox("Delete this car?", `${carTitle(v)} (${v.ref}) will be removed for good, together with its enquiries.`, "Delete car", true))) return;
       const { error } = await client().rpc("admin_delete_vehicle", { p_id: v.id }); if (error) return toast(niceErr(error)); try { await client().storage.from(BUCKET).remove(mine.orig || []); } catch (_) {} S.cars = null; VF = null; toast("Car deleted"); location.hash = "#/admin"; });
@@ -1608,8 +1712,8 @@ async function viewVehicleForm(id, admin) {
 }
 function paintPhotos() {
   const g = $("#pgrid"); if (!g) return; const P = VF.photos;
-  g.innerHTML = P.map((p, i) => `<div class="pcell"><div class="pt ${i === 0 ? "cover" : ""}" data-i="${i}"><img src="${esc(p.url)}" alt="Photo ${i + 1}">${i === 0 ? `<span class="lbl">Cover</span>` : ""}${p.clean ? `<span class="lbl2">Clean background</span>` : ""}${p.plate ? `<span class="lbl3">Plate covered</span>` : ""}${p.up ? `<div class="up">Uploading…</div>` : p.busy ? `<div class="up">${esc(p.busy)}</div>` : `<div class="bar">${i > 0 ? `<button type="button" data-pa="left" data-i="${i}" aria-label="Move earlier">←</button>` : ""}${i < P.length - 1 ? `<button type="button" data-pa="right" data-i="${i}" aria-label="Move later">→</button>` : ""}<button type="button" class="x" data-pa="del" data-i="${i}" aria-label="Remove photo">✕</button></div>`}</div>
-    ${p.up || p.busy ? "" : `<div class="tools">${p.clean ? "" : `<button type="button" class="btn btn-ghost btn-sm" data-pa="bg" data-i="${i}">Remove background</button>`}<button type="button" class="btn btn-ghost btn-sm" data-pa="plate" data-i="${i}">${p.plate ? "Edit plate cover" : "Cover number plate"}</button>${p.hist && p.hist.length ? `<button type="button" class="btn btn-ghost btn-sm" data-pa="undo" data-i="${i}">Undo last change</button>` : ""}</div>`}</div>`).join("");
+  g.innerHTML = P.map((p, i) => `<div class="pcell"><div class="pt ${i === 0 ? "cover" : ""}" data-i="${i}"><img src="${esc(p.url)}" alt="Photo ${i + 1}">${i === 0 ? `<span class="lbl">Cover</span>` : ""}${p.clean ? `<span class="lbl2">Car in focus</span>` : ""}${p.plate ? `<span class="lbl3">Plate covered</span>` : ""}${p.up ? `<div class="up">Uploading…</div>` : p.busy ? `<div class="up">${esc(p.busy)}</div>` : `<div class="bar">${i > 0 ? `<button type="button" data-pa="left" data-i="${i}" aria-label="Move earlier">←</button>` : ""}${i < P.length - 1 ? `<button type="button" data-pa="right" data-i="${i}" aria-label="Move later">→</button>` : ""}<button type="button" class="x" data-pa="del" data-i="${i}" aria-label="Remove photo">✕</button></div>`}</div>
+    ${p.up || p.busy ? "" : `<div class="tools">${p.clean ? "" : `<button type="button" class="btn btn-ghost btn-sm" data-pa="bg" data-i="${i}">Focus on car</button>`}<button type="button" class="btn btn-ghost btn-sm" data-pa="plate" data-i="${i}">${p.plate ? "Edit plate cover" : "Cover number plate"}</button>${p.hist && p.hist.length ? `<button type="button" class="btn btn-ghost btn-sm" data-pa="undo" data-i="${i}">Undo last change</button>` : ""}</div>`}</div>`).join("");
   const minP = VF.admin ? 1 : MIN_PHOTOS, pc = $("#ph_check");
   if (pc) pc.innerHTML = PHOTO_ORDER.map((n, i) => `<span class="${P.length > i ? "yes" : "no"}">${P.length > i ? "✓" : "○"} ${i + 1}. ${esc(n)}</span>`).join("");
   const h = $("#ph_hint"); if (h) h.textContent = P.length + " of " + MAX_PHOTOS + " photos" + (P.length < minP ? " · add at least " + (minP - P.length) + " more" : "");
@@ -1632,17 +1736,19 @@ async function addFiles(files) {
     if (VF === mine) paintPhotos();
   }
 }
-// remove the background of one photo: cut the car out, put it on a clean studio backdrop, upload the new picture
+// focus on the car in one photo: cut the car out, blur the background behind it, upload the new picture
+let BLUR_AMT = 45;
 async function cleanPhoto(t, mine, quiet) {
   if (!t || t.up || t.busy || t.clean) return;
   const say = (m) => { t.busy = m; if (VF === mine) paintPhotos(); };
   say("Preparing…");
   try {
     const src = t.file || await (await fetch(t.url)).blob();
-    let last = -1; const cut = await cutOut(src, (pct) => { if (pct !== last) { last = pct; say("Cleaning… " + pct + "%"); } });
-    say("Finishing…"); const out = await studioPhoto(cut), path = await uploadBlob(out, mine.key, mine.owner);
+    let last = -1; const cached = t._cut && t._cut.src === src ? t._cut.cut : null;   // after Undo, the cutting is not done twice
+    const cut = cached || await cutOut(src, (pct) => { if (pct !== last) { last = pct; say("Finding the car… " + pct + "%"); } }); t._cut = { src, cut };
+    say("Blurring the background…"); const out = await focusPhoto(src, cut, BLUR_AMT), path = await uploadBlob(out, mine.key, mine.owner);
     (t.hist = t.hist || []).push({ path: t.path, url: t.url, file: t.file, clean: !!t.clean, plate: !!t.plate }); t.path = path; t.url = URL.createObjectURL(out); t.file = out; t.clean = true;
-  } catch (e) { console.warn(e); toast(quiet ? "One photo could not be cleaned. You can still use it as it is." : "Sorry, the background could not be removed from that photo. Check your internet connection and try again, or use the photo as it is."); }
+  } catch (e) { console.warn(e); toast(quiet ? "One photo could not be put in focus. You can still use it as it is." : "Sorry, the car could not be found in that photo. Check your internet connection and try again, or use the photo as it is."); }
   t.busy = null; if (VF === mine) paintPhotos();
 }
 async function save(e) {
@@ -1679,8 +1785,8 @@ async function plateEditor(t, mine) {
   const k = Math.min(1, 1600 / bmp.width), W = Math.round(bmp.width * k), H = Math.round(bmp.height * k);
   const newPlate = (cy) => ({ cx: 0.5, cy, w: 0.25, rot: 0, yaw: 0, pitch: 0, co: [[0, 0], [0, 0], [0, 0], [0, 0]] }); const plates = [newPlate(0.7)]; let sel = 0;
   const bg = document.createElement("div"); bg.className = "modal-bg plbg"; bg.id = "pl_modal"; bg.setAttribute("role", "dialog"); bg.setAttribute("aria-modal", "true");
-  bg.innerHTML = `<div class="modal plm"><button type="button" class="plx" id="pl_x" aria-label="Close">✕</button><h3>Cover the number plate</h3><p style="margin-bottom:8px">Drag the Dealer Cars plate over the real number plate. Use <b>Bigger / Smaller</b> and <b>Turn</b> to fit it. If the car was photographed at an angle, use <b>Angle</b> to tilt the plate in 3D, or drag the four orange dots to the corners of the real plate. Tap <b>Add another plate</b> if there is more than one plate in the photo.</p>
-    <div class="plstage"><canvas id="pl_cv" width="${W}" height="${H}" aria-label="Photo with the Dealer Cars plate. Drag the plate to move it."></canvas></div>
+  bg.innerHTML = `<div class="modal plm"><button type="button" class="plx" id="pl_x" aria-label="Close">✕</button><h3>Cover the number plate</h3><p style="margin-bottom:8px">Drag the Dealer Cars plate over the real number plate. <b>Zoom in</b> with + (or pinch with two fingers, or scroll the mouse wheel) to line it up exactly, and drag the photo to move around when zoomed. Use <b>Bigger / Smaller</b> and <b>Turn</b> to fit it. If the car was photographed at an angle, use <b>Angle</b> to tilt the plate in 3D, or drag the four orange dots to the corners of the real plate. Tap <b>Add another plate</b> if there is more than one plate in the photo.</p>
+    <div class="plstage"><div class="plzoom" role="group" aria-label="Zoom"><button type="button" id="pl_zi" aria-label="Zoom in">+</button><button type="button" id="pl_zo" aria-label="Zoom out">−</button><button type="button" id="pl_zp" aria-label="Zoom to the plate">Zoom to plate</button><button type="button" id="pl_zf" aria-label="Show the whole photo">Fit</button><output id="pl_zv" aria-live="polite">1×</output></div><canvas id="pl_cv" width="${W}" height="${H}" aria-label="Photo with the Dealer Cars plate. Drag the plate to move it."></canvas></div>
     <div class="plfoot"><div class="plctl">
       <div class="plrow"><span>Size</span><button type="button" class="btn btn-ghost btn-sm" id="pl_sm" aria-label="Smaller">− Smaller</button><input type="range" id="pl_size" min="6" max="45" step="1" aria-label="Plate size"><button type="button" class="btn btn-ghost btn-sm" id="pl_bg" aria-label="Bigger">+ Bigger</button></div>
       <div class="plrow"><span>Turn</span><button type="button" class="btn btn-ghost btn-sm" id="pl_tl" aria-label="Turn left">↺ Left</button><input type="range" id="pl_rot" min="-35" max="35" step="1" aria-label="Turn the plate"><button type="button" class="btn btn-ghost btn-sm" id="pl_tr" aria-label="Turn right">↻ Right</button></div>
@@ -1690,36 +1796,54 @@ async function plateEditor(t, mine) {
     <div class="row"><button type="button" class="btn btn-ghost btn-sm" id="pl_add">Add another plate</button><button type="button" class="btn btn-ghost btn-sm" id="pl_del">Remove this plate</button><span style="flex:1"></span><button type="button" class="btn btn-ghost" id="pl_cancel">Cancel</button><button type="button" class="btn btn-primary" id="pl_apply">Apply to photo</button></div></div></div>`;
   document.body.appendChild(bg);
   const cv = bg.querySelector("#pl_cv"), cx = cv.getContext("2d"), size = bg.querySelector("#pl_size"), rot = bg.querySelector("#pl_rot"), yaw = bg.querySelector("#pl_yaw"), pitch = bg.querySelector("#pl_pitch");
+  const view = { z: 1, vx: 0, vy: 0 };   // zoom: z times bigger, vx / vy is the top-left corner of what you see (in photo pixels)
+  const clampView = () => { view.z = Math.min(8, Math.max(1, view.z)); view.vx = Math.min(W - W / view.z, Math.max(0, view.vx)); view.vy = Math.min(H - H / view.z, Math.max(0, view.vy)); };
+  const zoomAt = (lx, ly, nz) => { const ix = view.vx + lx / view.z, iy = view.vy + ly / view.z; view.z = nz; view.vx = ix - lx / view.z; view.vy = iy - ly / view.z; clampView(); const zv = bg.querySelector("#pl_zv"); if (zv) zv.textContent = (Math.round(view.z * 10) / 10) + "×"; paint(); };
   const paint = (final) => {
-    cx.clearRect(0, 0, W, H); cx.drawImage(bmp, 0, 0, W, H);
+    const z = final ? 1 : view.z, vx = final ? 0 : view.vx, vy = final ? 0 : view.vy;
+    cx.setTransform(1, 0, 0, 1, 0, 0); cx.clearRect(0, 0, W, H); cx.setTransform(z, 0, 0, z, -vx * z, -vy * z); cx.drawImage(bmp, 0, 0, W, H);
     plates.forEach((p, i) => {
       const on = !final && i === sel;
       if (plateFlat(p)) { drawPlate(cx, p.cx * W, p.cy * H, p.w * W, p.rot, on); if (!on) return; }
       else drawPlateWarp(cx, plateQuad(p, W, H));
       if (!on) return;
-      const q = plateQuad(p, W, H), rr = Math.max(7, W * 0.009);
-      cx.save(); cx.lineWidth = Math.max(2, W * 0.002); cx.strokeStyle = "#2f7df6"; cx.setLineDash([8, 6]); cx.beginPath(); q.forEach((a, j) => j ? cx.lineTo(a[0], a[1]) : cx.moveTo(a[0], a[1])); cx.closePath(); cx.stroke(); cx.setLineDash([]);
-      q.forEach(a => { cx.beginPath(); cx.arc(a[0], a[1], rr, 0, 6.2832); cx.fillStyle = "#F26A1B"; cx.fill(); cx.lineWidth = Math.max(2, W * 0.002); cx.strokeStyle = "#fff"; cx.stroke(); });
+      const q = plateQuad(p, W, H), rr = Math.max(7, W * 0.009) / z;
+      cx.save(); cx.lineWidth = Math.max(2, W * 0.002) / z; cx.strokeStyle = "#2f7df6"; cx.setLineDash([8 / z, 6 / z]); cx.beginPath(); q.forEach((a, j) => j ? cx.lineTo(a[0], a[1]) : cx.moveTo(a[0], a[1])); cx.closePath(); cx.stroke(); cx.setLineDash([]);
+      q.forEach(a => { cx.beginPath(); cx.arc(a[0], a[1], rr, 0, 6.2832); cx.fillStyle = "#F26A1B"; cx.fill(); cx.lineWidth = Math.max(2, W * 0.002) / z; cx.strokeStyle = "#fff"; cx.stroke(); });
       cx.restore();
     });
+    cx.setTransform(1, 0, 0, 1, 0, 0);
   };
   const sync = () => { const p = plates[sel]; size.value = Math.round(p.w * 100); rot.value = p.rot; yaw.value = p.yaw || 0; pitch.value = p.pitch || 0; bg.querySelector("#pl_del").disabled = plates.length < 2; bg.querySelector("#pl_add").disabled = plates.length >= 3; paint(); };
-  const pos = (e) => { const r = cv.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width * W, y: (e.clientY - r.top) / r.height * H }; };
+  const local = (e) => { const r = cv.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width * W, y: (e.clientY - r.top) / r.height * H, r }; };
+  const pos = (e) => { const l = local(e); return { x: view.vx + l.x / view.z, y: view.vy + l.y / view.z }; };
   const inPoly = (q, x, y) => { let c = false; for (let a = 0, b = 3; a < 4; b = a++) if ((q[a][1] > y) !== (q[b][1] > y) && x < (q[b][0] - q[a][0]) * (y - q[a][1]) / (q[b][1] - q[a][1]) + q[a][0]) c = !c; return c; };
-  const hit = (x, y) => { for (let i = plates.length - 1; i >= 0; i--) { const q = plateQuad(plates[i], W, H), mx = (q[0][0] + q[1][0] + q[2][0] + q[3][0]) / 4, my = (q[0][1] + q[1][1] + q[2][1] + q[3][1]) / 4; const g = q.map(a => { const vx = a[0] - mx, vy = a[1] - my, l = Math.hypot(vx, vy) || 1; return [a[0] + vx / l * 14, a[1] + vy / l * 14]; }); if (inPoly(g, x, y)) return i; } return -1; };
-  const cornerAt = (x, y) => { const q = plateQuad(plates[sel], W, H), tol = Math.max(18, W * 0.022); let best = -1, bd = tol; q.forEach((a, j) => { const d = Math.hypot(a[0] - x, a[1] - y); if (d <= bd) { bd = d; best = j; } }); return best; };
-  let drag = null;
+  const hit = (x, y) => { for (let i = plates.length - 1; i >= 0; i--) { const q = plateQuad(plates[i], W, H), mx = (q[0][0] + q[1][0] + q[2][0] + q[3][0]) / 4, my = (q[0][1] + q[1][1] + q[2][1] + q[3][1]) / 4; const g = q.map(a => { const vx = a[0] - mx, vy = a[1] - my, l = Math.hypot(vx, vy) || 1; return [a[0] + vx / l * 14 / view.z, a[1] + vy / l * 14 / view.z]; }); if (inPoly(g, x, y)) return i; } return -1; };
+  const cornerAt = (x, y) => { const q = plateQuad(plates[sel], W, H), tol = Math.max(18, W * 0.022) / view.z; let best = -1, bd = tol; q.forEach((a, j) => { const d = Math.hypot(a[0] - x, a[1] - y); if (d <= bd) { bd = d; best = j; } }); return best; };
+  let drag = null; const ptrs = new Map();
   cv.addEventListener("pointerdown", (e) => {
+    ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; drag = { pinch: true, d0: Math.hypot(a.x - b.x, a.y - b.y) || 1, z0: view.z }; e.preventDefault(); return; }
     const q = pos(e), c = cornerAt(q.x, q.y);
     if (c >= 0) { drag = { corner: c }; try { cv.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); return; }
-    const i = hit(q.x, q.y); if (i < 0) return; sel = i; drag = { dx: plates[i].cx * W - q.x, dy: plates[i].cy * H - q.y }; try { cv.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); sync();
+    const i = hit(q.x, q.y);
+    if (i < 0) { if (view.z > 1) { drag = { pan: true, sx: e.clientX, sy: e.clientY, vx0: view.vx, vy0: view.vy }; try { cv.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); } return; }
+    sel = i; drag = { dx: plates[i].cx * W - q.x, dy: plates[i].cy * H - q.y }; try { cv.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); sync();
   });
   cv.addEventListener("pointermove", (e) => {
-    if (!drag) return; const q = pos(e), p = plates[sel];
+    if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (drag && drag.pinch) { if (ptrs.size === 2) { const [a, b] = [...ptrs.values()], d = Math.hypot(a.x - b.x, a.y - b.y) || 1, r = cv.getBoundingClientRect(); zoomAt(((a.x + b.x) / 2 - r.left) / r.width * W, ((a.y + b.y) / 2 - r.top) / r.height * H, Math.min(8, Math.max(1, drag.z0 * d / drag.d0))); } return; }
+    if (!drag) return;
+    if (drag.pan) { const r = cv.getBoundingClientRect(); view.vx = drag.vx0 - (e.clientX - drag.sx) / r.width * W / view.z; view.vy = drag.vy0 - (e.clientY - drag.sy) / r.height * H / view.z; clampView(); paint(); return; }
+    const q = pos(e), p = plates[sel];
     if (drag.corner !== undefined) { const b = plateBaseQuad(p, W, H)[drag.corner], w = p.w * W; p.co = p.co || [[0, 0], [0, 0], [0, 0], [0, 0]]; p.co[drag.corner] = [(Math.min(W, Math.max(0, q.x)) - b[0]) / w, (Math.min(H, Math.max(0, q.y)) - b[1]) / w]; paint(); return; }
     p.cx = Math.min(1, Math.max(0, (q.x + drag.dx) / W)); p.cy = Math.min(1, Math.max(0, (q.y + drag.dy) / H)); paint();
   });
-  const stop = () => { drag = null; }; cv.addEventListener("pointerup", stop); cv.addEventListener("pointercancel", stop);
+  const stop = (e) => { ptrs.delete(e.pointerId); drag = null; }; cv.addEventListener("pointerup", stop); cv.addEventListener("pointercancel", stop);
+  const zc = (f) => { zoomAt(W / 2 / 1, H / 2 / 1, Math.min(8, Math.max(1, view.z * f))); };   // zoom from the middle of what you see
+  bg.querySelector("#pl_zi").addEventListener("click", () => zc(1.5)); bg.querySelector("#pl_zo").addEventListener("click", () => zc(1 / 1.5));
+  bg.querySelector("#pl_zf").addEventListener("click", () => { view.z = 1; view.vx = 0; view.vy = 0; zoomAt(0, 0, 1); });
+  bg.querySelector("#pl_zp").addEventListener("click", () => { const q = plateQuad(plates[sel], W, H), xs = q.map(a => a[0]), ys = q.map(a => a[1]), bw = Math.max(40, Math.max(...xs) - Math.min(...xs)), bh = Math.max(24, Math.max(...ys) - Math.min(...ys)); const nz = Math.min(8, Math.max(1.5, Math.min(0.6 * W / bw, 0.6 * H / bh))); view.z = nz; view.vx = (Math.min(...xs) + Math.max(...xs)) / 2 - W / nz / 2; view.vy = (Math.min(...ys) + Math.max(...ys)) / 2 - H / nz / 2; zoomAt(0, 0, nz); });
   size.addEventListener("input", () => { plates[sel].w = Number(size.value) / 100; paint(); });
   rot.addEventListener("input", () => { plates[sel].rot = Number(rot.value); paint(); });
   yaw.addEventListener("input", () => { plates[sel].yaw = Number(yaw.value); paint(); });
@@ -1730,7 +1854,7 @@ async function plateEditor(t, mine) {
   nudge("#pl_pu", p => { p.pitch = Math.max(-50, (p.pitch || 0) - 4); }); nudge("#pl_pd", p => { p.pitch = Math.min(50, (p.pitch || 0) + 4); });
   nudge("#pl_flat", p => { p.yaw = 0; p.pitch = 0; p.co = [[0, 0], [0, 0], [0, 0], [0, 0]]; });
   nudge("#pl_tl", p => { p.rot = Math.max(-35, p.rot - 3); }); nudge("#pl_tr", p => { p.rot = Math.min(35, p.rot + 3); });
-  cv.addEventListener("wheel", (e) => { e.preventDefault(); const p = plates[sel]; p.w = Math.min(0.45, Math.max(0.06, p.w + (e.deltaY < 0 ? 0.01 : -0.01))); sync(); }, { passive: false });
+  cv.addEventListener("wheel", (e) => { e.preventDefault(); const l = local(e); zoomAt(l.x, l.y, Math.min(8, Math.max(1, view.z * (e.deltaY < 0 ? 1.2 : 1 / 1.2)))); }, { passive: false });
   bg.querySelector("#pl_add").addEventListener("click", () => { if (plates.length >= 3) return; plates.push(newPlate(0.5 + plates.length * 0.08)); sel = plates.length - 1; sync(); });
   bg.querySelector("#pl_del").addEventListener("click", () => { if (plates.length < 2) return; plates.splice(sel, 1); sel = Math.max(0, sel - 1); sync(); });
   const onKey = (e) => { if (e.key === "Escape") close(); };
@@ -1793,7 +1917,7 @@ async function viewAdmin() {
     const df = b.conf_date || b.want_date, ff = fmtTime(b.conf_from || b.want_from), tt = fmtTime(b.conf_to || b.want_to), wa = waNumber(b.phone);
     const st = { New: "warn", Confirmed: "ok", Completed: "", Cancelled: "bad" }[b.status] || "";
     return `<div class="irow vwrow ${b.status === "New" ? "new" : ""}" data-bid="${esc(b.id)}" data-status="${esc(b.status)}" data-search="${esc((b.ref + " " + b.name + " " + b.phone + " " + b.car_title + " " + (b.car_ref || "")).toLowerCase())}">
-      <div class="top"><div><b style="font-size:17px">${esc(b.ref)}</b> <span class="badge ${st}">${esc(b.status)}</span> <span class="vw-int ${esc(b.intent)}">${esc(INTENTS[b.intent] || b.intent)}</span></div><span style="color:var(--muted);font-size:13.5px">Booked ${dateStr(b.created_at)}</span></div>
+      <div class="top"><div><b style="font-size:17px">${esc(b.ref)}</b> <span class="badge ${st}">${esc(b.status)}</span> ${b.kind === "consultation" ? `<span class="vw-int options">Free consultation</span>` : `<span class="vw-int ${esc(b.intent)}">${esc(INTENTS[b.intent] || b.intent)}</span>`}</div><span style="color:var(--muted);font-size:13.5px">Booked ${dateStr(b.created_at)}</span></div>
       <div style="margin:6px 0"><b>${esc(b.car_title)}</b>${b.car_ref ? ` <a href="#/car/${esc(b.car_ref)}" style="font-size:13.5px">(${esc(b.car_ref)})</a>` : ""}</div>
       <div class="kv"><div><span>Client:</span> <b>${esc(b.name)}</b> · <a href="tel:${esc(b.phone)}">${esc(b.phone)}</a>${wa ? ` · <a href="https://wa.me/${esc(wa)}" target="_blank" rel="noopener" data-wa-client>WhatsApp</a>` : ""}${b.email ? ` · <a href="mailto:${esc(b.email)}">${esc(b.email)}</a>` : ""}</div>
       <div><span>Client is free:</span> <b>${esc(fmtDay(b.want_date))}</b>, ${esc(fmtTime(b.want_from))} to ${esc(fmtTime(b.want_to))}</div>
@@ -1884,6 +2008,8 @@ async function resolveView() {
     case "about": return viewAbout();
     case "for-dealers": location.replace("#/"); return viewHome();
     case "booking": case "receipt": return viewBooking(query);
+    case "consultation": return viewConsultation();
+    case "saved": return viewSaved();
     case "login": return viewLogin(query);
     case "portal": return p[1] === "add" ? viewVehicleForm(null) : p[1] === "edit" && p[2] ? viewVehicleForm(decodeURIComponent(p[2])) : viewPortal();
     case "admin": return p[1] === "edit" && p[2] ? viewVehicleForm(decodeURIComponent(p[2]), true) : p[1] === "add" ? viewVehicleForm(null, true) : viewAdmin();
@@ -1910,6 +2036,25 @@ async function render() {
   const h = $("#main h1"); if (h) { h.setAttribute("tabindex", "-1"); }
 }
 window.addEventListener("hashchange", render);
+/* saved cars: the heart on a card or on the car page */
+document.addEventListener("click", (e) => {
+  const b = e.target.closest && e.target.closest("[data-save]"); if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  const ref = b.dataset.save, now = toggleSaved(ref); if (now === null) { toast("Your browser would not let us save that car."); return; }
+  document.querySelectorAll('[data-save="' + ref.replace(/"/g, "") + '"]').forEach(x => {
+    x.classList.toggle("on", now); x.setAttribute("aria-pressed", String(now));
+    if (x.id === "sv_btn") x.textContent = now ? "Saved. Tap to remove" : "Save this car"; else x.setAttribute("aria-label", now ? "Remove from saved cars" : "Save this car");
+  });
+  const n = savedCount(), a = document.getElementById("nav_saved"); if (a) a.innerHTML = "Saved" + (n ? ` <span class="n" id="saved_n">${n}</span>` : "");
+  toast(now ? "Saved. Find it under Saved." : "Removed from your saved cars.");
+  if (!now && /^#\/saved/.test(location.hash)) render();   // on the Saved page, a removed car leaves the list
+}, true);
+/* signed-in people (dealers, admin) are logged out after 45 minutes with no activity, in case a phone or computer is left open */
+(function idleGuard() {
+  let last = Date.now(); const bump = () => { last = Date.now(); };
+  ["pointerdown", "keydown", "scroll", "touchstart"].forEach(ev => window.addEventListener(ev, bump, { passive: true }));
+  setInterval(async () => { if (S.session && Date.now() - last > 45 * 60 * 1000) { try { await signOut(); } catch (_) {} toast("You were logged out because the page was idle for a while."); location.hash = "#/login"; } }, 60000);
+})();
 function siteLd() {
   if (document.getElementById("ld_site")) return; const s = document.createElement("script"); s.type = "application/ld+json"; s.id = "ld_site";
   s.textContent = JSON.stringify({ "@context": "https://schema.org", "@graph": [{ "@type": "Organization", name: "Dealer Cars", url: baseUrl() + "/", description: "An online marketplace for used cars from hand-picked dealers in South Africa." }, { "@type": "WebSite", name: "Dealer Cars", url: baseUrl() + "/" }] });
