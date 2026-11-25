@@ -1774,7 +1774,9 @@ async function save(e) {
   const p = { id: VF.id || undefined, make: g("v_make"), model: g("v_model"), variant: g("v_variant"), year, price, mileage, transmission: $("#v_trans").value, fuel_type: $("#v_fuel").value, body_type: $("#v_body").value, colour: g("v_colour"), province: $("#v_prov").value, city: g("v_city"), description: $("#v_desc").value, features: $("#v_feat").value, photos: VF.photos.map(x => x.path), payment_type: $("#v_pay").value };
   if (adm) p.rating = $("#v_rating").value;
   const orig = VF.orig || [];
-  setBusy(btn, true, "Saving…"); const { data, error } = await client().rpc(adm ? "admin_save_vehicle" : "dealer_save_vehicle", { p }); setBusy(btn, false);
+  setBusy(btn, true, "Saving…");
+  try { const { data: sd } = await client().auth.getSession(); const exp = sd && sd.session ? sd.session.expires_at * 1000 : 0; if (!sd || !sd.session || exp - Date.now() < 120000) { const r = await client().auth.refreshSession(); if (r.error || !r.data || !r.data.session) { setBusy(btn, false); return bad("Your login has expired. Nothing is lost on this page: open the site in a new tab, log in again, then come back here and press Save. (Or log in, and re-add the car.)"); } } } catch (_) {}
+  const { data, error } = await client().rpc(adm ? "admin_save_vehicle" : "dealer_save_vehicle", { p }); setBusy(btn, false);
   if (error) return bad(niceErr(error));
   if (adm) { try { const gone = orig.filter(x => !p.photos.includes(x)); if (gone.length) await client().storage.from(BUCKET).remove(gone); } catch (_) {} }
   S.cars = null; S.ptab = "vehicles"; if (adm) S.atab = S.atab === "pending" ? "pending" : "cars"; toast(adm ? (VF.id ? "Changes saved." : "Car added. It is live now.") : "Saved. Our team will review it shortly."); VF = null; location.hash = adm ? "#/admin" : "#/portal";
